@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RobotManager.Views.ClinicVisitPage"
+             Title="Clinic Visit">
+    <Grid Padding="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="{Binding Name, StringFormat='NAO {0}'}" FontSize="20" Margin="0,0,0,5"/>
+            <VerticalStackLayout>
+                <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="18" Opacity=".8"/>
+                
+                <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="18" Opacity=".8"/>
+            </VerticalStackLayout>
+            <Label Text="Select issues:" FontSize="18" Margin="0,15"/>
+            <CollectionView EmptyView="No issues">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate>
+                        <Frame>
+
+                        </Frame>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+            </CollectionView>
+        </VerticalStackLayout>
+
+
+        <Button Text="Create Visit" Grid.Row="1" Margin="10,10" Clicked="CreateVisit_Button_Clicked"/>
+
+    </Grid>
+</ContentPage>

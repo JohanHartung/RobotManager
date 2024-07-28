@@ -1,0 +1,65 @@
+is_global = true
+build_property.EnableAotAnalyzer = 
+build_property.EnableSingleFileAnalyzer = 
+build_property.EnableTrimAnalyzer = false
+build_property.IncludeAllContentForSelfExtract = 
+build_property.TargetFramework = net8.0-ios
+build_property.TargetPlatformMinVersion = 
+build_property.UsingMicrosoftNETSdkWeb = 
+build_property.ProjectTypeGuids = 
+build_property.InvariantGlobalization = false
+build_property.PlatformNeutralAssembly = 
+build_property.EnforceExtendedAnalyzerRules = 
+build_property._SupportedPlatformList = Linux,macOS,Windows
+build_property.RootNamespace = RobotManager
+build_property.ProjectDir = C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\
+build_property.EnableComHosting = 
+build_property.EnableGeneratedComInterfaceComImportInterop = 
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/App.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.App.xaml
+build_metadata.AdditionalFiles.TargetPath = App.xaml
+build_metadata.AdditionalFiles.RelativePath = App.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/AppShell.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.AppShell.xaml
+build_metadata.AdditionalFiles.TargetPath = AppShell.xaml
+build_metadata.AdditionalFiles.RelativePath = AppShell.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Resources/Styles/Colors.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Resources.Styles.Colors.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Colors.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Colors.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Resources/Styles/Styles.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Resources.Styles.Styles.xaml
+build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
+build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/ClinicVisitPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.ClinicVisitPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\ClinicVisitPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\ClinicVisitPage.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/MainPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.MainPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\MainPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\MainPage.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/RobotDetailPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.RobotDetailPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\RobotDetailPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\RobotDetailPage.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/RobotsPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.RobotsPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\RobotsPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\RobotsPage.xaml

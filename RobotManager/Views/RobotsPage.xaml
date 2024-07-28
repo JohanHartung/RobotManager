@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RobotManager.Views.RobotsPage"
+             Title="Robots">
+    <ScrollView
+        Padding="20,0">
+        <CollectionView x:Name="RobotCollection" VerticalOptions="FillAndExpand">
+            <CollectionView.ItemTemplate>
+                <DataTemplate>
+                    <Frame Padding="0" Margin="0,5" BackgroundColor="#008AF8" BorderColor="#008AF8">
+                        <SwipeView SwipeStarted="SwipeView_SwipeStarted">
+                            <SwipeView.LeftItems>
+                                <SwipeItem x:Name="SwipeItemFree" Text="Free" BackgroundColor="#5EC285" Clicked="SwipeItem_Clicked"/>
+                                <SwipeItem x:Name="SwipeItemGame" Text="Game" BackgroundColor="#D25449" Clicked="SwipeItem_Clicked"/>
+                                <SwipeItem x:Name="SwipeItemClinic" Text="Clinic" BackgroundColor="#008AF8" Clicked="SwipeItem_Clicked"/>
+                            </SwipeView.LeftItems>
+                            <Frame BackgroundColor="#303030" HasShadow="False">
+                                <Frame.GestureRecognizers>
+                                    <TapGestureRecognizer Tapped="Robot_Tapped"/>
+                                </Frame.GestureRecognizers>
+                                <VerticalStackLayout>
+                                    <HorizontalStackLayout HorizontalOptions="FillAndExpand">
+                                        <Label Text="{Binding Name, StringFormat='NAO {0}'}" FontSize="20"/>
+                                        <Label Text="{Binding Ip}" Opacity=".5" VerticalOptions="Center" Margin="10,0,0,0"/>
+                                    </HorizontalStackLayout>
+                                    <Label Text="{Binding Status, StringFormat='Status: {0}'}" Opacity=".8"/>
+                                </VerticalStackLayout>
+                            </Frame>
+                        </SwipeView>
+                    </Frame>
+                </DataTemplate>
+            </CollectionView.ItemTemplate>
+        </CollectionView>
+    </ScrollView>
+</ContentPage>
