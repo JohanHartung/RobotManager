@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RobotManager.Views.IssuePage"
+             Title="Create Issue">
+    <Grid Padding="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="{Binding Name, StringFormat='Create an issue for NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label Text="Title:" Margin="0,20,0,0" FontSize="18"/>
+            <Entry x:Name="TitleEntry" Placeholder="Title"/>
+            <HorizontalStackLayout>
+                <DatePicker x:Name="IssueDatePicker"/>
+                <TimePicker x:Name="IssueTimePicker"/>
+            </HorizontalStackLayout>
+            <Label Text="now" TextColor="#455a64" 
+                   FontAttributes="Bold" TextDecorations="Underline" 
+                   Margin="2,0" VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Label Text="Description:" Margin="0,20,0,0" FontSize="18"/>
+            <Editor x:Name="IssueDescription" Placeholder="Description" HeightRequest="200"/>
+            <Button x:Name="MoreButton" Text="More" BackgroundColor="#455a64" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
+            <VerticalStackLayout  x:Name="MoreOptions"  IsVisible="False">
+                <Label Text="More options:" Margin="0,20,0,0" FontSize="18"/>
+                <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="50,*" Margin="0,20">
+                    <CheckBox x:Name="ReplicatedCheckBox" Grid.Row="0" Grid.Column="0" CheckedChanged="CheckBox_CheckedChanged"/>
+                    <Label Text="Replicated" FontSize="15" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center"/>
+                    <HorizontalStackLayout x:Name="ReplicatedDateTime" Grid.Row="1" Grid.Column="1" IsVisible="False">
+                        <DatePicker x:Name="ReplicatedDatePicker"/>
+                        <TimePicker x:Name="ReplicatedTimePicker"/>
+                    </HorizontalStackLayout>
+
+                    <CheckBox x:Name="SolvedCheckBox" Grid.Row="2" Grid.Column="0" CheckedChanged="CheckBox_CheckedChanged"/>
+                    <Label Text="Solved" FontSize="15" Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center"/>
+                    <HorizontalStackLayout x:Name="SolvedDateTime" Grid.Row="3" Grid.Column="1" IsVisible="False">
+                        <DatePicker x:Name="SolvedDatePicker"/>
+                        <TimePicker x:Name="SolvedTimePicker"/>
+                    </HorizontalStackLayout>
+                    <Editor x:Name="SolvedReport" Placeholder="Solved-Report" Grid.Row="4" Grid.Column="1" HeightRequest="100" IsVisible="false"/>
+                </Grid>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+
+        <Button Text="Create Issue" Grid.Row="1" Margin="10,10" Clicked="CreateIssueButton_Clicked" BackgroundColor="#455a64" TextColor="WhiteSmoke"/>
+
+    </Grid>
+</ContentPage>
