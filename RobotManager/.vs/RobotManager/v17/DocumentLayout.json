@@ -3,48 +3,48 @@
   "WorkspaceRootPath": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\clinicvisitpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\clinicvisitpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\clinicvisitpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\clinicvisitpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
-    },
-    {
       "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\robotspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\robotspage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\robotdetailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\robotdetailpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\classes\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:classes\\apiresponse.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\robotdetailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\robotdetailpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\addrobotpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\addrobotpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\robotspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\robotspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\issuepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\issuepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\mainpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\addrobotpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\addrobotpage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\classes\\nao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:classes\\nao.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\mainpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\robotspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\robotspage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:appshell.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\issuepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\issuepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\classes\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:classes\\game.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\notepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\notepage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\clinicvisitpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\clinicvisitpage.xaml.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|c:\\users\\johan\\documents\\github\\robotmanager\\robotmanager\\views\\notepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}",
+      "RelativeMoniker": "D:0:0:{BDB24A18-02FE-49DC-BA66-96EC1D335A7C}|RobotManager.csproj|solutionrelative:views\\notepage.xaml||{F11ACC28-31D1-4C80-A34B-F4E09D3D753C}"
     }
   ],
   "DocumentGroupContainers": [
@@ -57,137 +57,142 @@
           "SelectedChildIndex": 2,
           "Children": [
             {
-              "$type": "Document",
-              "DocumentIndex": 4,
-              "Title": "RobotDetailPage.xaml",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotDetailPage.xaml",
-              "RelativeDocumentMoniker": "Views\\RobotDetailPage.xaml",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotDetailPage.xaml",
-              "RelativeToolTip": "Views\\RobotDetailPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAYAAAAXAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-25T16:50:40.921Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 3,
-              "Title": "RobotDetailPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotDetailPage.xaml.cs",
-              "RelativeDocumentMoniker": "Views\\RobotDetailPage.xaml.cs",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotDetailPage.xaml.cs",
-              "RelativeToolTip": "Views\\RobotDetailPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAkAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-25T16:49:50.037Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 0,
-              "Title": "ClinicVisitPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml.cs",
-              "RelativeDocumentMoniker": "Views\\ClinicVisitPage.xaml.cs",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml.cs",
-              "RelativeToolTip": "Views\\ClinicVisitPage.xaml.cs",
-              "ViewState": "AgIAAAUAAAAAAAAAAAAAABEAAAACAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T21:47:53.424Z",
-              "EditorCaption": ""
+              "$type": "Bookmark",
+              "Name": "ST:0:0:{1c4feeaa-4718-4aa9-859d-94ce25d182ba}"
             },
             {
               "$type": "Document",
               "DocumentIndex": 1,
-              "Title": "ClinicVisitPage.xaml",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml",
-              "RelativeDocumentMoniker": "Views\\ClinicVisitPage.xaml",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml",
-              "RelativeToolTip": "Views\\ClinicVisitPage.xaml",
-              "ViewState": "AgIAAAIAAAAAAAAAAAAAABEAAABGAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-24T21:47:06.311Z"
+              "Title": "ApiResponse.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\ApiResponse.cs",
+              "RelativeDocumentMoniker": "Classes\\ApiResponse.cs",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\ApiResponse.cs",
+              "RelativeToolTip": "Classes\\ApiResponse.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAABkAAAAFAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-16T22:14:56.535Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "RobotsPage.xaml.cs",
               "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotsPage.xaml.cs",
               "RelativeDocumentMoniker": "Views\\RobotsPage.xaml.cs",
               "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotsPage.xaml.cs",
               "RelativeToolTip": "Views\\RobotsPage.xaml.cs",
-              "ViewState": "AgIAAEkAAAAAAAAAAAAgwE8AAAAmAAAAAAAAAA==",
+              "ViewState": "AgIAAD4AAAAAAAAAAAAAACAAAAArAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T07:56:48.472Z"
+              "WhenOpened": "2024-09-05T18:46:19.263Z",
+              "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 5,
+              "DocumentIndex": 2,
+              "Title": "AddRobotPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\AddRobotPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\AddRobotPage.xaml.cs",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\AddRobotPage.xaml.cs",
+              "RelativeToolTip": "Views\\AddRobotPage.xaml.cs",
+              "ViewState": "AgIAAGEAAAAAAAAAAAAAAAMAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T18:07:22.341Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 4,
+              "Title": "AddRobotPage.xaml",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\AddRobotPage.xaml",
+              "RelativeDocumentMoniker": "Views\\AddRobotPage.xaml",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\AddRobotPage.xaml",
+              "RelativeToolTip": "Views\\AddRobotPage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAB8AAAA1AAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-09-05T17:46:30.819Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 3,
+              "Title": "IssuePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\IssuePage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\IssuePage.xaml.cs",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\IssuePage.xaml.cs",
+              "RelativeToolTip": "Views\\IssuePage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACIAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-09-05T18:05:25.508Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 7,
+              "Title": "IssuePage.xaml",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\IssuePage.xaml",
+              "RelativeDocumentMoniker": "Views\\IssuePage.xaml",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\IssuePage.xaml",
+              "RelativeToolTip": "Views\\IssuePage.xaml",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAACYAAAAmAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-09-05T17:55:40.653Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 6,
               "Title": "RobotsPage.xaml",
               "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotsPage.xaml",
               "RelativeDocumentMoniker": "Views\\RobotsPage.xaml",
               "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\RobotsPage.xaml",
               "RelativeToolTip": "Views\\RobotsPage.xaml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAAAAsAAABIAAAAAAAAAA==",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAoAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-24T07:54:33.134Z"
+              "WhenOpened": "2024-09-05T17:38:44.209Z"
             },
             {
               "$type": "Document",
-              "DocumentIndex": 10,
-              "Title": "Game.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\Game.cs",
-              "RelativeDocumentMoniker": "Classes\\Game.cs",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\Game.cs",
-              "RelativeToolTip": "Classes\\Game.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAABAAAAAZAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-24T07:48:16.566Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 9,
-              "Title": "AppShell.xaml",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\AppShell.xaml",
-              "RelativeDocumentMoniker": "AppShell.xaml",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\AppShell.xaml",
-              "RelativeToolTip": "AppShell.xaml",
-              "ViewState": "AgIAAAMAAAAAAAAAAAAvwA4AAAAzAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-23T21:59:47.09Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 8,
-              "Title": "MainPage.xaml.cs",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\MainPage.xaml.cs",
-              "RelativeDocumentMoniker": "Views\\MainPage.xaml.cs",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\MainPage.xaml.cs",
-              "RelativeToolTip": "Views\\MainPage.xaml.cs",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAoAAAAAAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T21:50:24.979Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 6,
-              "Title": "MainPage.xaml",
-              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\MainPage.xaml",
-              "RelativeDocumentMoniker": "Views\\MainPage.xaml",
-              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\MainPage.xaml",
-              "RelativeToolTip": "Views\\MainPage.xaml",
-              "ViewState": "AgIAAAAAAAAAAAAAAAAAAAcAAAAWAAAAAAAAAA==",
-              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
-              "WhenOpened": "2024-07-23T21:49:20.326Z"
-            },
-            {
-              "$type": "Document",
-              "DocumentIndex": 7,
+              "DocumentIndex": 5,
               "Title": "Nao.cs",
               "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\Nao.cs",
               "RelativeDocumentMoniker": "Classes\\Nao.cs",
               "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Classes\\Nao.cs",
               "RelativeToolTip": "Classes\\Nao.cs",
-              "ViewState": "AgIAAFAAAAAAAAAAAAAcwFkAAABEAAAAAAAAAA==",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAuwBkAAAAPAAAAAAAAAA==",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
-              "WhenOpened": "2024-07-23T21:17:32.058Z"
+              "WhenOpened": "2024-08-19T17:54:02.519Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 8,
+              "Title": "NotePage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\NotePage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\NotePage.xaml.cs",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\NotePage.xaml.cs",
+              "RelativeToolTip": "Views\\NotePage.xaml.cs",
+              "ViewState": "AgIAAAMAAAAAAAAAAAAAABoAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-08-19T17:44:49.41Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 9,
+              "Title": "ClinicVisitPage.xaml.cs",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml.cs",
+              "RelativeDocumentMoniker": "Views\\ClinicVisitPage.xaml.cs",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\ClinicVisitPage.xaml.cs",
+              "RelativeToolTip": "Views\\ClinicVisitPage.xaml.cs",
+              "ViewState": "AgIAAAAAAAAAAAAAAAAAAA0AAAAjAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
+              "WhenOpened": "2024-07-24T21:47:53.424Z"
+            },
+            {
+              "$type": "Document",
+              "DocumentIndex": 10,
+              "Title": "NotePage.xaml",
+              "DocumentMoniker": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\NotePage.xaml",
+              "RelativeDocumentMoniker": "Views\\NotePage.xaml",
+              "ToolTip": "C:\\Users\\johan\\Documents\\GitHub\\RobotManager\\RobotManager\\Views\\NotePage.xaml",
+              "RelativeToolTip": "Views\\NotePage.xaml",
+              "ViewState": "AgIAAAYAAAAAAAAAAAAAABIAAAAAAAAAAAAAAA==",
+              "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.003549|",
+              "WhenOpened": "2024-08-19T17:31:04.45Z"
             }
           ]
         }

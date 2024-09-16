@@ -1037,3 +1037,4 @@ C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\obj\Debug\net8.0-andro
 C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\obj\Debug\net8.0-android\stamp\_GenerateJavaStubs.stamp
 C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\obj\Debug\net8.0-android\stamp\_GeneratePackageManagerJava.stamp
 C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\obj\Debug\net8.0-android\stamp\_ResolveLibraryProjectImports.stamp
+C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\obj\Debug\net8.0-android\RobotManager.sourcelink.json

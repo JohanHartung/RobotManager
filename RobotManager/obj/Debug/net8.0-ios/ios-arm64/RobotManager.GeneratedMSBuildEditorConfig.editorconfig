@@ -15,6 +15,7 @@ build_property.RootNamespace = RobotManager
 build_property.ProjectDir = C:\Users\johan\Documents\GitHub\RobotManager\RobotManager\
 build_property.EnableComHosting = 
 build_property.EnableGeneratedComInterfaceComImportInterop = 
+build_property.EffectiveAnalysisLevelStyle = 8.0
 
 [C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/App.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
@@ -40,17 +41,35 @@ build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Resources.Sty
 build_metadata.AdditionalFiles.TargetPath = Resources\Styles\Styles.xaml
 build_metadata.AdditionalFiles.RelativePath = Resources\Styles\Styles.xaml
 
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/AddRobotPage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.AddRobotPage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\AddRobotPage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\AddRobotPage.xaml
+
 [C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/ClinicVisitPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.ClinicVisitPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\ClinicVisitPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\ClinicVisitPage.xaml
 
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/IssuePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.IssuePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\IssuePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\IssuePage.xaml
+
 [C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/MainPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml
 build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.MainPage.xaml
 build_metadata.AdditionalFiles.TargetPath = Views\MainPage.xaml
 build_metadata.AdditionalFiles.RelativePath = Views\MainPage.xaml
+
+[C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/NotePage.xaml]
+build_metadata.AdditionalFiles.GenKind = Xaml
+build_metadata.AdditionalFiles.ManifestResourceName = RobotManager.Views.NotePage.xaml
+build_metadata.AdditionalFiles.TargetPath = Views\NotePage.xaml
+build_metadata.AdditionalFiles.RelativePath = Views\NotePage.xaml
 
 [C:/Users/johan/Documents/GitHub/RobotManager/RobotManager/Views/RobotDetailPage.xaml]
 build_metadata.AdditionalFiles.GenKind = Xaml

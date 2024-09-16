@@ -18,7 +18,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("RobotManager")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0+0cda9507cee04c8e0351eb68b5232d990525ed14")]
 [assembly: System.Reflection.AssemblyProductAttribute("RobotManager")]
 [assembly: System.Reflection.AssemblyTitleAttribute("RobotManager")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
