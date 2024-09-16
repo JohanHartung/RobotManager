@@ -1,5 +1,10 @@
+using System.Net.Http;
+using System.Net.Http.Json;
+using System.Threading.Tasks;
 using RobotManager.Classes;
 using System.Collections.ObjectModel;
+using System.Text.Json;
+using System.Text.Json.Serialization;
 
 namespace RobotManager.Views;
 
@@ -11,21 +16,51 @@ public partial class RobotsPage : ContentPage
     public RobotsPage()
     {
         InitializeComponent();
-        naos.Add(new() { Name = "26", BodyID = "28", HeadID = "20", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
-        naos.Add(new() { Name = "25", BodyID = "06", HeadID = "06", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
-        naos.Add(new() { Name = "24", BodyID = "11", HeadID = "32", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Name = "23", BodyID = "10", HeadID = "37", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Name = "22", BodyID = "04", HeadID = "22", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Name = "21", BodyID = "42", HeadID = "50", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Name = "18", BodyID = "29", HeadID = "37", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "17", BodyID = "04", HeadID = "09", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "16", BodyID = "17", HeadID = "31", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "15", BodyID = "06", HeadID = "17", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "14", BodyID = "40", HeadID = "45", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "13", BodyID = "38", HeadID = "20", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Name = "12", BodyID = "01", HeadID = "31", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
-        naos.Add(new() { Name = "11", BodyID = "11", HeadID = "06", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
+        //naos.Add(new() { Name = "26", BodyID = "28", HeadID = "20", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
+        //naos.Add(new() { Name = "25", BodyID = "06", HeadID = "06", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
+        //naos.Add(new() { Name = "24", BodyID = "11", HeadID = "32", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        //naos.Add(new() { Name = "23", BodyID = "10", HeadID = "37", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        //naos.Add(new() { Name = "22", BodyID = "04", HeadID = "22", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        //naos.Add(new() { Name = "21", BodyID = "42", HeadID = "50", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        //naos.Add(new() { Name = "18", BodyID = "29", HeadID = "37", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "17", BodyID = "04", HeadID = "09", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "16", BodyID = "17", HeadID = "31", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "15", BodyID = "06", HeadID = "17", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "14", BodyID = "40", HeadID = "45", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "13", BodyID = "38", HeadID = "20", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        //naos.Add(new() { Name = "12", BodyID = "01", HeadID = "31", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
+        //naos.Add(new() { Name = "11", BodyID = "11", HeadID = "06", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
         RobotCollection.ItemsSource = naos;
+    }
+
+    private async Task LoadNaosAsync()
+    {
+        try
+        {
+            using HttpClient client = new();
+            var response = await client.GetAsync("https://skakominor.de/api/RobotManager/GetAll/naos");
+            response.EnsureSuccessStatusCode();
+            var jsonResponse = await response.Content.ReadAsStringAsync();
+            Console.WriteLine(jsonResponse); 
+
+            var apiResponse = JsonSerializer.Deserialize<ApiResponse<Nao>>(jsonResponse);
+            if (apiResponse?.Value != null)
+            {
+                foreach (var nao in apiResponse.Value)
+                {
+                    if (!naos.Contains(nao))
+                    {
+                        naos.Add(nao);
+                    }
+                }
+            }
+        }
+        catch (Exception ex)
+        {
+            // Handle exceptions (e.g., log the error, show a message to the user, etc.)
+            await DisplayAlert("Error", $"Error fetching data: {ex.Message}", "OK");
+            Console.WriteLine(ex);
+        }
     }
 
     private void SwipeItem_Clicked(object sender, EventArgs e)
@@ -34,6 +69,12 @@ public partial class RobotsPage : ContentPage
         if (swipeItem == null) return;
         var nao = swipeItem.BindingContext as Nao;
         if (nao == null) return;
+
+        if (openSwipeView != null)
+        {
+            openSwipeView.Close();
+            openSwipeView = null;
+        }
 
         switch (swipeItem.Text)
         {
@@ -44,7 +85,7 @@ public partial class RobotsPage : ContentPage
                 nao.Status = Status.Game;
                 break;
             case "Clinic":
-                Navigation.PushAsync(new ClinicVisitPage(nao));
+                Navigation.PushAsync(new ClinicVisitPage(nao, new(), true));
                 break;
             default:
                 nao.Status = Status.Free;
@@ -84,6 +125,31 @@ public partial class RobotsPage : ContentPage
             openSwipeView.Close();
             openSwipeView = null;
         }
-        openSwipeView = swipeView;
+    }
+
+    private void SwipeView_SwipeEnded(object sender, SwipeEndedEventArgs e)
+    {
+        var swipeView = sender as SwipeView;
+        if (swipeView == null) return;
+        openSwipeView = e.IsOpen ? swipeView : null;
+    }
+
+    private void SwipeView_SwipeChanging(object sender, SwipeChangingEventArgs e)
+    {
+        var swipeView = sender as SwipeView;
+        if (swipeView == null) return;
+    }
+
+    private void AddButton_Clicked(object sender, EventArgs e)
+    {
+        Navigation.PushAsync(new AddRobotPage());
+    }
+
+    private async void RefreshView_Refreshing(object sender, EventArgs e)
+    {
+        await LoadNaosAsync();
+        RobotCollection.ItemsSource = null;
+        RobotCollection.ItemsSource = naos;
+        RobotPageRV.IsRefreshing = false;
     }
 }
