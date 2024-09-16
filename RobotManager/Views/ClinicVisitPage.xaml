@@ -9,12 +9,12 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
-            <Label Text="{Binding Name, StringFormat='NAO {0}'}" FontSize="20" Margin="0,0,0,5"/>
-            <VerticalStackLayout>
-                <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="18" Opacity=".8"/>
-                
-                <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="18" Opacity=".8"/>
-            </VerticalStackLayout>
+            <HorizontalStackLayout Margin="0,0,0,0">
+                <Label Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+                <Label Text="{Binding Status, StringFormat='{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
+            </HorizontalStackLayout>
+            <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
             <Label Text="Select issues:" FontSize="18" Margin="0,15"/>
             <CollectionView EmptyView="No issues">
                 <CollectionView.ItemTemplate>
@@ -25,8 +25,12 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-        </VerticalStackLayout>
+            <Label Text="Notes:" FontSize="18" Margin="0,15"/>
+            <Editor HeightRequest="100"/>
 
+
+        </VerticalStackLayout>
+        
 
         <Button Text="Create Visit" Grid.Row="1" Margin="10,10" Clicked="CreateVisit_Button_Clicked"/>
 
