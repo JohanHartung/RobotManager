@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RobotManager.Views.AddRobotPage"
+             Title="Add Robot">
+    <Grid Padding="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout Grid.Row="0">
+            <Label Text="Add a new NAO" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label Text="Name:" Margin="0,20,0,0" FontSize="18"/>
+            <Entry x:Name="NameEntry" Placeholder="Name" ReturnType="Next"/>
+            <Label Text="Head ID:" Margin="0,20,0,0" FontSize="18"/>
+            <Entry x:Name="HeadIdEntry" Placeholder="Head ID" ReturnType="Next"/>
+            <Label Text="Body ID:" Margin="0,20,0,0" FontSize="18"/>
+            <Entry x:Name="BodyIdEntry" Placeholder="Body ID" ReturnType="Next"/>
+            <Label Text="Date of Purchase:" Margin="0,20,0,0" FontSize="18"/>
+            <DatePicker x:Name="PurchaseDatePicker"/>
+            <Label Text="now" TextColor="#455a64" 
+               FontAttributes="Bold" TextDecorations="Underline" 
+               Margin="2,0" VerticalTextAlignment="Center">
+                <Label.GestureRecognizers>
+                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                </Label.GestureRecognizers>
+            </Label>
+            <Button x:Name="MoreButton" Text="More" BackgroundColor="#455a64" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
+            <VerticalStackLayout  x:Name="MoreOptions"  IsVisible="False">
+                <Label Text="More options:" Margin="0,20,0,0" FontSize="18"/>
+                <Label Text="Warranty Extension:" Margin="0,20,0,0" FontSize="15"/>
+                <Entry x:Name="WarrantyExtensionEntry" Placeholder="Years"/>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+
+        <Button x:Name="AddRobotButton" Text="Add Robot" Grid.Row="1" 
+                Margin="10,10" Clicked="AddRobotButton_Clicked" BackgroundColor="#455a64" TextColor="WhiteSmoke"/>
+
+    </Grid>
+</ContentPage>
