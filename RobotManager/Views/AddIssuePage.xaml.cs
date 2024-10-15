@@ -3,11 +3,11 @@ using System.Net.Http.Json;
 
 namespace RobotManager.Views;
 
-public partial class IssuePage : ContentPage
+public partial class AddIssuePage : ContentPage
 {
 	Nao _nao;
 	Issue _issue;
-	public IssuePage(Nao nao, Issue issue , bool creatorMode = false)
+	public AddIssuePage(Nao nao, Issue issue , bool creatorMode = false)
 	{
 		InitializeComponent();
         ResetDateTime();
@@ -112,8 +112,8 @@ public partial class IssuePage : ContentPage
 
         if (response.IsSuccessStatusCode)
         {
-            await DisplayAlert("Success", "Robot added successfully", "OK");
-            Navigation.PopAsync();
+            await DisplayAlert("Success", "Issue added successfully", "OK");
+            await Navigation.PopAsync();
         }
         else
         {
