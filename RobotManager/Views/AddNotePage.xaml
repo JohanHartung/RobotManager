@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             x:Class="RobotManager.Views.NotePage"
+             x:Class="RobotManager.Views.AddNotePage"
              Title="Create Note">
     <Grid Padding="20,0">
         <Grid.RowDefinitions>
@@ -11,7 +11,7 @@
         <VerticalStackLayout Grid.Row="0">
             <Label Text="{Binding Name, StringFormat='Create a note for NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
             <Label Text="Title:" Margin="0,20,0,0" FontSize="18"/>
-            <Entry Placeholder="Title"/>
+            <Entry x:Name="TitleEntry" Placeholder="Title"/>
             <HorizontalStackLayout>
                 <DatePicker x:Name="NoteDatePicker"/>
                 <TimePicker x:Name="NoteTimePicker"/>
@@ -24,7 +24,7 @@
                 </Label.GestureRecognizers>
             </Label>
             <Label Text="Description:" Margin="0,20,0,0" FontSize="18"/>
-            <Editor Placeholder="Description" HeightRequest="200"/>
+            <Editor x:Name="NoteDescription" Placeholder="Description" HeightRequest="200"/>
 
 
         </VerticalStackLayout>
