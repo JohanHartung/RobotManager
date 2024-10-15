@@ -2,11 +2,12 @@ using RobotManager.Classes;
 
 namespace RobotManager.Views;
 
-public partial class ClinicVisitPage : ContentPage
+public partial class AddClinicVisitPage : ContentPage
 {
 	Nao _nao;
 	ClinicVisit _clinicVisit;
-	public ClinicVisitPage(Nao nao, ClinicVisit clinicVisit, bool creatorMode = false)
+	List<int> issues = new();
+	public AddClinicVisitPage(Nao nao, ClinicVisit clinicVisit, bool creatorMode = false)
 	{
 		InitializeComponent();
 		BindingContext = nao;
@@ -16,7 +17,9 @@ public partial class ClinicVisitPage : ContentPage
 
     private void CreateVisit_Button_Clicked(object sender, EventArgs e)
     {
-		_nao.ClinicVisits.Add(_clinicVisit);
+		//_nao.ClinicVisits.Add(_clinicVisit.Id);
+
 		_nao.Status = Status.Clinic;
     }
+
 }
