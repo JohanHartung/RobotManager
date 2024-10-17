@@ -6,14 +6,13 @@ namespace RobotManager.Views;
 public partial class AddIssuePage : ContentPage
 {
 	Nao _nao;
-	Issue _issue;
-	public AddIssuePage(Nao nao, Issue issue , bool creatorMode = false)
+    Issue issue = new();
+	public AddIssuePage(Nao nao)
 	{
 		InitializeComponent();
         ResetDateTime();
         BindingContext = nao;
 		_nao = nao;
-        _issue = issue;
     }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)

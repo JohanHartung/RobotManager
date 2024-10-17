@@ -6,14 +6,13 @@ namespace RobotManager.Views;
 public partial class AddNotePage : ContentPage
 {
 	Nao _nao;
-	Note _note = new();
-	public AddNotePage(Nao nao, Note note, bool creatorMode = false)
+	Note note = new();
+	public AddNotePage(Nao nao)
 	{
 		InitializeComponent();
         ResetDateTime();
         BindingContext = nao;
 		_nao = nao;
-        _note = note;
     }
 
     private async void CreateNoteButton_Clicked(object sender, EventArgs e)
