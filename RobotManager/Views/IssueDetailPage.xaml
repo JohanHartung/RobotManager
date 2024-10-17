@@ -9,9 +9,9 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
-            <HorizontalStackLayout Margin="0,15,0,0">
-                <Label Text="{Binding Title}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
-                <Label Opacity=".7" VerticalOptions="Center" FontSize="20">
+            <Grid ColumnDefinitions="*,100" Margin="0,15,0,0">
+                <Label Text="{Binding Title}" Margin="0,0,10,0" FontSize="22" VerticalTextAlignment="Center" Grid.Column="0"/>
+                <Label Opacity=".7" VerticalOptions="Start" FontSize="20" Grid.Column="1" HorizontalTextAlignment="Center">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="True">
                             <Setter Property="Text" Value="Solved"/>
@@ -21,13 +21,50 @@
                         </DataTrigger>
                     </Label.Triggers>
                 </Label>
-            </HorizontalStackLayout>
+            </Grid>
             <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
-            <Label x:Name="warrantyLabel" Text="Warranty Info" Opacity=".9" FontSize="14"/>
-            <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
-
+            <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Replicated}" Value="True">
+                        <Setter Property="Text" Value="{Binding ReplicatedDate, StringFormat='Replicated: {0}'}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding Replicated}" Value="False">
+                        <Setter Property="Text" Value="Not yet replicated"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
+            <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
+                <Label.Triggers>
+                    <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="True">
+                        <Setter Property="Text" Value="{Binding SolvedDate, StringFormat='Solved: {0}'}"/>
+                    </DataTrigger>
+                    <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="False">
+                        <Setter Property="Text" Value="Not yet solved"/>
+                    </DataTrigger>
+                </Label.Triggers>
+            </Label>
             <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,10,0,20"/>
+            <Label Text="{Binding Description}"/>
+        </VerticalStackLayout>
+        <VerticalStackLayout VerticalOptions="End" HorizontalOptions="End" Margin="0,0,-15,0">
+            <VerticalStackLayout x:Name="OptionsInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
+                <Button x:Name="ReplicateButton" Clicked="ReplicateButton_Clicked" Text="Mark Replicated" IsVisible="True" BackgroundColor="#455a64" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                <Button x:Name="SolveButton" Clicked="SolveButton_Clicked" Text="Mark Solved" IsVisible="True" BackgroundColor="#455a64" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+            </VerticalStackLayout>
+            <Button 
+        x:Name="OptionsButton"
+        Clicked="OptionsButton_Clicked"
+        Text="+"
+        WidthRequest="60"
+        HeightRequest="60"
+        CornerRadius="28"
+        BackgroundColor="#455a64"
+        TextColor="WhiteSmoke"
+        FontSize="30"
+        VerticalOptions="End"
+        HorizontalOptions="End"
+        Margin="0,0,16,16"/>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
