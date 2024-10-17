@@ -16,12 +16,22 @@
             <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
             <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
             <Label Text="Select issues:" FontSize="18" Margin="0,15"/>
-            <CollectionView EmptyView="No issues">
+            <CollectionView x:Name="IssueCV" EmptyView="No issues" Margin="0,5" MaximumHeightRequest="200" VerticalScrollBarVisibility="Always">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
-                        <Frame>
-
+                        <Frame BackgroundColor="#303030" Margin="0,5" BorderColor="#303030" Padding="10" >
+                            <Frame.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="IssueFrame_Tapped"/>
+                            </Frame.GestureRecognizers>
+                            <VerticalStackLayout>
+                                <Grid RowDefinitions="*" ColumnDefinitions="*,120">
+                                    <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="0"/>
+                                    <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" Margin="15,0" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="1"/>
+                                </Grid>
+                                <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" Margin="0,0,20,0"/>
+                            </VerticalStackLayout>
                         </Frame>
+
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
@@ -30,7 +40,7 @@
 
 
         </VerticalStackLayout>
-        
+
 
         <Button Text="Create Visit" Grid.Row="1" Margin="10,10" Clicked="CreateVisit_Button_Clicked"/>
 
