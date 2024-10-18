@@ -25,8 +25,15 @@
     <Color x:Key="Gray400">#919191</Color>
     <Color x:Key="Gray500">#6E6E6E</Color>
     <Color x:Key="Gray600">#404040</Color>
+    <Color x:Key="Gray550">#303030</Color>
     <Color x:Key="Gray900">#212121</Color>
     <Color x:Key="Gray950">#141414</Color>
+
+    <Color x:Key="DefaultColor">#455a64</Color>
+    <Color x:Key="FreeColor">#308a7b</Color>
+    <Color x:Key="GameColor">#80464d</Color>
+    <Color x:Key="ClinicColor">#80b2c9</Color>
+
 
     <SolidColorBrush x:Key="PrimaryBrush" Color="{StaticResource Primary}"/>
     <SolidColorBrush x:Key="SecondaryBrush" Color="{StaticResource Secondary}"/>
