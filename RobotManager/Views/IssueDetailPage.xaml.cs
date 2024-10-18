@@ -14,7 +14,6 @@ public partial class IssueDetailPage : ContentPage
     private void OptionsButton_Clicked(object sender, EventArgs e)
     {
         OptionsInterface.IsVisible = !OptionsInterface.IsVisible;
-        //AddButton.Text = AddButton.Text == "+" ? "x" : "+";
         double currRot = OptionsButton.Rotation;
         OptionsButton.RotateTo(currRot == 0 ? 45 : 0);
     }
