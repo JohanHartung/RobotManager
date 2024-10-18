@@ -11,6 +11,8 @@ public partial class RobotDetailPage : ContentPage
     List<Note> _notes = new();
     List<ClinicVisit> _clinicVisits = new();
 
+    Button selectedTab;
+
     public RobotDetailPage(Nao nao, List<Issue> issues, List<Note> notes, List<ClinicVisit> clinicVisits)
     {
         InitializeComponent();
@@ -101,4 +103,45 @@ public partial class RobotDetailPage : ContentPage
         string solvedReport = await DisplayPromptAsync("Solved Report", "If issue could not be replicated, leave empty");
         //TODO: Update issue with solved report and date
     }
+
+    private void TabButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        selectedTab = button!;
+
+        UpdateTabs();
+    }
+
+    private void UpdateTabs()
+    {
+        Color normal = Color.FromArgb("#303030");
+        Dictionary<Button, (Color color, StackLayout tab) > config = new()
+        {
+            { NotesButton, (Color.FromArgb("#308a7b"), NoteLayout ) },
+            { IssuesButton, (Color.FromArgb("#80464d"), IssueLayout ) },
+            { ClinicButton, (Color.FromArgb("#80b2c9"), ClinicLayout ) }
+        };
+
+        foreach ( var button in config.Keys ) 
+        {
+            if (button == selectedTab)
+            {
+                selectedTab.BackgroundColor = config[button].color;
+                config[button].tab.IsVisible = true;
+            }
+            else
+            {
+                button.BackgroundColor = normal;
+                config[button].tab.IsVisible = false;
+            }
+        }
+    }
+
+    private void PastIssuesGrid_Tapped(object sender, TappedEventArgs e)
+    {
+        var grid = sender as Grid;
+        var issueSwitch = grid!.FindByName<Switch>("pastIssuesSwitch");
+        issueSwitch.IsToggled = !issueSwitch.IsToggled;
+    }
+
 }
