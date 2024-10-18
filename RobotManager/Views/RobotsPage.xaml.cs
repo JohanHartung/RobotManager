@@ -344,18 +344,19 @@ public partial class RobotsPage : ContentPage
     {
         var button = sender as Button;
 
+        // set selectedFilter to AllFilter, if the same filter button is pressed twice
+        selectedFilter = button == selectedFilter ? AllFilterButton! : button!;
 
-        List<Button> filterButtons = new()
-        {
-            AllFilterButton!,
-            FreeFilterButton!,
-            GameFilterButton!,
-            ClinicFilterButton!
-        };
+        UpdateFilter();
+        FilterCollection();
+    }
+
+    private void UpdateFilter()
+    {
 
         Color normal = Color.FromArgb("#303030");
 
-        Dictionary<Button, Color> color = new()
+        Dictionary<Button, Color> config = new()
         {
             { AllFilterButton, Color.FromArgb("#455a64") },
             { FreeFilterButton, Color.FromArgb("#308a7b") },
@@ -363,18 +364,14 @@ public partial class RobotsPage : ContentPage
             { ClinicFilterButton, Color.FromArgb("#80b2c9") }
         };
 
-        // set selectedFilter to AllFilter, if the same filter button is pressed twice
-        selectedFilter = button == selectedFilter ? AllFilterButton! : button!;
 
-        foreach (var item in filterButtons)
+        foreach (var button in config.Keys)
         {
             // set BackgroundColor for active  filter button
-            item.BackgroundColor = item == selectedFilter ? color[item] : normal;
+            button.BackgroundColor = button == selectedFilter ? config[button] : normal;
         }
-
-        FilterCollection();
-
     }
+
 
     private void FilterCollection()
     {
