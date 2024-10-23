@@ -10,22 +10,27 @@
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
             <Label Text="{Binding Name, StringFormat='Create an issue for NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label Text="Title:" Margin="0,20,0,0" FontSize="18"/>
-            <Entry x:Name="TitleEntry" Placeholder="Title"/>
-            <HorizontalStackLayout>
-                <DatePicker x:Name="IssueDatePicker"/>
-                <TimePicker x:Name="IssueTimePicker"/>
-            </HorizontalStackLayout>
-            <Label Text="now" TextColor="#455a64" 
+            <BoxView BackgroundColor="Transparent" HeightRequest="20"/>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Entry x:Name="TitleEntry" Placeholder="Title"/>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Grid ColumnDefinitions="auto, auto, *">
+                    <DatePicker x:Name="IssueDatePicker" Grid.Column="0"/>
+                    <TimePicker x:Name="IssueTimePicker" Grid.Column="1"/>
+                    <Label Text="now" TextColor="#536578"  Grid.Column="2"
                    FontAttributes="Bold" TextDecorations="Underline" 
-                   Margin="2,0" VerticalTextAlignment="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-            <Label Text="Description:" Margin="0,20,0,0" FontSize="18"/>
-            <Editor x:Name="IssueDescription" Placeholder="Description" HeightRequest="200"/>
-            <Button x:Name="MoreButton" Text="More" BackgroundColor="#455a64" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
+                   Margin="20,0" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Editor x:Name="IssueDescription" Placeholder="Description" HeightRequest="200"/>
+            </Frame>
+            <Button x:Name="MoreButton" Text="More" BackgroundColor="#536578" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
             <VerticalStackLayout  x:Name="MoreOptions"  IsVisible="False">
                 <Label Text="More options:" Margin="0,20,0,0" FontSize="18"/>
                 <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="50,*" Margin="0,20">
@@ -49,7 +54,7 @@
         </VerticalStackLayout>
 
 
-        <Button Text="Create Issue" Grid.Row="1" Margin="10,10" Clicked="CreateIssueButton_Clicked" BackgroundColor="#455a64" TextColor="WhiteSmoke"/>
+        <Button Text="Create Issue" Grid.Row="1" Margin="10,10" Clicked="CreateIssueButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
 
     </Grid>
 </ContentPage>

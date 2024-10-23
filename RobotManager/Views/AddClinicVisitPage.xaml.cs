@@ -31,7 +31,7 @@ public partial class AddClinicVisitPage : ContentPage
 		var issue = frame.BindingContext as Issue;
 		if (issue == null) { return; }
 		Color normal = Color.FromArgb("#303030");
-		Color selected = Color.FromArgb("#455a64");
+		Color selected = Color.FromArgb("#536578");
 
 		if (selectedIssues.Contains(issue))
 		{

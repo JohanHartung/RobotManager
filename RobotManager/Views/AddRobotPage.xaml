@@ -10,33 +10,42 @@
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
             <Label Text="Add a new NAO" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label Text="Name:" Margin="0,20,0,0" FontSize="18"/>
-            <Entry x:Name="NameEntry" Placeholder="Name" ReturnType="Next"/>
-            <Label Text="Head ID:" Margin="0,20,0,0" FontSize="18"/>
-            <Entry x:Name="HeadIdEntry" Placeholder="Head ID" ReturnType="Next"/>
-            <Label Text="Body ID:" Margin="0,20,0,0" FontSize="18"/>
-            <Entry x:Name="BodyIdEntry" Placeholder="Body ID" ReturnType="Next"/>
-            <Label Text="Date of Purchase:" Margin="0,20,0,0" FontSize="18"/>
-            <DatePicker x:Name="PurchaseDatePicker"/>
-            <Label Text="now" TextColor="#455a64" 
-               FontAttributes="Bold" TextDecorations="Underline" 
-               Margin="2,0" VerticalTextAlignment="Center">
-                <Label.GestureRecognizers>
-                    <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
-                </Label.GestureRecognizers>
-            </Label>
-            <Button x:Name="MoreButton" Text="More" BackgroundColor="#455a64" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
+            <BoxView BackgroundColor="Transparent" HeightRequest="20"/>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Entry x:Name="NameEntry" Placeholder="Name" ReturnType="Next"/>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Entry x:Name="HeadIdEntry" Placeholder="Head ID" ReturnType="Next"/>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Entry x:Name="BodyIdEntry" Placeholder="Body ID" ReturnType="Next"/>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Grid ColumnDefinitions="auto,*">
+                    <DatePicker x:Name="PurchaseDatePicker" Grid.Column="0"/>
+                    <Label Text="now" TextColor="#536578" Grid.Column="1"
+                            FontAttributes="Bold" TextDecorations="Underline" 
+                            Margin="20,0" VerticalTextAlignment="Center" HorizontalOptions="EndAndExpand">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+            <Button x:Name="MoreButton" Text="More" BackgroundColor="#536578" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
             <VerticalStackLayout  x:Name="MoreOptions"  IsVisible="False">
                 <Label Text="More options:" Margin="0,20,0,0" FontSize="18"/>
                 <Label Text="Warranty Extension:" Margin="0,20,0,0" FontSize="15"/>
-                <Entry x:Name="WarrantyExtensionEntry" Placeholder="Years"/>
+                <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                    <Entry x:Name="WarrantyExtensionEntry" Placeholder="Years" Keyboard="Numeric"/>
+                </Frame>
             </VerticalStackLayout>
 
         </VerticalStackLayout>
 
 
         <Button x:Name="AddRobotButton" Text="Add Robot" Grid.Row="1" 
-                Margin="10,10" Clicked="AddRobotButton_Clicked" BackgroundColor="#455a64" TextColor="WhiteSmoke"/>
+                Margin="10,10" Clicked="AddRobotButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
 
     </Grid>
 </ContentPage>

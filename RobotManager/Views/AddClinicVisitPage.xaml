@@ -35,14 +35,16 @@
                     </DataTemplate>
                 </CollectionView.ItemTemplate>
             </CollectionView>
-            <Label Text="Notes:" FontSize="18" Margin="0,15"/>
-            <Editor HeightRequest="100"/>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Editor HeightRequest="100" Placeholder="Notes"/>
+            </Frame>
 
 
         </VerticalStackLayout>
 
 
-        <Button Text="Create Visit" Grid.Row="1" Margin="10,10" Clicked="CreateVisit_Button_Clicked"/>
+        <Button Text="Create Visit" Grid.Row="1" Margin="10,10" Clicked="CreateVisit_Button_Clicked"
+                BackgroundColor="{StaticResource DefaultColor}" TextColor="WhiteSmoke"/>
 
     </Grid>
 </ContentPage>
