@@ -66,22 +66,31 @@ public partial class RobotDetailPage : ContentPage
         var frame = sender as Frame;
         if (frame == null) { return; }
         var layout = frame.Content as VerticalStackLayout;
-        var issueButtons = layout.FindByName<Grid>("DetailButtons");
+        var detailButtons = layout.FindByName<Grid>("DetailButtons");
 
-        if (!issueButtons.IsVisible)
+        if (!detailButtons.IsVisible)
         {
             if (currentIssueButtons != null)
             {
                 currentIssueButtons.IsVisible = false;
             }
-            issueButtons.IsVisible = true;
-            currentIssueButtons = issueButtons;
+            detailButtons.IsVisible = true;
+            currentIssueButtons = detailButtons;
         }
         else
         {
-            issueButtons.IsVisible = false;
+            detailButtons.IsVisible = false;
             currentIssueButtons = null;
         }
+    }
+
+    private void ViewEditNoteButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) { return; }
+        var note = button.BindingContext as Note;
+        if (note == null) { return; }
+        Navigation.PushAsync(new NoteDetailPage(note, _nao));
     }
 
     private void ViewEditIssueButton_Clicked(object sender, EventArgs e)
@@ -90,7 +99,15 @@ public partial class RobotDetailPage : ContentPage
         if (button == null) { return; }
         var issue = button.BindingContext as Issue;
         if (issue == null) { return; }
-        Navigation.PushAsync(new IssueDetailPage(issue));
+        Navigation.PushAsync(new IssueDetailPage(issue, _nao));
+    }
+    private void ViewEditClinicButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) { return; }
+        var visit = button.BindingContext as ClinicVisit;
+        if (visit == null) { return; }
+        Navigation.PushAsync(new ClinicVisitDetailPage(visit, _nao, _issues));
     }
 
     private async void SolvedIssueButton_Clicked(object sender, EventArgs e)
@@ -137,11 +154,20 @@ public partial class RobotDetailPage : ContentPage
         }
     }
 
-    private void PastIssuesGrid_Tapped(object sender, TappedEventArgs e)
+    private void SwitchGrid_Tapped(object sender, TappedEventArgs e)
     {
         var grid = sender as Grid;
-        var issueSwitch = grid!.FindByName<Switch>("pastIssuesSwitch");
-        issueSwitch.IsToggled = !issueSwitch.IsToggled;
+        var toggleSwitch = new Switch();
+        if (grid == solvedIssuesGrid)
+        {
+            toggleSwitch = grid!.FindByName<Switch>("solvedIssuesSwitch");
+        }
+        else if (grid == pastVisitGrid)
+        {
+            toggleSwitch = grid!.FindByName<Switch>("pastVisitSwitch");
+        }
+
+        toggleSwitch.IsToggled = !toggleSwitch.IsToggled;
     }
 
 }
