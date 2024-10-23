@@ -18,6 +18,7 @@ public partial class RobotsPage : ContentPage
     SwipeView? openSwipeView;
 
     Button selectedFilter;
+    bool isOnline = Connectivity.NetworkAccess == NetworkAccess.Internet;
 
     public RobotsPage()
     {
@@ -133,6 +134,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2023, 12, 18),
         Issues = new List<int> { 1, 3 },
         IsBack = false,
+        Notes = "Camera displays distorted images in low light. Firmware update recommended.",
         BackReport = String.Empty
     },
     new()
@@ -142,6 +144,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 1, 5),
         Issues = new List<int> { 2 },
         IsBack = true,
+        Notes = "Speech recognition module crash resolved with module replacement.",
         BackReport = "Speech recognition issue fixed with module replacement."
     },
     new()
@@ -151,6 +154,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 2, 15),
         Issues = new List<int> { 3, 5 },
         IsBack = false,
+        Notes = "Battery replaced due to rapid drain issue. Testing results to be monitored.",
         BackReport = String.Empty
     },
     new()
@@ -160,6 +164,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 3, 23),
         Issues = new List<int> { 4 },
         IsBack = true,
+        Notes = "Camera feed displays distorted images in low light. Firmware update recommended.",
         BackReport = "Firmware update resolved camera distortion issue."
     },
     new()
@@ -169,6 +174,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 4, 10),
         Issues = new List<int> { 5 },
         IsBack = false,
+        Notes = "Robot froze during routine. Suspected software bug.",
         BackReport = String.Empty
     }
 };
@@ -358,7 +364,7 @@ public partial class RobotsPage : ContentPage
 
         Dictionary<Button, Color> config = new()
         {
-            { AllFilterButton, Color.FromArgb("#455a64") },
+            { AllFilterButton, Color.FromArgb("#536578") },
             { FreeFilterButton, Color.FromArgb("#308a7b") },
             { GameFilterButton, Color.FromArgb("#80464d") },
             { ClinicFilterButton, Color.FromArgb("#80b2c9") }

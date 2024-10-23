@@ -6,7 +6,7 @@
     <Grid Padding="20,0"
           RowDefinitions="50,*">
         <Grid ColumnDefinitions="*,*,*,*" Grid.Row="0">
-            <Button x:Name="AllFilterButton" BackgroundColor="#455a64" TextColor="WhiteSmoke" Grid.Column="0" Margin="3" Text="All" Clicked="FilterButton_Clicked"/>
+            <Button x:Name="AllFilterButton" BackgroundColor="{StaticResource DefaultColor}" TextColor="WhiteSmoke" Grid.Column="0" Margin="3" Text="All" Clicked="FilterButton_Clicked"/>
             <Button x:Name="FreeFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="1" Margin="3" Text="Free" Clicked="FilterButton_Clicked"/>
             <Button x:Name="GameFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="2" Margin="3" Text="Game" Clicked="FilterButton_Clicked"/>
             <Button x:Name="ClinicFilterButton" BackgroundColor="#303030"  TextColor="WhiteSmoke"  Grid.Column="3" Margin="3" Text="Clinic" Clicked="FilterButton_Clicked"/>
@@ -48,7 +48,7 @@
             WidthRequest="60"
             HeightRequest="60"
             CornerRadius="28"
-            BackgroundColor="#455a64"
+            BackgroundColor="#536578"
             TextColor="WhiteSmoke"
             FontSize="30"
             VerticalOptions="End"
