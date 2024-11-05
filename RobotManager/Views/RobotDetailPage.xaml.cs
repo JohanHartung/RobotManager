@@ -27,9 +27,9 @@ public partial class RobotDetailPage : ContentPage
 
 
         BindingContext = _nao;
-        IssueCV.ItemsSource = _issues;
         NoteCV.ItemsSource = _notes;
-        ClinicCV.ItemsSource = _clinicVisits;
+        HandleSolvedIssues(solvedIssuesSwitch.IsToggled);
+        HandlePastVisits(pastVisitSwitch.IsToggled);
     }
 
     private void AddButton_Clicked(object sender, EventArgs e)
@@ -118,7 +118,43 @@ public partial class RobotDetailPage : ContentPage
         if (issue == null) { return; }
 
         string solvedReport = await DisplayPromptAsync("Solved Report", "If issue could not be replicated, leave empty");
-        //TODO: Update issue with solved report and date
+        issue.Solved = true;
+        issue.SolvedReport = solvedReport;
+        if (!await issue.Post())
+        {
+            await DisplayAlert("Error", "Issue could not be updated", "OK");
+        }
+    }
+    private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) { return; }
+        var visit = button.BindingContext as ClinicVisit;
+        if (visit == null) { return; }
+
+        string backReport = await DisplayPromptAsync("Return Report", "Please enter a report:");
+        bool issueSolved = await DisplayAlert("Issue(s) Solved?", "Mark issue(s) solved?", "Yes", "No");
+        visit.IsBack = true;
+        visit.BackDate = DateTime.Now;
+        visit.BackReport = backReport;
+        if (issueSolved)
+        {
+            foreach (var issue in _issues)
+            {
+                issue.Solved = true;
+                issue.SolvedDate = DateTime.Now;
+                issue.SolvedReport = $"Issue solved during clinic visit #{visit.Id.ToString().PadLeft(4, '0')}";
+                if (!await issue.Post())
+                {
+                    await DisplayAlert("Error", "Issue could not be updated", "OK");
+                }
+            }
+        }
+
+        if (!await visit.Post())
+        {
+            await DisplayAlert("Error", "Clinic Visit could not be updated", "OK");
+        }
     }
 
     private void TabButton_Clicked(object sender, EventArgs e)
@@ -154,6 +190,20 @@ public partial class RobotDetailPage : ContentPage
         }
     }
 
+    private void Switch_Toggled(object sender, ToggledEventArgs e)
+    {
+        var toggleSwitch = sender as Switch;
+        if (toggleSwitch == solvedIssuesSwitch)
+        {
+            HandleSolvedIssues(toggleSwitch.IsToggled);
+        }
+        else if (toggleSwitch == pastVisitSwitch)
+        {
+            HandlePastVisits(toggleSwitch.IsToggled);
+        }
+    }
+
+
     private void SwitchGrid_Tapped(object sender, TappedEventArgs e)
     {
         var grid = sender as Grid;
@@ -161,13 +211,45 @@ public partial class RobotDetailPage : ContentPage
         if (grid == solvedIssuesGrid)
         {
             toggleSwitch = grid!.FindByName<Switch>("solvedIssuesSwitch");
+            HandleSolvedIssues(!toggleSwitch.IsToggled);
         }
         else if (grid == pastVisitGrid)
         {
             toggleSwitch = grid!.FindByName<Switch>("pastVisitSwitch");
+            HandlePastVisits(!toggleSwitch.IsToggled);
         }
 
         toggleSwitch.IsToggled = !toggleSwitch.IsToggled;
+    }
+
+    private void HandleSolvedIssues(bool toggled)
+    {
+        IssueCV.ItemsSource = null;
+        if (toggled)
+        {
+            IssueCV.ItemsSource = _issues;
+        }
+        else
+        {
+            IssueCV.ItemsSource = _issues.Where(issue => !issue.Solved).ToList();
+            
+        }
+
+    }
+
+    private void HandlePastVisits(bool toggled)
+    {
+        ClinicCV.ItemsSource = null;
+        if (toggled)
+        {
+            ClinicCV.ItemsSource = _clinicVisits;
+        }
+        else
+        {
+            ClinicCV.ItemsSource = _clinicVisits.Where(visit => !visit.IsBack).ToList();
+            
+        }
+
     }
 
 }
