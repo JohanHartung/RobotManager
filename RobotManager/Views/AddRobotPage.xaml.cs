@@ -60,12 +60,8 @@ public partial class AddRobotPage : ContentPage
     }
     private async Task PostNaoAsync(Nao nao)
     {
-        using HttpClient client = new();
-        string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/nao";
-
-        HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, nao);
-
-        if (response.IsSuccessStatusCode)
+        
+        if (await nao.Post())
         {
             await DisplayAlert("Success", "Robot added successfully", "OK");
             Navigation.PopAsync();
