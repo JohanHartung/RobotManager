@@ -78,7 +78,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 4, 7),
         Description = "The robot freezes while performing dance routines, requiring a reboot.",
         Replicated = false,
-        Solved = false,
+        Solved = true,
         Nao = 2
     }
 };
