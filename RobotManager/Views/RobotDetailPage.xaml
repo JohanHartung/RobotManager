@@ -68,7 +68,7 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
                     </Grid.GestureRecognizers>
-                    <Switch x:Name="solvedIssuesSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
+                    <Switch x:Name="solvedIssuesSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
                     <Label Text="Include solved issues" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
                 </Grid>
                 <CollectionView x:Name="IssueCV" EmptyView="No issues">
@@ -130,7 +130,7 @@
                     <Grid.GestureRecognizers>
                         <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
                     </Grid.GestureRecognizers>
-                    <Switch x:Name="pastVisitSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand"/>
+                    <Switch x:Name="pastVisitSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
                     <Label Text="Include past visits" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
                 </Grid>
                 <CollectionView x:Name="ClinicCV" EmptyView="No clinic visits">
@@ -165,7 +165,7 @@
                                         <Button Text="View/Edit" Clicked="ViewEditClinicButton_Clicked"
                                                 BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                 Grid.Row="0" Grid.Column="0" Margin="2"/>
-                                        <Button Text="Mark Returned" 
+                                        <Button Text="Mark Returned" Clicked="ReturnedClinicButton_Clicked"
                                                 BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                 Grid.Row="0" Grid.Column="1" Margin="2"/>
                                     </Grid>
