@@ -22,8 +22,8 @@
                     </Label.Triggers>
                 </Label>
             </HorizontalStackLayout>
-            <Label x:Name="NaoHead" Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label x:Name="NaoBody" Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
+            <Label x:Name="NaoHead" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label x:Name="NaoBody" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
             <Label Text="Issues:" FontSize="18" Margin="0,15"/>
             <CollectionView x:Name="IssueCV" EmptyView="No issues" Margin="0,5" MaximumHeightRequest="200" VerticalScrollBarVisibility="Always">
                 <CollectionView.ItemTemplate>
@@ -46,6 +46,7 @@
 
 
         </VerticalStackLayout>
+        <Button Text="Mark Returned" Grid.Row="1" BackgroundColor="#536578" TextColor="WhiteSmoke" Margin="5" Clicked="ReturnedButton_Clicked"/>
 
     </Grid>
 </ContentPage>

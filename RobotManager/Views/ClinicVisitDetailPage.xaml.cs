@@ -10,9 +10,9 @@ public partial class ClinicVisitDetailPage : ContentPage
 		BindingContext = visit;
 		IssueCV.ItemsSource = issues.Where(i => visit.Issues.Contains(i.Id));
         Title = $"Issue #{visit.Id.ToString().PadLeft(4, '0')} | NAO{nao.Name}";
-		NaoName.Text = nao.Name;
-		NaoHead.Text = nao.HeadID;
-        NaoBody.Text = nao.BodyID;
+		NaoName.Text = $"NAO{nao.Name}";
+		NaoHead.Text = $"Head ID: {nao.HeadID}";
+        NaoBody.Text = $"Body ID: {nao.BodyID}";
 
     }
 }
