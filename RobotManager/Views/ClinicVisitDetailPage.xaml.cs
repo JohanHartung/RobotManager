@@ -19,4 +19,31 @@ public partial class ClinicVisitDetailPage : ContentPage
         NaoBody.Text = $"Body ID: {nao.BodyID}";
 
     }
+
+    private async void ReturnedButton_Clicked(object sender, EventArgs e)
+    {
+		string backReport = await DisplayPromptAsync("Return Report", "Please enter a report:");
+		bool issueSolved = await DisplayAlert("Issue(s) Solved?", "Mark issue(s) solved?", "Yes", "No");
+		_visit.IsBack = true;
+        _visit.BackDate = DateTime.Now;
+        _visit.BackReport = backReport;
+        if (issueSolved)
+        {
+            foreach (var issue in _issues)
+            {
+                issue.Solved = true;
+                issue.SolvedDate = DateTime.Now;
+                issue.SolvedReport = $"Issue solved during clinic visit #{_visit.Id.ToString().PadLeft(4, '0')}";
+                if (!await issue.Post())
+                {
+                    await DisplayAlert("Error", "Issue could not be updated", "OK");
+                }
+            }
+        }
+
+        if(!await _visit.Post())
+        {
+            await DisplayAlert("Error", "Clinic Visit could not be updated", "OK");
+        }
+    }
 }
