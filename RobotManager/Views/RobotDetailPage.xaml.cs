@@ -17,29 +17,37 @@ public partial class RobotDetailPage : ContentPage
     {
         InitializeComponent();
 
+        // set local variables to the passed values
         _nao = nao;
         _issues = issues;
         _notes = notes;
         _clinicVisits = clinicVisits;
 
+        // check whether the robot is under warranty and display the corresponding text
         bool underWarranty = nao.Warranty >= DateTime.Now;
         warrantyLabel.Text = underWarranty ? $"Currently under warranty ({nao.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
 
 
         BindingContext = _nao;
         NoteCV.ItemsSource = _notes;
+
+        // almost equivalent to 'NoteCV.ItemsSource = _notes;' but filters out solved issues and clinic visits
         HandleSolvedIssues(solvedIssuesSwitch.IsToggled);
         HandlePastVisits(pastVisitSwitch.IsToggled);
     }
 
+    // AddButton = '+' button in the bottom right corner
     private void AddButton_Clicked(object sender, EventArgs e)
     {
+        // toggle visibility of the add button interface
         AddInterface.IsVisible = !AddInterface.IsVisible;
-        //AddButton.Text = AddButton.Text == "+" ? "x" : "+";
+
+        //transforms the '+' button to an 'x' button
         double currRot = AddButton.Rotation;
         AddButton.RotateTo(currRot == 0 ? 45 : 0);
     }
 
+    // habdles cases for buttons in the AddInterface
     private void AddNavigationButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -61,6 +69,7 @@ public partial class RobotDetailPage : ContentPage
         Navigation.PushAsync(page);
     }
 
+    // toggles the visibility of the detail buttons for notes issues and clinic visits
     private void Frame_Tapped(object sender, TappedEventArgs e)
     {
         var frame = sender as Frame;
@@ -84,6 +93,7 @@ public partial class RobotDetailPage : ContentPage
         }
     }
 
+    // note detail buttons
     private void ViewEditNoteButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -108,7 +118,10 @@ public partial class RobotDetailPage : ContentPage
 
             await DisplayAlert("Error", "Note could not be deleted", "OK");
         }
-    }    private void ViewEditIssueButton_Clicked(object sender, EventArgs e)
+    }
+
+    // issue detail buttons
+    private void ViewEditIssueButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
         if (button == null) { return; }
@@ -116,15 +129,6 @@ public partial class RobotDetailPage : ContentPage
         if (issue == null) { return; }
         Navigation.PushAsync(new IssueDetailPage(issue, _nao));
     }
-    private void ViewEditClinicButton_Clicked(object sender, EventArgs e)
-    {
-        var button = sender as Button;
-        if (button == null) { return; }
-        var visit = button.BindingContext as ClinicVisit;
-        if (visit == null) { return; }
-        Navigation.PushAsync(new ClinicVisitDetailPage(visit, _nao, _issues));
-    }
-
     private async void SolvedIssueButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -133,6 +137,12 @@ public partial class RobotDetailPage : ContentPage
         if (issue == null) { return; }
 
         string solvedReport = await DisplayPromptAsync("Solved Report", "If issue could not be replicated, leave empty");
+        if (solvedReport == null)
+        {
+            // User pressed Cancel
+            // use string.IsNullOrWhiteSpace(solvedReport) to check if user pressed OK with empty input
+            return;
+        }
         issue.Solved = true;
         issue.SolvedReport = solvedReport;
         if (!await issue.Post())
@@ -140,6 +150,8 @@ public partial class RobotDetailPage : ContentPage
             await DisplayAlert("Error", "Issue could not be updated", "OK");
         }
     }
+
+    // clinic visit detail buttons
     private void ViewEditClinicButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -147,7 +159,9 @@ public partial class RobotDetailPage : ContentPage
         var visit = button.BindingContext as ClinicVisit;
         if (visit == null) { return; }
         Navigation.PushAsync(new ClinicVisitDetailPage(visit, _nao, _issues));
-    }    private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)
+    }
+
+    private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
         if (button == null) { return; }
@@ -155,6 +169,13 @@ public partial class RobotDetailPage : ContentPage
         if (visit == null) { return; }
 
         string backReport = await DisplayPromptAsync("Return Report", "Please enter a report:");
+        if (backReport == null)
+        {
+            // User pressed Cancel
+            // use string.IsNullOrWhiteSpace(backReport) to check if user pressed OK with empty input
+            return;
+        }
+
         bool issueSolved = await DisplayAlert("Issue(s) Solved?", "Mark issue(s) solved?", "Yes", "No");
         visit.IsBack = true;
         visit.BackDate = DateTime.Now;
@@ -179,6 +200,7 @@ public partial class RobotDetailPage : ContentPage
         }
     }
 
+    // toggles between the three tabs
     private void TabButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
@@ -190,14 +212,14 @@ public partial class RobotDetailPage : ContentPage
     private void UpdateTabs()
     {
         Color normal = Color.FromArgb("#303030");
-        Dictionary<Button, (Color color, StackLayout tab) > config = new()
+        Dictionary<Button, (Color color, StackLayout tab)> config = new()
         {
             { NotesButton, (Color.FromArgb("#308a7b"), NoteLayout ) },
             { IssuesButton, (Color.FromArgb("#80464d"), IssueLayout ) },
             { ClinicButton, (Color.FromArgb("#80b2c9"), ClinicLayout ) }
         };
 
-        foreach ( var button in config.Keys ) 
+        foreach (var button in config.Keys)
         {
             if (button == selectedTab)
             {
@@ -254,7 +276,7 @@ public partial class RobotDetailPage : ContentPage
         else
         {
             IssueCV.ItemsSource = _issues.Where(issue => !issue.Solved).ToList();
-            
+
         }
 
     }
@@ -269,7 +291,7 @@ public partial class RobotDetailPage : ContentPage
         else
         {
             ClinicCV.ItemsSource = _clinicVisits.Where(visit => !visit.IsBack).ToList();
-            
+
         }
 
     }
