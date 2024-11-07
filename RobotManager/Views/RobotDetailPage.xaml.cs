@@ -93,7 +93,22 @@ public partial class RobotDetailPage : ContentPage
         Navigation.PushAsync(new NoteDetailPage(note, _nao));
     }
 
-    private void ViewEditIssueButton_Clicked(object sender, EventArgs e)
+    private async void RemoveNoteButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) { return; }
+        var note = button.BindingContext as Note;
+        if (note == null) { return; }
+
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this note?", "Yes", "No");
+        if (!answer) { return; }
+        if (!await note.Delete())
+        {
+            // TODO: update list
+
+            await DisplayAlert("Error", "Note could not be deleted", "OK");
+        }
+    }    private void ViewEditIssueButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
         if (button == null) { return; }
