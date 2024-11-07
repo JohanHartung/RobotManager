@@ -9,7 +9,6 @@
             <RowDefinition Height="auto"/>
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
-            <Label Text="{Binding Name, StringFormat='Create an issue for NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
             <BoxView BackgroundColor="Transparent" HeightRequest="20"/>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
                 <Entry x:Name="TitleEntry" Placeholder="Title"/>
@@ -28,33 +27,38 @@
                 </Grid>
             </Frame>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
-                <Editor x:Name="IssueDescription" Placeholder="Description" HeightRequest="200"/>
+                <Editor x:Name="IssueDescription" Placeholder="Description" HeightRequest="150"/>
             </Frame>
-            <Button x:Name="MoreButton" Text="More" BackgroundColor="#536578" TextColor="WhiteSmoke" Margin="130,10" Clicked="MoreButton_Clicked"/>
-            <VerticalStackLayout  x:Name="MoreOptions"  IsVisible="False">
-                <Label Text="More options:" Margin="0,20,0,0" FontSize="18"/>
+            <VerticalStackLayout x:Name="MoreOptions" >
                 <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="50,*" Margin="0,20">
                     <CheckBox x:Name="ReplicatedCheckBox" Grid.Row="0" Grid.Column="0" CheckedChanged="CheckBox_CheckedChanged"/>
                     <Label Text="Replicated" FontSize="15" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center"/>
                     <HorizontalStackLayout x:Name="ReplicatedDateTime" Grid.Row="1" Grid.Column="1" IsVisible="False">
-                        <DatePicker x:Name="ReplicatedDatePicker"/>
-                        <TimePicker x:Name="ReplicatedTimePicker"/>
+                        <HorizontalStackLayout>
+                            <DatePicker x:Name="ReplicatedDatePicker"/>
+                            <TimePicker x:Name="ReplicatedTimePicker"/>
+                        </HorizontalStackLayout>
                     </HorizontalStackLayout>
+
 
                     <CheckBox x:Name="SolvedCheckBox" Grid.Row="2" Grid.Column="0" CheckedChanged="CheckBox_CheckedChanged"/>
                     <Label Text="Solved" FontSize="15" Grid.Row="2" Grid.Column="1" VerticalTextAlignment="Center"/>
-                    <HorizontalStackLayout x:Name="SolvedDateTime" Grid.Row="3" Grid.Column="1" IsVisible="False">
-                        <DatePicker x:Name="SolvedDatePicker"/>
-                        <TimePicker x:Name="SolvedTimePicker"/>
-                    </HorizontalStackLayout>
-                    <Editor x:Name="SolvedReport" Placeholder="Solved-Report" Grid.Row="4" Grid.Column="1" HeightRequest="100" IsVisible="false"/>
+                    <VerticalStackLayout x:Name="SolvedDateTime" Grid.Row="3" Grid.Column="1" IsVisible="False">
+                        <HorizontalStackLayout>
+                            <DatePicker x:Name="SolvedDatePicker"/>
+                            <TimePicker x:Name="SolvedTimePicker"/>
+                        </HorizontalStackLayout>
+                        <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                            <Editor x:Name="SolvedReport" Placeholder="Solved-Report" HeightRequest="100"/>
+                        </Frame>
+                    </VerticalStackLayout>
                 </Grid>
             </VerticalStackLayout>
 
         </VerticalStackLayout>
 
 
-        <Button Text="Create Issue" Grid.Row="1" Margin="10,10" Clicked="CreateIssueButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
+        <Button x:Name="CreateIssueButton" Text="Create Issue" Grid.Row="1" Margin="10,10" Clicked="CreateIssueButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
 
     </Grid>
 </ContentPage>
