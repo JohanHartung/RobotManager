@@ -44,8 +44,8 @@ public partial class IssueDetailPage : ContentPage
         }
     }
 
-    private void EditButton_Clicked(object sender, EventArgs e)
+    private async void EditButton_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new AddIssuePage(_nao, _issue, true));
     }
 }
