@@ -23,9 +23,14 @@ public partial class IssueDetailPage : ContentPage
         OptionsButton.RotateTo(currRot == 0 ? 45 : 0);
     }
 
-    private void ReplicateButton_Clicked(object sender, EventArgs e)
+    private async void ReplicateButton_Clicked(object sender, EventArgs e)
     {
-
+        _issue.Replicated = true;
+        if (!await _issue.Post())
+        {
+            await DisplayAlert("Error", "Could not connect to the server", "OK");
+        }
+        
     }
 
     private void SolveButton_Clicked(object sender, EventArgs e)
