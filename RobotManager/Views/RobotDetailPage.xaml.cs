@@ -140,7 +140,14 @@ public partial class RobotDetailPage : ContentPage
             await DisplayAlert("Error", "Issue could not be updated", "OK");
         }
     }
-    private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)
+    private void ViewEditClinicButton_Clicked(object sender, EventArgs e)
+    {
+        var button = sender as Button;
+        if (button == null) { return; }
+        var visit = button.BindingContext as ClinicVisit;
+        if (visit == null) { return; }
+        Navigation.PushAsync(new ClinicVisitDetailPage(visit, _nao, _issues));
+    }    private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
         if (button == null) { return; }
