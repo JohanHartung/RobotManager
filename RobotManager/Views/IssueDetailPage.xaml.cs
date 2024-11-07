@@ -4,12 +4,16 @@ namespace RobotManager.Views;
 
 public partial class IssueDetailPage : ContentPage
 {
-	public IssueDetailPage(Issue issue, Nao nao)
+    Issue _issue;
+    Nao _nao;
+    public IssueDetailPage(Issue issue, Nao nao)
 	{
 		InitializeComponent();
 
-		BindingContext = issue;
-        Title = $"Issue #{issue.Id.ToString().PadLeft(4, '0')} | NAO{nao.Name}";
+        _issue = issue;
+        _nao = nao;
+        BindingContext = _issue;
+        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
 	}
 
     private void OptionsButton_Clicked(object sender, EventArgs e)
