@@ -34,13 +34,14 @@ public partial class IssueDetailPage : ContentPage
     }
 
     private void SolveButton_Clicked(object sender, EventArgs e)
+    private async void RemoveButton_Clicked(object sender, EventArgs e)
     {
-
-    }
-
-    private void RemoveButton_Clicked(object sender, EventArgs e)
-    {
-
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this note?", "Yes", "No");
+        if (!answer) { return; }
+        if (!await _issue.Delete())
+        {
+            await DisplayAlert("Error", "Issue could not be deleted", "OK");
+        }
     }
 
     private void EditButton_Clicked(object sender, EventArgs e)
