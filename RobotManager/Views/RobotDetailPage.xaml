@@ -53,7 +53,7 @@
                                             BackgroundColor="#536578" TextColor="WhiteSmoke" Clicked="ViewEditNoteButton_Clicked"
                                             Grid.Row="0" Grid.Column="0" Margin="2"/>
                                         <Button Text="Remove"
-                                            BackgroundColor="#80464d" TextColor="WhiteSmoke"
+                                            BackgroundColor="#80464d" TextColor="WhiteSmoke" Clicked="RemoveNoteButton_Clicked"
                                             Grid.Row="0" Grid.Column="1" Margin="2"/>
                                     </Grid>
                                 </VerticalStackLayout>
