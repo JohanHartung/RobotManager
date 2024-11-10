@@ -8,10 +8,23 @@ namespace RobotManager.Views;
 public partial class AddRobotPage : ContentPage
 {
     Nao _nao;
-	public AddRobotPage(Nao? nao = null)
-	{
-		InitializeComponent();
-	}
+    public AddRobotPage(Nao? nao = null, bool editMode = false)
+    {
+        InitializeComponent();
+        _nao = nao ?? new Nao();
+
+        if (editMode)
+        {
+            Title = $"Edit NAO{_nao.Name}";
+            AddRobotButton.Text = "Save";
+            NameEntry.Text = _nao.Name;
+            HeadIdEntry.Text = _nao.HeadID;
+            BodyIdEntry.Text = _nao.BodyID;
+            PurchaseDatePicker.Date = _nao.Purchased;
+            WarrantyExtensionEntry.Text = _nao.WarrantyExtension.ToString();
+        }
+
+    }
 
     private void TapGestureRecognizer_Tapped(object sender, TappedEventArgs e)
     {
