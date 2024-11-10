@@ -4,7 +4,9 @@ namespace RobotManager.Views;
 
 public partial class NoteDetailPage : ContentPage
 {
-	public NoteDetailPage(Note note, Nao nao)
+    Note _note;
+    Nao _nao;
+    	public NoteDetailPage(Note note, Nao nao)
 	{
 		InitializeComponent();
         BindingContext = note;
