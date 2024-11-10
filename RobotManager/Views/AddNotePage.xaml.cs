@@ -8,12 +8,24 @@ public partial class AddNotePage : ContentPage
     Nao _nao;
     Note _note;
     public AddNotePage(Nao nao, Note? note = null, bool editMode = false)
-	public AddNotePage(Nao nao)
-	{
-		InitializeComponent();
+    {
+        InitializeComponent();
         ResetDateTime();
-        BindingContext = nao;
-		_nao = nao;
+
+        _nao = nao;
+        _note = note ?? new Note();
+
+        if (editMode)
+        {
+            Title = $"Edit Note #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+            CreateNoteButton.Text = "Save Changes";
+            TitleEntry.Text = _note.Title;
+            NoteDatePicker.Date = _note.Date;
+            NoteTimePicker.Time = _note.Date.TimeOfDay;
+            NoteDescription.Text = _note.Description;
+        }
+
+        BindingContext = _nao;
     }
 
     private async void CreateNoteButton_Clicked(object sender, EventArgs e)
