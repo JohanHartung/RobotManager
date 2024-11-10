@@ -5,7 +5,7 @@ namespace RobotManager.Views;
 public partial class RobotDetailPage : ContentPage
 {
     private Nao _nao;
-    private Grid? currentIssueButtons;
+    private Grid? currenDetailButtons;
 
     List<Issue> _issues = new();
     List<Note> _notes = new();
@@ -53,6 +53,13 @@ public partial class RobotDetailPage : ContentPage
         {
             AddInterface.IsVisible = true;
             DeleteEditButton.IsVisible = true;
+
+            // cancel out currently active detail buttons
+            if (currenDetailButtons != null)
+            {
+                currenDetailButtons.IsVisible = false;
+                currenDetailButtons = null;
+            }
 
             //transforms the '+' button to an 'x' button
             AddButton.RotateTo(45);
@@ -122,17 +129,28 @@ public partial class RobotDetailPage : ContentPage
 
         if (!detailButtons.IsVisible)
         {
-            if (currentIssueButtons != null)
+            if (currenDetailButtons != null)
             {
-                currentIssueButtons.IsVisible = false;
+                currenDetailButtons.IsVisible = false;
             }
             detailButtons.IsVisible = true;
-            currentIssueButtons = detailButtons;
+            currenDetailButtons = detailButtons;
         }
         else
         {
             detailButtons.IsVisible = false;
-            currentIssueButtons = null;
+            currenDetailButtons = null;
+        }
+
+        // cancel out currently active add interface
+        if (AddInterface.IsVisible || OptionsInterface.IsVisible)
+        {
+            AddInterface.IsVisible = false;
+            OptionsInterface.IsVisible = false;
+            DeleteEditButton.IsVisible = false;
+
+            //transforms the 'x' button to an '+' button
+            AddButton.RotateTo(0);
         }
     }
 
