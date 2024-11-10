@@ -10,13 +10,13 @@ public partial class AddClinicVisitPage : ContentPage
 	List<Issue> selectedIssues = new();
 
     public AddClinicVisitPage(Nao nao, List<Issue> issues, ClinicVisit? clinicVisit = null, bool editMode = false)
-	public AddClinicVisitPage(Nao nao, List<Issue> issues)
-	{
-		InitializeComponent();
-		BindingContext = nao;
-		_nao = nao;
-		clinicVisit = new();
-		IssueCV.ItemsSource = issues;
+    {
+        InitializeComponent();
+        BindingContext = nao;
+        _nao = nao;
+        _clinicVisit = clinicVisit ?? new ClinicVisit();
+        IssueCV.ItemsSource = issues;
+        selectedIssues = clinicVisit?.Issues.Select(i => issues.Find(issue => issue.Id == i)).ToList() ?? new List<Issue>();
     }
 
     private void CreateVisit_Button_Clicked(object sender, EventArgs e)
