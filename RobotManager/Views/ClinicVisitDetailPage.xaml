@@ -46,7 +46,26 @@
 
 
         </VerticalStackLayout>
-        <Button Text="Mark Returned" Grid.Row="1" BackgroundColor="#536578" TextColor="WhiteSmoke" Margin="5" Clicked="ReturnedButton_Clicked"/>
+        <VerticalStackLayout VerticalOptions="End" HorizontalOptions="End" Margin="0,0,-15,0">
+            <VerticalStackLayout x:Name="OptionsInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
+                <Button x:Name="RetunedButton" Clicked="ReturnedButton_Clicked" Text="Mark Returned" IsVisible="True" BackgroundColor="#536578" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                <Button x:Name="EditButton" Clicked="EditButton_Clicked" Text="Edit" IsVisible="True" BackgroundColor="#536578" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+            </VerticalStackLayout>
+            <Button 
+                x:Name="OptionsButton"
+                Clicked="OptionsButton_Clicked"
+                Text="+"
+                WidthRequest="60"
+                HeightRequest="60"
+                CornerRadius="28"
+                BackgroundColor="#536578"
+                TextColor="WhiteSmoke"
+                FontSize="30"
+                VerticalOptions="End"
+                HorizontalOptions="End"
+                Margin="0,0,16,16"/>
+        </VerticalStackLayout>
 
     </Grid>
 </ContentPage>
