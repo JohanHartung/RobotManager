@@ -48,4 +48,27 @@ public partial class ClinicVisitDetailPage : ContentPage
             await DisplayAlert("Error", "Clinic Visit could not be updated", "OK");
         }
     }
+
+    private void OptionsButton_Clicked(object sender, EventArgs e)
+    {
+        OptionsInterface.IsVisible = !OptionsInterface.IsVisible;
+        double currRot = OptionsButton.Rotation;
+        OptionsButton.RotateTo(currRot == 0 ? 45 : 0);
+    }
+
+    private async void EditButton_Clicked(object sender, EventArgs e)
+    {
+        // TODO: get global issues
+        await Navigation.PushAsync(new AddClinicVisitPage(_nao, _issues!, _visit, true));
+    }
+
+    private async void RemoveButton_Clicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this clinic visit?", "Yes", "No");
+        if (!answer) { return; }
+        if (!await _visit.Delete())
+        {
+            await DisplayAlert("Error", "Clinic Visit could not be deleted", "OK");
+        }
+    }
 }
