@@ -7,6 +7,7 @@ namespace RobotManager.Views;
 
 public partial class AddRobotPage : ContentPage
 {
+    Nao _nao;
 	public AddRobotPage(Nao? nao = null)
 	{
 		InitializeComponent();
