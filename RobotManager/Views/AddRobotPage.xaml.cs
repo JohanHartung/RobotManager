@@ -47,38 +47,20 @@ public partial class AddRobotPage : ContentPage
         {
             warranty = 0;
         }
-        if (FormIsValid())
+        if (!FormIsValid()) { return; }
+
+        _nao.Name = NameEntry.Text;
+        _nao.HeadID = HeadIdEntry.Text;
+        _nao.BodyID = BodyIdEntry.Text;
+        _nao.Purchased = PurchaseDatePicker.Date;
+        _nao.WarrantyExtension = warranty;
+
+        if(!await _nao.Post())
         {
-            Nao nao = new()
-            {
-                Name = NameEntry.Text,
-                HeadID = HeadIdEntry.Text,
-                BodyID = BodyIdEntry.Text,
-                Purchased = PurchaseDatePicker.Date,
-                WarrantyExtension = warranty
-            };
-            try
-            {
-                await PostNaoAsync(nao);
-            }
-            catch (Exception)
-            {
-                await DisplayAlert("Error", "Could not connect to the server ", "OK");
-            }
+            await DisplayAlert("Error", "Could not connect to the server ", "OK");
+            return;
         }
-    }
-    private async Task PostNaoAsync(Nao nao)
-    {
-        
-        if (await nao.Post())
-        {
-            await DisplayAlert("Success", "Robot added successfully", "OK");
-            Navigation.PopAsync();
-        }
-        else
-        {
-            await DisplayAlert("Error", "Failed to add robot", "OK");
-        }
+        await Navigation.PopAsync();
     }
 
     private bool FormIsValid()
