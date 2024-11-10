@@ -19,11 +19,21 @@ public partial class AddClinicVisitPage : ContentPage
         selectedIssues = clinicVisit?.Issues.Select(i => issues.Find(issue => issue.Id == i)).ToList() ?? new List<Issue>();
     }
 
-    private void CreateVisit_Button_Clicked(object sender, EventArgs e)
+    private async void CreateVisit_Button_Clicked(object sender, EventArgs e)
     {
-		//_nao.ClinicVisits.Add(_clinicVisit.Id);
-
-		_nao.Status = Status.Clinic;
+        _clinicVisit.Issues = selectedIssues.Select(i => i.Id).ToList();
+        _clinicVisit.Nao = _nao.Id;
+        _clinicVisit.Date = DateTime.Now;
+        _clinicVisit.Notes = NotesEntry.Text;
+        _nao.Status = Status.Clinic;
+        if(!await _clinicVisit.Post() && !await _nao.Post())
+        {
+            await DisplayAlert("Error", "Could not connect to the server ", "OK");
+        }
+        else
+        {
+            await Navigation.PopAsync();
+        }
     }
 
 	private void IssueFrame_Tapped(object sender, TappedEventArgs e)
