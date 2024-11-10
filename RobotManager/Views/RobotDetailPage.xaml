@@ -183,9 +183,29 @@
                 <Button x:Name="AddIssueButton" Clicked="AddNavigationButton_Clicked" Text="Add Issue" IsVisible="True" BackgroundColor="{StaticResource GameColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
                 <Button x:Name="AddClinicVisitButton" Clicked="AddNavigationButton_Clicked" Text="Add Clinic Visit" IsVisible="True" BackgroundColor="{StaticResource ClinicColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
             </VerticalStackLayout>
-            <Button 
+            <VerticalStackLayout x:Name="OptionsInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
+                <Button x:Name="EditButton" Clicked="EditButton_Clicked" Text="Edit" IsVisible="True" BackgroundColor="#536578" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+            </VerticalStackLayout>
+            <Grid ColumnDefinitions="*,auto">
+                <Button 
+                x:Name="DeleteEditButton"
+                Clicked="DeleteEditButton_Clicked"
+                Grid.Column="0"
+                Text="Delete/Edit"
+                IsVisible="False"
+                CornerRadius="10"
+                HeightRequest="40"
+                BackgroundColor="#536578"
+                TextColor="WhiteSmoke"
+                VerticalOptions="Center"
+                HorizontalOptions="Fill"
+                Margin="0,0,16,16"/>
+                
+                <Button 
                 x:Name="AddButton"
                 Clicked="AddButton_Clicked"
+                Grid.Column="1"
                 Text="+"
                 WidthRequest="60"
                 HeightRequest="60"
@@ -196,6 +216,7 @@
                 VerticalOptions="End"
                 HorizontalOptions="End"
                 Margin="0,0,16,16"/>
+            </Grid>
         </VerticalStackLayout>
     </Grid>
 </ContentPage>
