@@ -40,11 +40,23 @@ public partial class RobotDetailPage : ContentPage
     private void AddButton_Clicked(object sender, EventArgs e)
     {
         // toggle visibility of the add button interface
-        AddInterface.IsVisible = !AddInterface.IsVisible;
+        if (AddInterface.IsVisible || OptionsInterface.IsVisible)
+        {
+            AddInterface.IsVisible = false;
+            OptionsInterface.IsVisible = false;
+            DeleteEditButton.IsVisible = false;
 
-        //transforms the '+' button to an 'x' button
-        double currRot = AddButton.Rotation;
-        AddButton.RotateTo(currRot == 0 ? 45 : 0);
+            //transforms the 'x' button to an '+' button
+            AddButton.RotateTo(0);
+        }
+        else
+        {
+            AddInterface.IsVisible = true;
+            DeleteEditButton.IsVisible = true;
+
+            //transforms the '+' button to an 'x' button
+            AddButton.RotateTo(45);
+        }
     }
 
     // habdles cases for buttons in the AddInterface
@@ -67,6 +79,37 @@ public partial class RobotDetailPage : ContentPage
         }
 
         Navigation.PushAsync(page);
+    }
+
+    private void DeleteEditButton_Clicked(object sender, EventArgs e)
+    {
+        if (OptionsInterface.IsVisible)
+        {
+            OptionsInterface.IsVisible = false;
+            AddInterface.IsVisible = true;
+            DeleteEditButton.Text = "Delete/Edit";
+        }
+        else
+        {
+            OptionsInterface.IsVisible = true;
+            AddInterface.IsVisible = false;
+            DeleteEditButton.Text = "Add to NAO";
+        }
+    }
+
+    private async void RemoveButton_Clicked(object sender, EventArgs e)
+    {
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this NAO?", "Yes", "No");
+        if (!answer) { return; }
+        if (!await _nao.Delete())
+        {
+            await DisplayAlert("Error", "NAO could not be deleted", "OK");
+        }
+    }
+
+    private async void EditButton_Clicked(object sender, EventArgs e)
+    {
+        await Navigation.PushAsync(new AddRobotPage(_nao, true));
     }
 
     // toggles the visibility of the detail buttons for notes issues and clinic visits
@@ -295,5 +338,4 @@ public partial class RobotDetailPage : ContentPage
         }
 
     }
-
 }
