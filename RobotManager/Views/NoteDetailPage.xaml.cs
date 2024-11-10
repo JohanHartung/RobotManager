@@ -10,8 +10,10 @@ public partial class NoteDetailPage : ContentPage
 	public NoteDetailPage(Note note, Nao nao)
 	{
 		InitializeComponent();
-        BindingContext = note;
-        Title = $"Issue #{note.Id.ToString().PadLeft(4, '0')} | NAO{nao.Name}";
+        _note = note;
+        _nao = nao;
+        BindingContext = _note;
+        Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
     }
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)
