@@ -36,7 +36,7 @@
                 </CollectionView.ItemTemplate>
             </CollectionView>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
-                <Editor HeightRequest="100" Placeholder="Notes"/>
+                <Editor x:Name="NotesEntry" HeightRequest="100" Placeholder="Notes"/>
             </Frame>
 
 
