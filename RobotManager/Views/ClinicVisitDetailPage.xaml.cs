@@ -4,11 +4,13 @@ namespace RobotManager.Views;
 
 public partial class ClinicVisitDetailPage : ContentPage
 {
-	ClinicVisit _visit;
+    Nao _nao;
+    ClinicVisit _visit;
 	List<Issue>? _issues;
     public ClinicVisitDetailPage(ClinicVisit visit, Nao nao, List<Issue> issues)
 	{
 		InitializeComponent();
+        _nao = nao;
 		_visit = visit;
         _issues = issues.Where(i => visit.Issues.Contains(i.Id)).ToList();
         BindingContext = _visit;
