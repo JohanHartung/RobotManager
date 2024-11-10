@@ -5,8 +5,8 @@ namespace RobotManager.Views;
 
 public partial class AddNotePage : ContentPage
 {
-	Nao _nao;
-	Note note = new();
+    Nao _nao;
+    Note _note;
 	public AddNotePage(Nao nao)
 	{
 		InitializeComponent();
