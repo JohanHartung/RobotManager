@@ -35,7 +35,7 @@
         </VerticalStackLayout>
 
 
-        <Button Text="Create Note" Grid.Row="1" Margin="10,10" Clicked="CreateNoteButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
+        <Button x:Name="CreateNoteButton" Text="Create Note" Grid.Row="1" Margin="10,10" Clicked="CreateNoteButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
 
     </Grid>
 </ContentPage>
