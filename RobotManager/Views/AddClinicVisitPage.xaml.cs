@@ -9,6 +9,7 @@ public partial class AddClinicVisitPage : ContentPage
 
 	List<Issue> selectedIssues = new();
 
+    public AddClinicVisitPage(Nao nao, List<Issue> issues, ClinicVisit? clinicVisit = null, bool editMode = false)
 	public AddClinicVisitPage(Nao nao, List<Issue> issues)
 	{
 		InitializeComponent();
