@@ -5,7 +5,7 @@ namespace RobotManager.Views;
 public partial class AddClinicVisitPage : ContentPage
 {
 	Nao _nao;
-	ClinicVisit clinicVisit;
+	ClinicVisit _clinicVisit;
 
 	List<Issue> selectedIssues = new();
 
