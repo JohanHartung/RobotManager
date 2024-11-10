@@ -7,7 +7,7 @@ namespace RobotManager.Views;
 
 public partial class AddRobotPage : ContentPage
 {
-	public AddRobotPage()
+	public AddRobotPage(Nao? nao = null)
 	{
 		InitializeComponent();
 	}
@@ -22,11 +22,6 @@ public partial class AddRobotPage : ContentPage
         PurchaseDatePicker.Date = DateTime.Now;
     }
 
-    private void MoreButton_Clicked(object sender, EventArgs e)
-    {
-        MoreButton.IsVisible = false;
-        MoreOptions.IsVisible = true;
-    }
     private async void AddRobotButton_Clicked(object sender, EventArgs e)
     {
         int warranty = 0;
