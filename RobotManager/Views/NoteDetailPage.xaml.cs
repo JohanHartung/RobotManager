@@ -6,16 +6,24 @@ public partial class NoteDetailPage : ContentPage
 {
     Note _note;
     Nao _nao;
-    	public NoteDetailPage(Note note, Nao nao)
+    
+	public NoteDetailPage(Note note, Nao nao)
 	{
 		InitializeComponent();
         BindingContext = note;
         Title = $"Issue #{note.Id.ToString().PadLeft(4, '0')} | NAO{nao.Name}";
     }
 
-    private void RemoveButton_Clicked(object sender, EventArgs e)
+    private async void RemoveButton_Clicked(object sender, EventArgs e)
     {
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this note?", "Yes", "No");
+        if (!answer) { return; }
 
+        if (!await _note.Delete())
+        {
+            await DisplayAlert("Error", "Note could not be deleted", "OK");
+        }
+        
     }
 
     private void OptionsButton_Clicked(object sender, EventArgs e)
@@ -25,8 +33,8 @@ public partial class NoteDetailPage : ContentPage
         OptionsButton.RotateTo(currRot == 0 ? 45 : 0);
     }
 
-    private void EditButton_Clicked(object sender, EventArgs e)
+    private async void EditButton_Clicked(object sender, EventArgs e)
     {
-
+        await Navigation.PushAsync(new AddNotePage(_nao, _note, true));
     }
 }
