@@ -7,6 +7,7 @@ public partial class AddNotePage : ContentPage
 {
     Nao _nao;
     Note _note;
+    public AddNotePage(Nao nao, Note? note = null, bool editMode = false)
 	public AddNotePage(Nao nao)
 	{
 		InitializeComponent();
