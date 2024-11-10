@@ -58,6 +58,10 @@ public partial class AddIssuePage : ContentPage
             {
                 await DisplayAlert("Error", "Could not connect to the server ", "OK");
             }
+            else
+            {
+                await Navigation.PopAsync();
+            }
         }
     }
 
@@ -107,24 +111,6 @@ public partial class AddIssuePage : ContentPage
             return false;
         }
         return true;
-    }
-
-    private async Task PostIssueAsync(Issue issue)
-    {
-        using HttpClient client = new();
-        string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/issue";
-
-        HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, issue);
-
-        if (response.IsSuccessStatusCode)
-        {
-            await DisplayAlert("Success", "Issue added successfully", "OK");
-            await Navigation.PopAsync();
-        }
-        else
-        {
-            await DisplayAlert("Error", "Failed to add issue", "OK");
-        }
     }
 
 }

@@ -32,20 +32,19 @@ public partial class AddNotePage : ContentPage
     {
         if (FormIsValid())
         {
-            Note note = new()
-            {
-                Title = TitleEntry.Text,
-                Date = NoteDatePicker.Date.Add(NoteTimePicker.Time),
-                Description = NoteDescription.Text,
-                Nao = _nao.Id
-            };
-            try
-            {
-                await PostNoteAsync(note);
-            }
-            catch (Exception)
+
+            _note.Title = TitleEntry.Text;
+            _note.Date = NoteDatePicker.Date.Add(NoteTimePicker.Time);
+            _note.Description = NoteDescription.Text;
+            _note.Nao = _nao.Id;
+
+            if (!await _note.Post())
             {
                 await DisplayAlert("Error", "Could not connect to the server ", "OK");
+            }
+            else
+            {
+                await Navigation.PopAsync();
             }
         }
     }
@@ -74,23 +73,5 @@ public partial class AddNotePage : ContentPage
             return false;
         }
         return true;
-    }
-
-    private async Task PostNoteAsync(Note note)
-    {
-        using HttpClient client = new();
-        string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/note";
-
-        HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, note);
-
-        if (response.IsSuccessStatusCode)
-        {
-            await DisplayAlert("Success", "Note added successfully", "OK");
-            await Navigation.PopAsync();
-        }
-        else
-        {
-            await DisplayAlert("Error", "Failed to add note", "OK");
-        }
     }
 }
