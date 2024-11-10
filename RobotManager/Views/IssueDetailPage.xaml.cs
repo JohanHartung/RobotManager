@@ -53,7 +53,7 @@ public partial class IssueDetailPage : ContentPage
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)
     {
-        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this note?", "Yes", "No");
+        bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this issue?", "Yes", "No");
         if (!answer) { return; }
         if (!await _issue.Delete())
         {
