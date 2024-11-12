@@ -95,7 +95,6 @@ namespace RobotManager.Classes
 
                 if (nao != null)
                 {
-                    this.id = nao.id;
                     this.name = nao.name;
                     this.headID = nao.headID;
                     this.bodyID = nao.bodyID;
@@ -146,16 +145,34 @@ namespace RobotManager.Classes
         private DateTime solvedDate;
         private string solvedReport = String.Empty;
 
+        [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
+
+        [JsonPropertyName("nao")]
         public int Nao { get => nao; set => nao = value; }
 
+        [JsonPropertyName("title")]
         public string Title { get => title; set => title = value; }
+
+        [JsonPropertyName("description")]
         public string Description { get => description; set => description = value; }
+
+        [JsonPropertyName("replicated")]
         public bool Replicated { get => replicated; set => replicated = value; }
+
+        [JsonPropertyName("solved")]
         public bool Solved { get => solved; set => solved = value; }
+
+        [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
+
+        [JsonPropertyName("replicatedDate")]
         public DateTime ReplicatedDate { get => replicatedDate; set => replicatedDate = value; }
+
+        [JsonPropertyName("solvedDate")]
         public DateTime SolvedDate { get => solvedDate; set => solvedDate = value; }
+
+        [JsonPropertyName("solvedReport")]
         public string SolvedReport { get => solvedReport; set => solvedReport = value; }
 
         public async Task<bool> Post()
@@ -181,7 +198,6 @@ namespace RobotManager.Classes
             Issue issue = await client.GetFromJsonAsync<Issue>(apiUrl);
             if (issue != null)
             {
-                this.id = issue.id;
                 this.nao = issue.nao;
                 this.title = issue.title;
                 this.description = issue.description;
@@ -221,11 +237,19 @@ namespace RobotManager.Classes
         private string description = String.Empty;
         private DateTime date;
 
+        [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
+
+        [JsonPropertyName("nao")]
         public int Nao { get => nao; set => nao = value; }
 
+        [JsonPropertyName("title")]
         public string Title { get => title; set => title = value; }
+
+        [JsonPropertyName("description")]
         public string Description { get => description; set => description = value; }
+
+        [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
 
         public async Task<bool> Post()
@@ -253,7 +277,6 @@ namespace RobotManager.Classes
                 Note note = await client.GetFromJsonAsync<Note>(apiUrl);
                 if (note != null)
                 {
-                    this.id = note.id;
                     this.nao = note.nao;
                     this.title = note.title;
                     this.description = note.description;
@@ -295,14 +318,28 @@ namespace RobotManager.Classes
         private string notes = String.Empty;
         private string backReport = String.Empty;
 
+        [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
+
+        [JsonPropertyName("nao")]
         public int Nao { get => nao; set => nao = value; }
 
+        [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
+
+        [JsonPropertyName("backDate")]
         public DateTime BackDate { get => backDate; set => backDate = value; }
+
+        [JsonPropertyName("issues")]
         public List<int> Issues { get => issues; set => issues = value; }
+
+        [JsonPropertyName("isBack")]
         public bool IsBack { get => isBack; set => isBack = value; }
+
+        [JsonPropertyName("notes")]
         public string Notes { get => notes; set => notes = value; }
+
+        [JsonPropertyName("backReport")]
         public string BackReport { get => backReport; set => backReport = value; }
 
         public string DisplayID { get => id.ToString().PadLeft(4, '0'); }
@@ -333,7 +370,6 @@ namespace RobotManager.Classes
                 ClinicVisit visit = await client.GetFromJsonAsync<ClinicVisit>(apiUrl);
                 if (visit != null)
                 {
-                    this.id = visit.id;
                     this.nao = visit.nao;
                     this.date = visit.date;
                     this.issues = visit.issues;
