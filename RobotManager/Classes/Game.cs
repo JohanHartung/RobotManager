@@ -27,6 +27,9 @@ namespace RobotManager.Classes
         [JsonPropertyName("home")]
         public bool Home { get => home; set => home = value; }
 
+        public string? CountdownText { get; set; }
+        public bool CuntdownStarted { get => true; }
+
 
         public async Task<bool> Post()
         {
