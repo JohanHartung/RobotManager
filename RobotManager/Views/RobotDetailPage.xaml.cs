@@ -204,7 +204,7 @@ public partial class RobotDetailPage : ContentPage
             // use string.IsNullOrWhiteSpace(solvedReport) to check if user pressed OK with empty input
             return;
         }
-        issue.Solved = true;
+        issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
         issue.SolvedReport = solvedReport;
         if (!await issue.Post())
         {
@@ -245,8 +245,7 @@ public partial class RobotDetailPage : ContentPage
         {
             foreach (var issue in _issues)
             {
-                issue.Solved = true;
-                issue.SolvedDate = DateTime.Now;
+                issue.Solved = (-2, DateTime.Now); // -2 > clinic
                 issue.SolvedReport = $"Issue solved during clinic visit #{visit.Id.ToString().PadLeft(4, '0')}";
                 if (!await issue.Post())
                 {
@@ -336,7 +335,7 @@ public partial class RobotDetailPage : ContentPage
         }
         else
         {
-            IssueCV.ItemsSource = _issues.Where(issue => !issue.Solved).ToList();
+            IssueCV.ItemsSource = _issues.Where(issue => !issue.IsSolved).ToList();
 
         }
 
