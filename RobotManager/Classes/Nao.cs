@@ -1,12 +1,15 @@
-﻿using System;
+﻿using Microsoft.Extensions.Primitives;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
+using System.Security.Cryptography;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using static RobotManager.Classes.Helpers;
 
 namespace RobotManager.Classes
 {
@@ -72,10 +75,11 @@ namespace RobotManager.Classes
         {
             Nao nao = this;
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/nao";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "CreateEdit/nao";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, nao);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, nao);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -88,10 +92,11 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/GetSingle/nao/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetSingle/nao/{id}";
             try
             {
-                Nao nao = await client.GetFromJsonAsync<Nao>(apiUrl);
+                Nao nao = await client.GetFromJsonAsync<Nao>(apiUri);
 
                 if (nao != null)
                 {
@@ -117,10 +122,11 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Delete/nao/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Delete/nao/{id}";
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                HttpResponseMessage response = await client.DeleteAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -177,10 +183,11 @@ namespace RobotManager.Classes
         {
             Issue issue = this;
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/issue";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "CreateEdit/issue";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, issue);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, issue);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -192,8 +199,9 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/GetSingle/issue/{id}";
-            Issue issue = await client.GetFromJsonAsync<Issue>(apiUrl);
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetSingle/issue/{id}";
+            Issue issue = await client.GetFromJsonAsync<Issue>(apiUri);
             if (issue != null)
             {
                 this.nao = issue.nao;
@@ -212,10 +220,11 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Delete/issue/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Delete/issue/{id}";
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                HttpResponseMessage response = await client.DeleteAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -255,12 +264,21 @@ namespace RobotManager.Classes
 
         public async Task<bool> Post()
         {
+            DateTime dateTime = DateTime.Now;
+            var userSecret = GenerateUserSecret(dateTime);
+            var userId = Preferences.Get("userId", -1);
+            var deviceId = Preferences.Get("deviceId", null);
+
+            if (userId == -1 || deviceId == null) { return false; }
+
             Note note = this;
+            
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/note";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri+"CreateEdit/note";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, note);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, note);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -272,10 +290,12 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/GetSingle/note/{id}";
+
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetSingle/note/{id}";
             try
             {
-                Note note = await client.GetFromJsonAsync<Note>(apiUrl);
+                Note note = await client.GetFromJsonAsync<Note>(apiUri);
                 if (note != null)
                 {
                     this.nao = note.nao;
@@ -296,10 +316,11 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Delete/note/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Delete/note/{id}";
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                HttpResponseMessage response = await client.DeleteAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -355,10 +376,11 @@ namespace RobotManager.Classes
         {
             ClinicVisit visit = this;
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/clinicVisit";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "CreateEdit/clinicVisit";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, visit);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, visit);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -370,10 +392,11 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/GetSingle/clinicVisit/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetSingle/clinicVisit/{id}";
             try
             {
-                ClinicVisit visit = await client.GetFromJsonAsync<ClinicVisit>(apiUrl);
+                ClinicVisit visit = await client.GetFromJsonAsync<ClinicVisit>(apiUri);
                 if (visit != null)
                 {
                     this.nao = visit.nao;
@@ -396,10 +419,11 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Delete/clinicVisit/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Delete/clinicVisit/{id}";
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                HttpResponseMessage response = await client.DeleteAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -407,6 +431,8 @@ namespace RobotManager.Classes
                 return false;
             }
         }
+
+        
     }
 
     public enum Status
