@@ -1,3 +1,4 @@
+using RobotManager.Classes;
 using System.Security.Cryptography;
 using System.Text;
 
@@ -6,7 +7,10 @@ namespace RobotManager.Views;
 public partial class SignInPage : ContentPage
 {
 	List<Frame> EntryFrames;
-	public SignInPage()
+
+    User user = new();
+
+    public SignInPage()
 	{
 		InitializeComponent();
 		EntryFrames = new()
@@ -26,33 +30,36 @@ public partial class SignInPage : ContentPage
         }
     }
 
-    private void ContinueButton_Clicked(object sender, EventArgs e)
+    private async void ContinueButton_Clicked(object sender, EventArgs e)
     {
         var button = sender as Button;
         var frame = button!.Parent as Frame;
         if (frame == UsernameEtryForm)
         {
-            bool existantUsername = true; // TODO: Check if username exists
+            user.Name = UsernameEntry1.Text;
+            bool existantUsername = await user.ValidUsername(user.Name);
             SetFrameVisibility(existantUsername ? PasswordEtryForm : RegistrationCodeEtryForm);
         }
         else if (frame == PasswordEtryForm)
         {
-            string challenge = "1234"; // TODO: Get challenge from server
-            string response = Hash(PasswordEntry1.Text, challenge);
-            // TODO: Send response to server
-
-
+            (int processId, string secret)? challenge = await user.LoginChallenge(user.Name);
+            string response = Hash(PasswordEntry1.Text, challenge.Value.secret);
+            var userdata = user.LoginResponse(challenge.Value.processId, response);
+            user.Initialize(userdata.Result);
+            // TODO: signin done
         }
         else if (frame == RegistrationCodeEtryForm)
         {
-            bool validCode = true; // TODO: Check if code is valid
+            bool validCode = await user.ValidRegistrationCode(RegistrationCodeEntry.Text);
             SetFrameVisibility(validCode ? RegistrationEtryForm : UsernameEtryForm);
         }
         else if (frame == RegistrationEtryForm)
         {
-            string username = Hash(UsernameEntry2.Text);
+            string username = UsernameEntry2.Text;
             string password = Hash(PasswordEntry2.Text);
-            string registrationCode = Hash(RegistrationCodeEntry.Text);
+            var userdata = await user.CreateUser(username, password);
+            user.Initialize(userdata);
+            // TODO: registration done
         }
     }
 	private string Hash(string password, string? challenge = null)
