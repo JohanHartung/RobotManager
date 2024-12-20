@@ -24,13 +24,19 @@ public partial class AddIssuePage : ContentPage
             IssueDatePicker.Date = _issue.Date;
             IssueTimePicker.Time = _issue.Date.TimeOfDay;
             IssueDescription.Text = _issue.Description;
-            ReplicatedCheckBox.IsChecked = _issue.Replicated;
-            ReplicatedDatePicker.Date = _issue.ReplicatedDate;
-            ReplicatedTimePicker.Time = _issue.ReplicatedDate.TimeOfDay;
-            SolvedCheckBox.IsChecked = _issue.Solved;
-            SolvedDatePicker.Date = _issue.SolvedDate;
-            SolvedTimePicker.Time = _issue.SolvedDate.TimeOfDay;
-            SolvedReport.Text = _issue.SolvedReport;
+            if (_issue.IsReplicated)
+            {
+                ReplicatedCheckBox.IsChecked = _issue.IsReplicated;
+                ReplicatedDatePicker.Date = _issue.Replicated.Values.Min().Date;
+                ReplicatedTimePicker.Time = _issue.Replicated.Values.Min().TimeOfDay;
+            }
+            if (_issue.IsSolved)
+            {
+                SolvedCheckBox.IsChecked = _issue.IsSolved;
+                SolvedDatePicker.Date = _issue.Solved.Value.dateTime.Date;
+                SolvedTimePicker.Time = _issue.Solved.Value.dateTime.TimeOfDay;
+                SolvedReport.Text = _issue.SolvedReport;
+            }
         }
 
     }
@@ -47,11 +53,15 @@ public partial class AddIssuePage : ContentPage
             _issue.Title = TitleEntry.Text;
             _issue.Date = IssueDatePicker.Date.Add(IssueTimePicker.Time);
             _issue.Description = IssueDescription.Text;
-            _issue.Replicated = ReplicatedCheckBox.IsChecked;
-            _issue.ReplicatedDate = ReplicatedDatePicker.Date.Add(ReplicatedTimePicker.Time);
-            _issue.Solved = SolvedCheckBox.IsChecked;
-            _issue.SolvedDate = SolvedDatePicker.Date.Add(SolvedTimePicker.Time);
-            _issue.SolvedReport = SolvedReport.Text;
+            if (ReplicatedCheckBox.IsChecked)
+            {
+                _issue.Replicated!.Add(Preferences.Get("userID", -1), ReplicatedDatePicker.Date.Add(ReplicatedTimePicker.Time));
+            }
+            if(SolvedCheckBox.IsChecked)
+            {
+                _issue.Solved = new() { user = Preferences.Get("userID", -1), dateTime = SolvedDatePicker.Date.Add(SolvedTimePicker.Time)};
+                _issue.SolvedReport = SolvedReport.Text;
+            }
             _issue.Nao = _nao.Id;
 
             if (!await _issue.Post())
