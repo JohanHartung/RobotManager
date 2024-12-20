@@ -34,11 +34,12 @@ namespace RobotManager.Classes
         public async Task<(int userId, string deviceId, string token)> CreateUser(string username, string password)
         {
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/Create/user";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "Create/user";
             var content = new { username, password };
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, content);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, content);
                 return await response.Content.ReadFromJsonAsync<(int userId, string deviceId, string token)>();
             }
             catch
@@ -50,11 +51,12 @@ namespace RobotManager.Classes
         public async Task<bool> EditUser(int id, string username, string token, string? password = null)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Edit/user/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Edit/user/{id}";
             var content = new { username, token, password };
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, content);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, content);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -66,10 +68,11 @@ namespace RobotManager.Classes
         public async Task<User?> GetUser(int id)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/GetSingle/user/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetSingle/user/{id}";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage response = await client.GetAsync(apiUri);
                 if (response.IsSuccessStatusCode)
                 {
                     return await response.Content.ReadFromJsonAsync<User>();
@@ -85,10 +88,11 @@ namespace RobotManager.Classes
         public async Task<bool> DeleteUser(int id)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/Delete/user/{id}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"Delete/user/{id}";
             try
             {
-                HttpResponseMessage response = await client.DeleteAsync(apiUrl);
+                HttpResponseMessage response = await client.DeleteAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -100,10 +104,11 @@ namespace RobotManager.Classes
         public async Task<bool> ValidUsername(string username)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/ValidUsername/{username}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"ValidUsername/{username}";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage response = await client.GetAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -115,10 +120,11 @@ namespace RobotManager.Classes
         public async Task<(int processId, string secret)?> LoginChallenge(string username)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/LoginChallenge/{username}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"LoginChallenge/{username}";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage response = await client.GetAsync(apiUri);
                 if (response.IsSuccessStatusCode)
                 {
                     var result = await response.Content.ReadFromJsonAsync<dynamic>();
@@ -135,10 +141,11 @@ namespace RobotManager.Classes
         public async Task<(int userId, string deviceId, string token)?> LoginResponse(int processId, string response)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/LoginResponse/{processId},{response}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"LoginResponse/{processId},{response}";
             try
             {
-                HttpResponseMessage responseMessage = await client.GetAsync(apiUrl);
+                HttpResponseMessage responseMessage = await client.GetAsync(apiUri);
                 if (responseMessage.IsSuccessStatusCode)
                 {
                     var result = await responseMessage.Content.ReadFromJsonAsync<dynamic>();
@@ -155,10 +162,11 @@ namespace RobotManager.Classes
         public async Task<bool> ValidRegistrationCode(string code)
         {
             using HttpClient client = new();
-            string apiUrl = $"https://skakominor.de/api/RobotManager/ValidRegistrationCode/{code}";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"ValidRegistrationCode/{code}";
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUrl);
+                HttpResponseMessage response = await client.GetAsync(apiUri);
                 return response.IsSuccessStatusCode;
             }
             catch
