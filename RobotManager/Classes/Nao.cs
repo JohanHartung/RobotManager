@@ -138,11 +138,10 @@ namespace RobotManager.Classes
 
         private string title = String.Empty;
         private string description = String.Empty;
-        private bool replicated;
-        private bool solved;
-        private DateTime date;
-        private DateTime replicatedDate;
-        private DateTime solvedDate;
+        private string author = String.Empty;
+        private DateTime date = new();
+        private Dictionary<int, DateTime> replicated = new(); // (int user, DateTime dateTime)?
+        private (int user, DateTime dateTime)? solved = new();
         private string solvedReport = String.Empty;
 
         [JsonPropertyName("id")]
@@ -157,20 +156,19 @@ namespace RobotManager.Classes
         [JsonPropertyName("description")]
         public string Description { get => description; set => description = value; }
 
-        [JsonPropertyName("replicated")]
-        public bool Replicated { get => replicated; set => replicated = value; }
-
-        [JsonPropertyName("solved")]
-        public bool Solved { get => solved; set => solved = value; }
+        [JsonPropertyName("author")]
+        public string Author { get => author; set => author = value; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
 
-        [JsonPropertyName("replicatedDate")]
-        public DateTime ReplicatedDate { get => replicatedDate; set => replicatedDate = value; }
+        [JsonPropertyName("replicated")]
+        public Dictionary<int, DateTime> Replicated { get => replicated; set => replicated = value; }
+        public bool IsReplicated { get => replicated != null; }
 
-        [JsonPropertyName("solvedDate")]
-        public DateTime SolvedDate { get => solvedDate; set => solvedDate = value; }
+        [JsonPropertyName("solved")]
+        public (int user, DateTime dateTime)? Solved { get => solved; set => solved = value; }
+        public bool IsSolved { get => solved != null; }
 
         [JsonPropertyName("solvedReport")]
         public string SolvedReport { get => solvedReport; set => solvedReport = value; }
@@ -201,11 +199,10 @@ namespace RobotManager.Classes
                 this.nao = issue.nao;
                 this.title = issue.title;
                 this.description = issue.description;
+                this.author = issue.author;
+                this.date = issue.date;
                 this.replicated = issue.replicated;
                 this.solved = issue.solved;
-                this.date = issue.date;
-                this.replicatedDate = issue.replicatedDate;
-                this.solvedDate = issue.solvedDate;
                 this.solvedReport = issue.solvedReport;
                 return true;
             }
@@ -235,6 +232,7 @@ namespace RobotManager.Classes
 
         private string title = String.Empty;
         private string description = String.Empty;
+        private string author = String.Empty;
         private DateTime date;
 
         [JsonPropertyName("id")]
@@ -248,6 +246,9 @@ namespace RobotManager.Classes
 
         [JsonPropertyName("description")]
         public string Description { get => description; set => description = value; }
+
+        [JsonPropertyName("author")]
+        public string Author { get => author; set => author = value; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
@@ -280,6 +281,7 @@ namespace RobotManager.Classes
                     this.nao = note.nao;
                     this.title = note.title;
                     this.description = note.description;
+                    this.author = note.author;
                     this.date = note.date;
                     return true;
                 }
@@ -317,6 +319,7 @@ namespace RobotManager.Classes
         private bool isBack;
         private string notes = String.Empty;
         private string backReport = String.Empty;
+        private string author = String.Empty;
 
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
@@ -341,6 +344,9 @@ namespace RobotManager.Classes
 
         [JsonPropertyName("backReport")]
         public string BackReport { get => backReport; set => backReport = value; }
+
+        [JsonPropertyName("author")]
+        public string Author { get => author; set => author = value; }
 
         public string DisplayID { get => id.ToString().PadLeft(4, '0'); }
         public int IssueCount { get => issues.Count; }
@@ -376,6 +382,7 @@ namespace RobotManager.Classes
                     this.isBack = visit.isBack;
                     this.notes = visit.notes;
                     this.backReport = visit.backReport;
+                    this.author = visit.author;
                     return true;
                 }
                 return false;
