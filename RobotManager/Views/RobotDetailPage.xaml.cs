@@ -161,7 +161,7 @@ public partial class RobotDetailPage : ContentPage
         if (button == null) { return; }
         var note = button.BindingContext as Note;
         if (note == null) { return; }
-        Navigation.PushAsync(new NoteDetailPage(note, _nao));
+        Navigation.PushAsync(new NoteDetailPage(note));
     }
 
     private async void RemoveNoteButton_Clicked(object sender, EventArgs e)
@@ -188,7 +188,7 @@ public partial class RobotDetailPage : ContentPage
         if (button == null) { return; }
         var issue = button.BindingContext as Issue;
         if (issue == null) { return; }
-        Navigation.PushAsync(new IssueDetailPage(issue, _nao));
+        Navigation.PushAsync(new IssueDetailPage(issue));
     }
     private async void SolvedIssueButton_Clicked(object sender, EventArgs e)
     {
@@ -219,7 +219,7 @@ public partial class RobotDetailPage : ContentPage
         if (button == null) { return; }
         var visit = button.BindingContext as ClinicVisit;
         if (visit == null) { return; }
-        Navigation.PushAsync(new ClinicVisitDetailPage(visit, _nao, _issues));
+        Navigation.PushAsync(new ClinicVisitDetailPage(visit));
     }
 
     private async void ReturnedClinicButton_Clicked(object sender, EventArgs e)

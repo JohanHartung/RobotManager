@@ -10,12 +10,13 @@ public partial class SettingsPage : ContentPage
 
     private void Button_Clicked(object sender, EventArgs e)
     {
-        uriText.Text = $"https://{domainEntry.Text}/api/RobotManager/";
-        Preferences.Set("uri", domainEntry.Text);
+        uriText.Text = $"http://{domainEntry.Text}/api/RobotManager/";
+        //Preferences.Set("uri", domainEntry.Text);
+        Preferences.Set("uri", $"http://{domainEntry.Text}/api/RobotManager/");
     }
 
     private void domainEntry_TextChanged(object sender, TextChangedEventArgs e)
     {
-        uriText.Text = $"https://{domainEntry.Text}/api/RobotManager/";
+        uriText.Text = $"http://{domainEntry.Text}/api/RobotManager/";
     }
 }

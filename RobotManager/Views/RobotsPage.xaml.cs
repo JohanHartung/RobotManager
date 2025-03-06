@@ -11,6 +11,7 @@ namespace RobotManager.Views;
 
 public partial class RobotsPage : ContentPage
 {
+    private static readonly HttpClient client = new();
     ObservableCollection<Nao> naos = new();
     List<Issue> issues = new();
     List<Note> notes = new();
@@ -25,7 +26,7 @@ public partial class RobotsPage : ContentPage
         InitializeComponent();
         selectedFilter = AllFilterButton;
 
-#if DEBUG
+#if false
         issues = new List<Issue>
 {
     new()
@@ -34,19 +35,18 @@ public partial class RobotsPage : ContentPage
         Title = "Joint Motor Calibration Error",
         Date = new DateTime(2023, 12, 18),
         Description = "The right elbow joint is misaligned and requires recalibration.",
-        Replicated = true,
-        ReplicatedDate = new DateTime(2023, 12, 18),
-        Solved = false,
+        Replicated = new Dictionary<int, DateTime> { { 1, new DateTime(2023, 12, 18) } },
         Nao = 3
-    },
+    }
+};
+        /*
     new()
     {
         Id = 2,
         Title = "Speech Recognition Module Crash",
         Date = new DateTime(2024, 1, 5),
         Description = "The NAO robot fails to recognize simple commands after multiple interactions.",
-        Replicated = false,
-        Solved = true,
+        Solved = (3, DateTime.Now),
         Nao = 1
     },
     new()
@@ -81,7 +81,7 @@ public partial class RobotsPage : ContentPage
         Solved = true,
         Nao = 2
     }
-};
+};*/
         notes = new List<Note>
 {
     new()
@@ -202,21 +202,24 @@ public partial class RobotsPage : ContentPage
     {
         try
         {
-            using HttpClient client = new();
-            var response = await client.GetAsync("https://skakominor.de/api/RobotManager/GetAll/naos");
+            //using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetAll/naos";
+            var response = await client.GetAsync(apiUri);
+
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
             Console.WriteLine(jsonResponse);
-
+            naos = new();
             var apiResponse = JsonSerializer.Deserialize<ApiResponse<Nao>>(jsonResponse);
             if (apiResponse?.Value != null)
             {
                 foreach (var nao in apiResponse.Value)
                 {
-                    if (!naos.Contains(nao))
-                    {
+                    //if (!naos.Contains(nao))
+                    //{
+                    //}
                         naos.Add(nao);
-                    }
                 }
             }
         }
@@ -244,13 +247,13 @@ public partial class RobotsPage : ContentPage
         switch (swipeItem.Text)
         {
             case "Free":
-#if DEBUG
+#if false
                 nao.Status = Status.Free;
 #endif
                 await SetStatusAsync(nao, Status.Free);
                 break;
             case "Game":
-#if DEBUG
+#if false
                 nao.Status = Status.Game;
 #endif
                 await SetStatusAsync(nao, Status.Game);
@@ -259,7 +262,7 @@ public partial class RobotsPage : ContentPage
                 await Navigation.PushAsync(new AddClinicVisitPage(nao, issues.Where(iss => iss.Nao == nao.Id).ToList()));
                 break;
             default:
-#if DEBUG
+#if false
                 nao.Status = Status.Free;
 #endif
                 await SetStatusAsync(nao, Status.Free);
@@ -334,10 +337,11 @@ public partial class RobotsPage : ContentPage
     private async Task SetStatusAsync(Nao nao, Status status)
     {
         using HttpClient client = new();
-        string apiUrl = $"https://skakominor.de/api/RobotManager/SetStatus/{nao.Id}/{status}";
+        string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+        string apiUri = baseUri + $"{nao.Id}/{status}";
         try
         {
-            HttpResponseMessage response = await client.PostAsync(apiUrl, null);
+            HttpResponseMessage response = await client.PostAsync(apiUri, null);
             response.EnsureSuccessStatusCode();
         }
         catch (Exception)

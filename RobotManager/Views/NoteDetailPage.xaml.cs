@@ -7,12 +7,18 @@ public partial class NoteDetailPage : ContentPage
     Note _note;
     Nao _nao;
     
-	public NoteDetailPage(Note note, Nao nao)
+	public NoteDetailPage(Note note)
 	{
-		InitializeComponent();
         _note = note;
-        _nao = nao;
+        _nao = new Nao();
         BindingContext = _note;
+        InitializeComponent();
+        InitalizeAsync();
+    }
+
+    private async Task InitalizeAsync()
+    {
+        await _nao.InitializeFromCloud(_note.Nao);
         Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
     }
 
