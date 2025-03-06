@@ -7,19 +7,24 @@ public partial class ClinicVisitDetailPage : ContentPage
     Nao _nao;
     ClinicVisit _visit;
 	List<Issue>? _issues;
-    public ClinicVisitDetailPage(ClinicVisit visit, Nao nao, List<Issue> issues)
+    public ClinicVisitDetailPage(ClinicVisit visit)
 	{
 		InitializeComponent();
-        _nao = nao;
 		_visit = visit;
-        _issues = issues.Where(i => visit.Issues.Contains(i.Id)).ToList();
         BindingContext = _visit;
-        IssueCV.ItemsSource = _issues;
-        Title = $"Clinic Visit #{visit.Id.ToString().PadLeft(4, '0')} | NAO{nao.Name}";
-		NaoName.Text = $"NAO{nao.Name}";
-		NaoHead.Text = $"Head ID: {nao.HeadID}";
-        NaoBody.Text = $"Body ID: {nao.BodyID}";
+        InitializeAsync();
+    }
+    private async Task InitializeAsync()
+    {
+        await _nao.InitializeFromCloud(_visit.Nao);
+        _issues = new();
 
+        _issues = _issues.Where(i => _visit.Issues.Contains(i.Id)).ToList();
+        IssueCV.ItemsSource = _issues;
+        Title = $"Clinic Visit #{_visit.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+        NaoName.Text = $"NAO{_nao.Name}";
+        NaoHead.Text = $"Head ID: {_nao.HeadID}";
+        NaoBody.Text = $"Body ID: {_nao.BodyID}";
     }
 
     private async void ReturnedButton_Clicked(object sender, EventArgs e)

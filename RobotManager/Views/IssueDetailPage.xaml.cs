@@ -6,15 +6,20 @@ public partial class IssueDetailPage : ContentPage
 {
     Issue _issue;
     Nao _nao;
-    public IssueDetailPage(Issue issue, Nao nao)
+    public IssueDetailPage(Issue issue)
 	{
-		InitializeComponent();
-
         _issue = issue;
-        _nao = nao;
+        _nao = new Nao();
         BindingContext = _issue;
-        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+        InitializeComponent();
+        InitializeAsync();
 	}
+
+    private async Task InitializeAsync()
+    {
+        await _nao.InitializeFromCloud(_issue.Nao);
+        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+    }
 
     private void OptionsButton_Clicked(object sender, EventArgs e)
     {

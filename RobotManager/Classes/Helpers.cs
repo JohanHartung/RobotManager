@@ -19,15 +19,15 @@ namespace RobotManager.Classes
             return Convert.ToBase64String(hash);
         }
 
-        public static string? GenerateUserSecret(DateTime dateTime)
+        public static string? GenerateUserSecret(string dateTime)
         {
             using var sha256 = SHA256.Create();
-            string? token = Preferences.Get("token", null);
+            string? token = Preferences.Get("Token", null);
             if (token == null)
             {
                 return null;
             }
-            return Hash(token, dateTime.ToString());
+            return Hash(token, dateTime);
         }
     }
 }
