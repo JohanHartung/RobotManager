@@ -37,6 +37,7 @@ public partial class AddNotePage : ContentPage
             _note.Date = NoteDatePicker.Date.Add(NoteTimePicker.Time);
             _note.Description = NoteDescription.Text;
             _note.Nao = _nao.Id;
+            _note.Author = Preferences.Get("UserId", -1);
 
             if (!await _note.Post())
             {
@@ -44,7 +45,8 @@ public partial class AddNotePage : ContentPage
             }
             else
             {
-                await Navigation.PopAsync();
+                await DisplayAlert("Succes", "should be done", "OK");
+                //await Navigation.PopAsync();
             }
         }
     }
