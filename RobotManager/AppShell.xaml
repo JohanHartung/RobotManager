@@ -14,8 +14,8 @@
         <Tab Title="Robots">
             <ShellContent Title="Robots" ContentTemplate="{DataTemplate local:RobotsPage}" Route="RobotsPage"/>
         </Tab>
-        <Tab Title="Sign In">
-            <ShellContent Title="Sign In" ContentTemplate="{DataTemplate local:SignInPage}" Route="SignInPage"/>
+        <Tab Title="User">
+            <ShellContent Title="Sign In" ContentTemplate="{DataTemplate local:UserPage}" Route="SignInPage"/>
         </Tab>
         <Tab Title="Settings">
             <ShellContent Title="Settings" ContentTemplate="{DataTemplate local:SettingsPage}" Route="SettingsPage"/>
