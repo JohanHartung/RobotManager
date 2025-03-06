@@ -23,6 +23,8 @@
                     </CollectionView>
                 </VerticalStackLayout>
             </Frame>
+            <Button x:Name="resetButton" Text="reset user data" IsVisible="False" Clicked="Button_Clicked"/>
+            <Button x:Name="loginButton" Text="login test user" IsVisible="False" Clicked="LoginButton_Clicked"/>
         </VerticalStackLayout>
     </ScrollView>
 
