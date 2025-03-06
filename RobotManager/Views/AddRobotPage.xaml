@@ -12,13 +12,13 @@
             <Label Text="Add a new NAO" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
             <BoxView BackgroundColor="Transparent" HeightRequest="20"/>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
-                <Entry x:Name="NameEntry" Placeholder="Name" ReturnType="Next"/>
+                <Entry x:Name="NameEntry" Placeholder="Name" ReturnType="Next" Keyboard="Numeric"/>
             </Frame>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
-                <Entry x:Name="HeadIdEntry" Placeholder="Head ID" ReturnType="Next"/>
+                <Entry x:Name="HeadIdEntry" Placeholder="Head ID" ReturnType="Next" Keyboard="Numeric"/>
             </Frame>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
-                <Entry x:Name="BodyIdEntry" Placeholder="Body ID" ReturnType="Next"/>
+                <Entry x:Name="BodyIdEntry" Placeholder="Body ID" ReturnType="Next" Keyboard="Numeric"/>
             </Frame>
             <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
                 <Grid ColumnDefinitions="auto,*">
