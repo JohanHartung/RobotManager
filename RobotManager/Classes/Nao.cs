@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
@@ -75,11 +76,40 @@ namespace RobotManager.Classes
         {
             Nao nao = this;
             using HttpClient client = new();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
             string apiUri = baseUri + "CreateEdit/nao";
+
+            User user = new();
+            var dateTime = DateTime.Now;
+            var userSecret = GenerateUserSecret(dateTime.ToString());
+
+            var request = new CreateEditNaoRequest
+            {
+                Nao = nao,
+                //Id = nao.Id,
+                //Name = nao.Name,
+                //HeadID = nao.HeadID,
+                //BodyID = nao.BodyID,
+                //WarrantyExtension = nao.WarrantyExtension,
+                //Purchased = nao.Purchased.ToString(),
+                //Issues = nao.Issues,
+                //Notes = nao.Notes,
+                //ClinicVisits = nao.ClinicVisits,
+                //Status = (int)nao.Status,
+                UserId = user.Id,
+                DeviceId = user.DeviceId,
+                DateTime = dateTime.ToString(),
+                UserSecret = userSecret
+            };
+
+            var content = JsonContent.Create(request);
+
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, nao);
+                HttpResponseMessage response = await client.PostAsync(apiUri, content);
+                var result = await response.Content.ReadFromJsonAsync<CreateNaoResponse>();
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -87,6 +117,12 @@ namespace RobotManager.Classes
                 return false;
             }
 
+        }
+
+        public async Task<bool> InitializeFromCloud(int naoID)
+        {
+            id = naoID;
+            return await Get();
         }
 
         public async Task<bool> Get()
@@ -144,7 +180,7 @@ namespace RobotManager.Classes
 
         private string title = String.Empty;
         private string description = String.Empty;
-        private string author = String.Empty;
+        private int author;
         private DateTime date = new();
         private Dictionary<int, DateTime> replicated = new(); // (int user, DateTime dateTime)?
         private (int user, DateTime dateTime)? solved = new();
@@ -163,7 +199,7 @@ namespace RobotManager.Classes
         public string Description { get => description; set => description = value; }
 
         [JsonPropertyName("author")]
-        public string Author { get => author; set => author = value; }
+        public int Author { get => author; set => author = value; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
@@ -179,15 +215,37 @@ namespace RobotManager.Classes
         [JsonPropertyName("solvedReport")]
         public string SolvedReport { get => solvedReport; set => solvedReport = value; }
 
+        public async Task<bool> InitializeFromCloud(int issueID)
+        {
+            id = issueID;
+            return await Get();
+        }
+
         public async Task<bool> Post()
         {
+            var dateTime = DateTime.Now;
+            var userSecret = GenerateUserSecret(dateTime.ToString());
+            var userId = Preferences.Get("UserId", -1);
+            var deviceId = Preferences.Get("DeviceId", null);
+
+            if (userId == -1 || deviceId == null) { return false; }
             Issue issue = this;
+
+            var request = new CreateEditIssueRequest
+            {
+                Issue = issue,
+                UserId = userId,
+                DeviceId = deviceId,
+                DateTime = dateTime.ToString(),
+                UserSecret = userSecret
+            };
+
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
             string apiUri = baseUri + "CreateEdit/issue";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, issue);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -241,7 +299,7 @@ namespace RobotManager.Classes
 
         private string title = String.Empty;
         private string description = String.Empty;
-        private string author = String.Empty;
+        private int author;
         private DateTime date;
 
         [JsonPropertyName("id")]
@@ -257,28 +315,43 @@ namespace RobotManager.Classes
         public string Description { get => description; set => description = value; }
 
         [JsonPropertyName("author")]
-        public string Author { get => author; set => author = value; }
+        public int Author { get => author; set => author = value; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
 
+        public async Task<bool> InitializeFromCloud(int noteID)
+        {
+            id = noteID;
+            return await Get();
+        }
+
         public async Task<bool> Post()
         {
-            DateTime dateTime = DateTime.Now;
-            var userSecret = GenerateUserSecret(dateTime);
-            var userId = Preferences.Get("userId", -1);
-            var deviceId = Preferences.Get("deviceId", null);
+            var dateTime = DateTime.Now;
+            var userSecret = GenerateUserSecret(dateTime.ToString());
+            var userId = Preferences.Get("UserId", -1);
+            var deviceId = Preferences.Get("DeviceId", null);
 
             if (userId == -1 || deviceId == null) { return false; }
 
             Note note = this;
-            
+
+            var request = new CreateEditNoteRequest
+            {
+                Note = note,
+                UserId = userId,
+                DeviceId = deviceId,
+                DateTime = dateTime.ToString(),
+                UserSecret = userSecret
+            };
+
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri+"CreateEdit/note";
+            string apiUri = baseUri + "CreateEdit/note";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, note);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -340,7 +413,8 @@ namespace RobotManager.Classes
         private bool isBack;
         private string notes = String.Empty;
         private string backReport = String.Empty;
-        private string author = String.Empty;
+        private int author;
+        private int collector;
 
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
@@ -367,14 +441,38 @@ namespace RobotManager.Classes
         public string BackReport { get => backReport; set => backReport = value; }
 
         [JsonPropertyName("author")]
-        public string Author { get => author; set => author = value; }
+        public int Author { get => author; set => author = value; }
+        [JsonPropertyName("collector")]
+        public int Collector { get => collector; set => collector = value; }
 
         public string DisplayID { get => id.ToString().PadLeft(4, '0'); }
         public int IssueCount { get => issues.Count; }
 
+        public async Task<bool> InitializeFromCloud(int clinicVisitID)
+        {
+            id = clinicVisitID;
+            return await Get();
+        }
+
         public async Task<bool> Post()
         {
+            var dateTime = DateTime.Now;
+            var userSecret = GenerateUserSecret(dateTime.ToString());
+            var userId = Preferences.Get("UserId", -1);
+            var deviceId = Preferences.Get("DeviceId", null);
+
+            if (userId == -1 || deviceId == null) { return false; }
+
             ClinicVisit visit = this;
+
+            var request = new CreateEditClinicVisitRequest
+            {
+                ClinicVisit = visit,
+                UserId = userId,
+                DeviceId = deviceId,
+                DateTime = dateTime.ToString(),
+                UserSecret = userSecret
+            };
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
             string apiUri = baseUri + "CreateEdit/clinicVisit";
@@ -432,7 +530,7 @@ namespace RobotManager.Classes
             }
         }
 
-        
+
     }
 
     public enum Status
@@ -441,4 +539,68 @@ namespace RobotManager.Classes
         Game,
         Clinic
     }
+    public class CreateEditNaoRequest
+    {
+        public Nao Nao { get; set; }
+
+        // Nao Data
+        //public int Id { get; set; }
+        //public string Name { get; set; }
+        //public string HeadID { get; set; }
+        //public string BodyID { get; set; }
+        //public int WarrantyExtension { get; set; }
+        //public string Purchased { get; set; }
+        //public List<int> Issues { get; set; }
+        //public List<int> Notes { get; set; }
+        //public List<int> ClinicVisits { get; set; }
+        //public int Status { get; set; }
+
+        // User Data for Authentication
+        public int UserId { get; set; }
+        public string DeviceId { get; set; }
+        public string DateTime { get; set; }
+        public string UserSecret { get; set; }
+    }
+
+    public class CreateNaoResponse
+    {
+        public int id { get; set; }
+        public string name { get; set; }
+        public string headID { get; set; }
+        public string bodyID { get; set; }
+        public int warrantyExtension { get; set; }
+        public string purchased { get; set; }
+        //public List<int> issues { get; set; }
+        //public List<int> notes { get; set; }
+        //public List<int> clinicVisits { get; set; }
+        public int status { get; set; }
+    }
+
+    public class CreateEditIssueRequest
+    {
+        public Issue Issue { get; set; }
+        public int UserId { get; set; }
+        public string DeviceId { get; set; }
+        public string DateTime { get; set; }
+        public string UserSecret { get; set; }
+    }
+
+    public class CreateEditNoteRequest
+    {
+        public Note Note { get; set; }
+        public int UserId { get; set; }
+        public string DeviceId { get; set; }
+        public string DateTime { get; set; }
+        public string UserSecret { get; set; }
+    }
+
+    public class CreateEditClinicVisitRequest
+    {
+        public ClinicVisit ClinicVisit { get; set; }
+        public int UserId { get; set; }
+        public string DeviceId { get; set; }
+        public string DateTime { get; set; }
+        public string UserSecret { get; set; }
+    }
+
 }

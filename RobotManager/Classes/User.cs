@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
@@ -30,17 +31,28 @@ namespace RobotManager.Classes
             this.Token = userdata.Value.token;
         }
 
+        public bool Exists()
+        {
+            return Id != -1 && Name != null && DeviceId != null && Token != null;
+        }
 
         public async Task<(int userId, string deviceId, string token)> CreateUser(string username, string password)
         {
             using HttpClient client = new();
+            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
             string apiUri = baseUri + "Create/user";
-            var content = new { username, password };
+            var content = JsonContent.Create(new { username, password });
+
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, content);
-                return await response.Content.ReadFromJsonAsync<(int userId, string deviceId, string token)>();
+                HttpResponseMessage response = await client.PostAsync(apiUri, content);
+                response.EnsureSuccessStatusCode();
+                string responseContent = await response.Content.ReadAsStringAsync();
+                Console.WriteLine($"Response Content: {responseContent}");
+                var result = await response.Content.ReadFromJsonAsync<CreateUserResponse>();
+                return result != null ? (result.UserId, result.DeviceId, result.Token) : (-1, "", "");
             }
             catch
             {
@@ -101,7 +113,7 @@ namespace RobotManager.Classes
             }
         }
 
-        public async Task<bool> ValidUsername(string username)
+        public async Task<bool?> ValidUsername(string username)
         {
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
@@ -109,11 +121,20 @@ namespace RobotManager.Classes
             try
             {
                 HttpResponseMessage response = await client.GetAsync(apiUri);
-                return response.IsSuccessStatusCode;
+                string responseContent = await response.Content.ReadAsStringAsync();
+                if (responseContent == "{\"statusCode\":200}") 
+                { 
+                    return !string.IsNullOrEmpty(responseContent); 
+                }
+                else if(responseContent == "{\"statusCode\":204}")
+                {
+                    return false;
+                }
+                else { return null; }
             }
             catch
             {
-                return false;
+                return null;
             }
         }
 
@@ -167,12 +188,28 @@ namespace RobotManager.Classes
             try
             {
                 HttpResponseMessage response = await client.GetAsync(apiUri);
-                return response.IsSuccessStatusCode;
+                if (response.IsSuccessStatusCode)
+                {
+                    return await response.Content.ReadAsStringAsync() == "{\"statusCode\":200}";
+                }
+                return false;
             }
             catch
             {
                 return false;
             }
         }
+    }
+
+    public class CreateUserResponse
+    {
+        [JsonPropertyName("id")]
+        public int UserId { get; set; }
+
+        [JsonPropertyName("deviceId")]
+        public string DeviceId { get; set; }
+
+        [JsonPropertyName("token")]
+        public string Token { get; set; }
     }
 }
