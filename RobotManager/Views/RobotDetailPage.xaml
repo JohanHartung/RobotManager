@@ -3,43 +3,46 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RobotManager.Views.RobotDetailPage"
              Title="Robot Details">
-    <Grid Padding="20,0">
-        <Grid.RowDefinitions>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="auto"/>
-            <RowDefinition Height="*"/>
-        </Grid.RowDefinitions>
-        <VerticalStackLayout Grid.Row="0">
-            <HorizontalStackLayout Margin="0,15,0,0">
-                <Label Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
-                <Label Text="{Binding Status, StringFormat='{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
-            </HorizontalStackLayout>
-            <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
-            <Label x:Name="warrantyLabel" Text="Warranty Info" Opacity=".9" FontSize="14"/>
-            <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
+    <RefreshView x:Name="RobotDetailPageRV" Refreshing="RobotDetailPageRV_Refreshing">
+        <ScrollView>
 
-            <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,10,0,20"/>
-        </VerticalStackLayout>
-        <Grid ColumnDefinitions="*,*,*" Grid.Row="1" Margin="0,5">
-            <Button x:Name="NotesButton" Margin="3" Text="Notes" Grid.Column="0" BackgroundColor="{StaticResource FreeColor}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
-            <Button x:Name="IssuesButton" Margin="3" Text="Issues" Grid.Column="1" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
-            <Button x:Name="ClinicButton" Margin="3" Text="Clinic Visits" Grid.Column="2" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
-        </Grid>
+            <Grid Padding="20,0">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="auto"/>
+                    <RowDefinition Height="*"/>
+                </Grid.RowDefinitions>
+                <VerticalStackLayout Grid.Row="0">
+                    <HorizontalStackLayout Margin="0,15,0,0">
+                        <Label Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+                        <Label Text="{Binding Status, StringFormat='{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
+                    </HorizontalStackLayout>
+                    <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
+                    <Label x:Name="warrantyLabel" Text="Warranty Info" Opacity=".9" FontSize="14"/>
+                    <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
 
-        <VerticalStackLayout Grid.Row="2" VerticalOptions="FillAndExpand">
+                    <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,10,0,20"/>
+                </VerticalStackLayout>
+                <Grid ColumnDefinitions="*,*,*" Grid.Row="1" Margin="0,5">
+                    <Button x:Name="NotesButton" Margin="3" Text="Notes" Grid.Column="0" BackgroundColor="{StaticResource FreeColor}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
+                    <Button x:Name="IssuesButton" Margin="3" Text="Issues" Grid.Column="1" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
+                    <Button x:Name="ClinicButton" Margin="3" Text="Clinic Visits" Grid.Column="2" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
+                </Grid>
 
-            <StackLayout x:Name="NoteLayout" VerticalOptions="FillAndExpand">
-                <BoxView HeightRequest="18 " BackgroundColor="Transparent"/>
-                <CollectionView x:Name="NoteCV" EmptyView="No Notes" Margin="0,5">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame x:Name="NoteFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#282828" HasShadow="False">
-                                <VerticalStackLayout>
-                                    <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Frame_Tapped"/>
-                                        </Frame.GestureRecognizers>
+                <VerticalStackLayout Grid.Row="2" VerticalOptions="FillAndExpand">
+
+                    <StackLayout x:Name="NoteLayout" VerticalOptions="FillAndExpand">
+                        <BoxView HeightRequest="18 " BackgroundColor="Transparent"/>
+                        <CollectionView x:Name="NoteCV" EmptyView="No Notes" Margin="0,5">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame x:Name="NoteFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#282828" HasShadow="False">
+                                        <VerticalStackLayout>
+                                            <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="Frame_Tapped"/>
+                                                </Frame.GestureRecognizers>
                                                 <VerticalStackLayout>
                                                     <Grid ColumnDefinitions="*,auto">
                                                         <Label Text="{Binding Title}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" Grid.Column="0"/>
@@ -48,150 +51,150 @@
                                                     <Label Text="{Binding AuthorName}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" MaxLines="2"/>
                                                     <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" MaxLines="2"/>
                                                 </VerticalStackLayout>
-                                    </Frame>
-                                    <Grid x:Name="DetailButtons"
+                                            </Frame>
+                                            <Grid x:Name="DetailButtons"
                                         RowDefinitions="*" 
                                         ColumnDefinitions="*,*" Margin="5" IsVisible="False">
-                                        <Button Text="View/Edit"
+                                                <Button Text="View/Edit"
                                             BackgroundColor="#536578" TextColor="WhiteSmoke" Clicked="ViewEditNoteButton_Clicked"
                                             Grid.Row="0" Grid.Column="0" Margin="2"/>
-                                        <Button Text="Remove"
+                                                <Button Text="Remove"
                                             BackgroundColor="#80464d" TextColor="WhiteSmoke" Clicked="RemoveNoteButton_Clicked"
                                             Grid.Row="0" Grid.Column="1" Margin="2"/>
-                                    </Grid>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-
-            <StackLayout x:Name="IssueLayout" IsVisible="False" Grid.Row="2">
-                <Grid x:Name="solvedIssuesGrid" ColumnDefinitions="auto,*">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
-                    </Grid.GestureRecognizers>
-                    <Switch x:Name="solvedIssuesSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
-                    <Label Text="Include solved issues" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
-                </Grid>
-                <CollectionView x:Name="IssueCV" EmptyView="No issues">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame x:Name="IssueFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#282828" HasShadow="False">
-                                <VerticalStackLayout>
-                                    <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Frame_Tapped"/>
-                                        </Frame.GestureRecognizers>
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="0"/>
-                                            <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="1"/>
-                                            <Grid ColumnDefinitions="auto,10,auto">
-                                                <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
-                                                    <Label.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="True">
-                                                            <Setter Property="Text" Value="Replicated"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="False">
-                                                            <Setter Property="Text" Value="Not yet replicated"/>
-                                                        </DataTrigger>
-                                                    </Label.Triggers>
-                                                </Label>
-                                                <Label FontSize="15" Opacity=".6" Grid.Column="2" VerticalTextAlignment="Center">
-                                                    <Label.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsSolved}" Value="True">
-                                                            <Setter Property="Text" Value="{Binding Solved[1], StringFormat='Solved: {0}'}"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="False">
-                                                            <Setter Property="Text" Value="Not solved"/>
-                                                        </DataTrigger>
-                                                    </Label.Triggers>
-                                                </Label>
                                             </Grid>
-                                            <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" Margin="0,0,20,0" MaxLines="2"/>
                                         </VerticalStackLayout>
                                     </Frame>
-                                    <Grid x:Name="DetailButtons"
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+
+                    <StackLayout x:Name="IssueLayout" IsVisible="False" Grid.Row="2">
+                        <Grid x:Name="solvedIssuesGrid" ColumnDefinitions="auto,*">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
+                            </Grid.GestureRecognizers>
+                            <Switch x:Name="solvedIssuesSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
+                            <Label Text="Include solved issues" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
+                        </Grid>
+                        <CollectionView x:Name="IssueCV" EmptyView="No issues">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame x:Name="IssueFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#282828" HasShadow="False">
+                                        <VerticalStackLayout>
+                                            <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="Frame_Tapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="0"/>
+                                                    <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="1"/>
+                                                    <Grid ColumnDefinitions="auto,10,auto">
+                                                        <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
+                                                            <Label.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="True">
+                                                                    <Setter Property="Text" Value="Replicated"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="False">
+                                                                    <Setter Property="Text" Value="Not yet replicated"/>
+                                                                </DataTrigger>
+                                                            </Label.Triggers>
+                                                        </Label>
+                                                        <Label FontSize="15" Opacity=".6" Grid.Column="2" VerticalTextAlignment="Center">
+                                                            <Label.Triggers>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding IsSolved}" Value="True">
+                                                                    <Setter Property="Text" Value="{Binding Solved[1], StringFormat='Solved: {0}'}"/>
+                                                                </DataTrigger>
+                                                                <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="False">
+                                                                    <Setter Property="Text" Value="Not solved"/>
+                                                                </DataTrigger>
+                                                            </Label.Triggers>
+                                                        </Label>
+                                                    </Grid>
+                                                    <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" Margin="0,0,20,0" MaxLines="2"/>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                            <Grid x:Name="DetailButtons"
                                       RowDefinitions="*" 
                                       ColumnDefinitions="*,*" Margin="5" IsVisible="False">
-                                        <Button Text="View/Edit" Clicked="ViewEditIssueButton_Clicked"
+                                                <Button Text="View/Edit" Clicked="ViewEditIssueButton_Clicked"
                                             BackgroundColor="#536578" TextColor="WhiteSmoke"
                                         Grid.Row="0" Grid.Column="0" Margin="2"/>
-                                        <Button Text="Mark Solved" Clicked="SolvedIssueButton_Clicked" 
+                                                <Button Text="Mark Solved" Clicked="SolvedIssueButton_Clicked" 
                                             BackgroundColor="#536578" TextColor="WhiteSmoke"
                                         Grid.Row="0" Grid.Column="1" Margin="2"/>
-                                    </Grid>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-
-            <StackLayout x:Name="ClinicLayout" IsVisible="False" Grid.Row="2">
-                <Grid x:Name="pastVisitGrid" ColumnDefinitions="auto,*">
-                    <Grid.GestureRecognizers>
-                        <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
-                    </Grid.GestureRecognizers>
-                    <Switch x:Name="pastVisitSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
-                    <Label Text="Include past visits" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
-                </Grid>
-                <CollectionView x:Name="ClinicCV" EmptyView="No clinic visits">
-                    <CollectionView.ItemTemplate>
-                        <DataTemplate>
-                            <Frame x:Name="ClinicFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#303030" HasShadow="False">
-                                <VerticalStackLayout>
-
-                                    <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
-                                        <Frame.GestureRecognizers>
-                                            <TapGestureRecognizer Tapped="Frame_Tapped"/>
-                                        </Frame.GestureRecognizers>
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding DisplayID, StringFormat='Clinic Visit #{0}'}" FontSize="18"/>
-                                            <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8"/>
-                                            <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
-                                                <Label.Triggers>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="True">
-                                                        <Setter Property="Text" Value="Returned"/>
-                                                    </DataTrigger>
-                                                    <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="False">
-                                                        <Setter Property="Text" Value="Still in Clinic"/>
-                                                    </DataTrigger>
-                                                </Label.Triggers>
-                                            </Label>
-                                            <Label Text="{Binding IssueCount, StringFormat='{0} Issues'}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8"/>
+                                            </Grid>
                                         </VerticalStackLayout>
                                     </Frame>
-                                    <Grid x:Name="DetailButtons"
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+
+                    <StackLayout x:Name="ClinicLayout" IsVisible="False" Grid.Row="2">
+                        <Grid x:Name="pastVisitGrid" ColumnDefinitions="auto,*">
+                            <Grid.GestureRecognizers>
+                                <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
+                            </Grid.GestureRecognizers>
+                            <Switch x:Name="pastVisitSwitch" Grid.Column="0" VerticalOptions="CenterAndExpand" Toggled="Switch_Toggled"/>
+                            <Label Text="Include past visits" Grid.Column="1" VerticalTextAlignment="Center" FontSize="16" FontAttributes="Bold" Margin="10"/>
+                        </Grid>
+                        <CollectionView x:Name="ClinicCV" EmptyView="No clinic visits">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame x:Name="ClinicFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#303030" HasShadow="False">
+                                        <VerticalStackLayout>
+
+                                            <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="Frame_Tapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding DisplayID, StringFormat='Clinic Visit #{0}'}" FontSize="18"/>
+                                                    <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8"/>
+                                                    <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
+                                                        <Label.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="True">
+                                                                <Setter Property="Text" Value="Returned"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="False">
+                                                                <Setter Property="Text" Value="Still in Clinic"/>
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                    <Label Text="{Binding IssueCount, StringFormat='{0} Issues'}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8"/>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                            <Grid x:Name="DetailButtons"
                                           RowDefinitions="*" 
                                           ColumnDefinitions="*,*" Margin="5" IsVisible="False">
-                                        <Button Text="View/Edit" Clicked="ViewEditClinicButton_Clicked"
+                                                <Button Text="View/Edit" Clicked="ViewEditClinicButton_Clicked"
                                                 BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                 Grid.Row="0" Grid.Column="0" Margin="2"/>
-                                        <Button Text="Mark Returned" Clicked="ReturnedClinicButton_Clicked"
+                                                <Button Text="Mark Returned" Clicked="ReturnedClinicButton_Clicked"
                                                 BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                 Grid.Row="0" Grid.Column="1" Margin="2"/>
-                                    </Grid>
-                                </VerticalStackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </CollectionView.ItemTemplate>
-                </CollectionView>
-            </StackLayout>
-        </VerticalStackLayout>
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </StackLayout>
+                </VerticalStackLayout>
 
-        <VerticalStackLayout VerticalOptions="End" HorizontalOptions="End" Margin="0,0,-15,0" Grid.Row="2">
-            <VerticalStackLayout x:Name="AddInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
-                <Button x:Name="AddNoteButton" Clicked="AddNavigationButton_Clicked" Text="Add Note" IsVisible="True" BackgroundColor="{StaticResource FreeColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
-                <Button x:Name="AddIssueButton" Clicked="AddNavigationButton_Clicked" Text="Add Issue" IsVisible="True" BackgroundColor="{StaticResource GameColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
-                <Button x:Name="AddClinicVisitButton" Clicked="AddNavigationButton_Clicked" Text="Add Clinic Visit" IsVisible="True" BackgroundColor="{StaticResource ClinicColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
-            </VerticalStackLayout>
-            <VerticalStackLayout x:Name="OptionsInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
-                <Button x:Name="EditButton" Clicked="EditButton_Clicked" Text="Edit" IsVisible="True" BackgroundColor="#536578" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
-                <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
-            </VerticalStackLayout>
-            <Grid ColumnDefinitions="*,auto">
-                <Button 
+                <VerticalStackLayout VerticalOptions="End" HorizontalOptions="End" Margin="0,0,-15,0" Grid.Row="2">
+                    <VerticalStackLayout x:Name="AddInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
+                        <Button x:Name="AddNoteButton" Clicked="AddNavigationButton_Clicked" Text="Add Note" IsVisible="True" BackgroundColor="{StaticResource FreeColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                        <Button x:Name="AddIssueButton" Clicked="AddNavigationButton_Clicked" Text="Add Issue" IsVisible="True" BackgroundColor="{StaticResource GameColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                        <Button x:Name="AddClinicVisitButton" Clicked="AddNavigationButton_Clicked" Text="Add Clinic Visit" IsVisible="True" BackgroundColor="{StaticResource ClinicColor}" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                    </VerticalStackLayout>
+                    <VerticalStackLayout x:Name="OptionsInterface" IsVisible="False" Margin="0,0,20,10" WidthRequest="180" Spacing="10">
+                        <Button x:Name="EditButton" Clicked="EditButton_Clicked" Text="Edit" IsVisible="True" BackgroundColor="#536578" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                        <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
+                    </VerticalStackLayout>
+                    <Grid ColumnDefinitions="*,auto">
+                        <Button 
                 x:Name="DeleteEditButton"
                 Clicked="DeleteEditButton_Clicked"
                 Grid.Column="0"
@@ -204,8 +207,8 @@
                 VerticalOptions="Center"
                 HorizontalOptions="Fill"
                 Margin="0,0,16,16"/>
-                
-                <Button 
+
+                        <Button 
                 x:Name="AddButton"
                 Clicked="AddButton_Clicked"
                 Grid.Column="1"
@@ -219,7 +222,9 @@
                 VerticalOptions="End"
                 HorizontalOptions="End"
                 Margin="0,0,16,16"/>
+                    </Grid>
+                </VerticalStackLayout>
             </Grid>
-        </VerticalStackLayout>
-    </Grid>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>
