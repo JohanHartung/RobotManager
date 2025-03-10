@@ -5,6 +5,7 @@ using RobotManager.Classes;
 using System.Collections.ObjectModel;
 using System.Text.Json;
 using System.Text.Json.Serialization;
+using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
 
 
 namespace RobotManager.Views;
@@ -24,6 +25,8 @@ public partial class RobotsPage : ContentPage
     public RobotsPage()
     {
         InitializeComponent();
+        Refresh();
+
         selectedFilter = AllFilterButton;
 
 #if false
@@ -209,12 +212,20 @@ public partial class RobotsPage : ContentPage
 
             response.EnsureSuccessStatusCode();
             var jsonResponse = await response.Content.ReadAsStringAsync();
+            //check if "[]"
+            if(jsonResponse == "[]")
+            {
+                await DisplayAlert("Error", "No robots found", "OK");
+                return;
+            }
+
+
             Console.WriteLine(jsonResponse);
             naos = new();
-            var apiResponse = JsonSerializer.Deserialize<ApiResponse<Nao>>(jsonResponse);
-            if (apiResponse?.Value != null)
+            var apiResponse = JsonSerializer.Deserialize<List<Nao>>(jsonResponse);
+            if (apiResponse != null)
             {
-                foreach (var nao in apiResponse.Value)
+                foreach (var nao in apiResponse)
                 {
                     //if (!naos.Contains(nao))
                     //{
@@ -247,25 +258,32 @@ public partial class RobotsPage : ContentPage
         switch (swipeItem.Text)
         {
             case "Free":
-#if false
-                nao.Status = Status.Free;
-#endif
-                await SetStatusAsync(nao, Status.Free);
+
+
+                if(!await nao.SetStatus(Status.Free))
+                {
+                    await DisplayAlert("Error", "Error syncing status", "OK");
+                }
                 break;
             case "Game":
-#if false
-                nao.Status = Status.Game;
-#endif
-                await SetStatusAsync(nao, Status.Game);
+
+
+                if (!await nao.SetStatus(Status.Game))
+                {
+
+                    await DisplayAlert("Error", "Error syncing status", "OK");
+                }
                 break;
             case "Clinic":
                 await Navigation.PushAsync(new AddClinicVisitPage(nao, issues.Where(iss => iss.Nao == nao.Id).ToList()));
                 break;
             default:
-#if false
-                nao.Status = Status.Free;
-#endif
-                await SetStatusAsync(nao, Status.Free);
+
+
+                if (!await nao.SetStatus(Status.Free))
+                {
+                    await DisplayAlert("Error", "Error syncing status", "OK");
+                }
                 break;
 
         }
@@ -286,7 +304,7 @@ public partial class RobotsPage : ContentPage
             var naoIssues = issues.Where(iss => iss.Nao == nao.Id).ToList();
             var naoNotes = notes.Where(note => note.Nao == nao.Id).ToList();
             var naoClinicVisits = clinicVisits.Where(clinic => clinic.Nao == nao.Id).ToList();
-            Navigation.PushAsync(new RobotDetailPage(nao, naoIssues, naoNotes, naoClinicVisits));
+            Navigation.PushAsync(new RobotDetailPage(nao.Id));
         }
         else
         {
@@ -328,25 +346,32 @@ public partial class RobotsPage : ContentPage
 
     private async void RefreshView_Refreshing(object sender, EventArgs e)
     {
-        await LoadNaosAsync();
-        RobotCollection.ItemsSource = null;
-        FilterCollection();
+        await Refresh();
         RobotPageRV.IsRefreshing = false;
     }
 
-    private async Task SetStatusAsync(Nao nao, Status status)
+    private async Task Refresh()
+    {
+        await LoadNaosAsync();
+        RobotCollection.ItemsSource = null;
+        FilterCollection();
+    }
+
+    private async Task<bool> SetStatusAsync(Nao nao, Status status)
     {
         using HttpClient client = new();
         string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-        string apiUri = baseUri + $"{nao.Id}/{status}";
+        string apiUri = baseUri + $"SetStatus/{nao.Id}/{(int)status}";
         try
         {
-            HttpResponseMessage response = await client.PostAsync(apiUri, null);
+            HttpResponseMessage response = await client.PostAsync(apiUri, new StringContent(""));
             response.EnsureSuccessStatusCode();
+            return true;
         }
         catch (Exception)
         {
             await DisplayAlert("Error", "Error syncing status", "OK");
+            return false;
         }
     }
 
