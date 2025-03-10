@@ -1,37 +1,48 @@
 using RobotManager.Classes;
-
+using static RobotManager.Classes.Helpers;
 namespace RobotManager.Views;
 
 public partial class RobotDetailPage : ContentPage
 {
-    private Nao _nao;
+    private Nao nao;
     private Grid? currenDetailButtons;
 
-    List<Issue> _issues = new();
-    List<Note> _notes = new();
-    List<ClinicVisit> _clinicVisits = new();
+    List<Issue>? issues = new();
+    List<Note>? notes = new();
+    List<ClinicVisit>? clinicVisits = new();
 
     Button selectedTab;
 
-    public RobotDetailPage(Nao nao, List<Issue> issues, List<Note> notes, List<ClinicVisit> clinicVisits)
+    public RobotDetailPage(int naoId)
     {
         InitializeComponent();
+        _ = InitializeAsync(naoId);
+    }
 
-        // set local variables to the passed values
-        _nao = nao;
-        _issues = issues;
-        _notes = notes;
-        _clinicVisits = clinicVisits;
+    private async Task InitializeAsync(int naoId)
+    {
+        nao = new();
+
+        if (!await nao.InitializeFromCloud(naoId)) { return; }
+        issues = await GetGroupIssues(naoId);
+        notes = await GetGroupNotes(naoId);
+        clinicVisits = await GetGroupClinicVisits(naoId);
+        if (notes != null)
+        {
+            foreach (var note in notes)
+            {
+                await note.AuthorUser.GetUser(note.Author);
+            }
+        }
 
         // check whether the robot is under warranty and display the corresponding text
         bool underWarranty = nao.Warranty >= DateTime.Now;
         warrantyLabel.Text = underWarranty ? $"Currently under warranty ({nao.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
 
+        BindingContext = nao;
+        NoteCV.ItemsSource = notes;
 
-        BindingContext = _nao;
-        NoteCV.ItemsSource = _notes;
-
-        // almost equivalent to 'NoteCV.ItemsSource = _notes;' but filters out solved issues and clinic visits
+        // almost equivalent to 'NoteCV.ItemsSource = notes;' but filters out solved issues and clinic visits
         HandleSolvedIssues(solvedIssuesSwitch.IsToggled);
         HandlePastVisits(pastVisitSwitch.IsToggled);
     }
@@ -74,15 +85,15 @@ public partial class RobotDetailPage : ContentPage
 
         if (button == AddIssueButton)
         {
-            page = new AddIssuePage(_nao);
+            page = new AddIssuePage(nao);
         }
         else if (button == AddNoteButton)
         {
-            page = new AddNotePage(_nao);
+            page = new AddNotePage(nao);
         }
         else if (button == AddClinicVisitButton)
         {
-            page = new AddClinicVisitPage(_nao, _issues);
+            page = new AddClinicVisitPage(nao, issues);
         }
 
         Navigation.PushAsync(page);
@@ -108,7 +119,7 @@ public partial class RobotDetailPage : ContentPage
     {
         bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this NAO?", "Yes", "No");
         if (!answer) { return; }
-        if (!await _nao.Delete())
+        if (!await nao.Delete())
         {
             await DisplayAlert("Error", "NAO could not be deleted", "OK");
         }
@@ -116,7 +127,7 @@ public partial class RobotDetailPage : ContentPage
 
     private async void EditButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddRobotPage(_nao, true));
+        await Navigation.PushAsync(new AddRobotPage(nao, true));
     }
 
     // toggles the visibility of the detail buttons for notes issues and clinic visits
@@ -243,7 +254,7 @@ public partial class RobotDetailPage : ContentPage
         visit.BackReport = backReport;
         if (issueSolved)
         {
-            foreach (var issue in _issues)
+            foreach (var issue in issues)
             {
                 issue.Solved = (-2, DateTime.Now); // -2 > clinic
                 issue.SolvedReport = $"Issue solved during clinic visit #{visit.Id.ToString().PadLeft(4, '0')}";
@@ -331,11 +342,11 @@ public partial class RobotDetailPage : ContentPage
         IssueCV.ItemsSource = null;
         if (toggled)
         {
-            IssueCV.ItemsSource = _issues;
+            IssueCV.ItemsSource = issues;
         }
         else
         {
-            IssueCV.ItemsSource = _issues.Where(issue => !issue.IsSolved).ToList();
+            IssueCV.ItemsSource = issues.Where(issue => !issue.IsSolved).ToList();
 
         }
 
@@ -346,13 +357,19 @@ public partial class RobotDetailPage : ContentPage
         ClinicCV.ItemsSource = null;
         if (toggled)
         {
-            ClinicCV.ItemsSource = _clinicVisits;
+            ClinicCV.ItemsSource = clinicVisits;
         }
         else
         {
-            ClinicCV.ItemsSource = _clinicVisits.Where(visit => !visit.IsBack).ToList();
+            ClinicCV.ItemsSource = clinicVisits.Where(visit => !visit.IsBack).ToList();
 
         }
 
+    }
+
+    private async void RobotDetailPageRV_Refreshing(object sender, EventArgs e)
+    {
+        await InitializeAsync(nao.Id);
+        RobotDetailPageRV.IsRefreshing = false;
     }
 }
