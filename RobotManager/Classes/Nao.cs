@@ -8,6 +8,7 @@ using System.Net.Http.Json;
 using System.Runtime.Serialization;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 using static RobotManager.Classes.Helpers;
@@ -22,9 +23,6 @@ namespace RobotManager.Classes
         private string bodyID = String.Empty;
         private int warrantyExtension = 0;
         private DateTime purchased;
-        private List<int> issues = new();
-        private List<int> notes = new();
-        private List<int> clinicVisits = new();
         private Status status = Status.Free;
 
         [JsonPropertyName("id")]
@@ -47,14 +45,7 @@ namespace RobotManager.Classes
         public DateTime Purchased { get => purchased; set => purchased = value; }
         public DateTime Warranty { get => purchased.AddYears(2 + WarrantyExtension); }
 
-        [JsonPropertyName("issues")]
-        public List<int> Issues { get => issues; set => issues = value; }
-
-        [JsonPropertyName("notes")]
-        public List<int> Notes { get => notes; set => notes = value; }
-
-        [JsonPropertyName("clinicVisits")]
-        public List<int> ClinicVisits { get => clinicVisits; set => clinicVisits = value; }
+        [JsonPropertyName("status")]
         public Status Status
         {
             get => status;
@@ -105,6 +96,9 @@ namespace RobotManager.Classes
             };
 
             var content = JsonContent.Create(request);
+            // Serialize JSON manually and log it
+            string jsonBody = JsonSerializer.Serialize(request);
+            Console.WriteLine("Sending JSON: " + jsonBody);
 
             try
             {
@@ -132,18 +126,19 @@ namespace RobotManager.Classes
             string apiUri = baseUri + $"GetSingle/nao/{id}";
             try
             {
-                Nao nao = await client.GetFromJsonAsync<Nao>(apiUri);
+                HttpResponseMessage response = await client.GetAsync(apiUri).ConfigureAwait(false);
+                response.EnsureSuccessStatusCode();
+
+                Nao? nao = await response.Content.ReadFromJsonAsync<Nao>();
+                
 
                 if (nao != null)
-                {
+                { 
                     this.name = nao.name;
                     this.headID = nao.headID;
                     this.bodyID = nao.bodyID;
                     this.warrantyExtension = nao.warrantyExtension;
                     this.purchased = nao.purchased;
-                    this.issues = nao.issues;
-                    this.notes = nao.notes;
-                    this.clinicVisits = nao.clinicVisits;
                     this.status = nao.status;
                     return true;
                 }
@@ -171,6 +166,24 @@ namespace RobotManager.Classes
             }
         }
 
+        public async Task<bool> SetStatus(Status status)
+        {
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"SetStatus/{id}/{(int)status}";
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(apiUri, new StringContent(""));
+                response.EnsureSuccessStatusCode();
+                this.status = status;
+                return true;
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+
     }
 
     public class Issue
@@ -182,7 +195,7 @@ namespace RobotManager.Classes
         private string description = String.Empty;
         private int author;
         private DateTime date = new();
-        private Dictionary<int, DateTime> replicated = new(); // (int user, DateTime dateTime)?
+        private Dictionary<int, DateTime> replicated = new(); // (int user, DateTime dateTime)
         private (int user, DateTime dateTime)? solved = new();
         private string solvedReport = String.Empty;
 
@@ -205,12 +218,12 @@ namespace RobotManager.Classes
         public DateTime Date { get => date; set => date = value; }
 
         [JsonPropertyName("replicated")]
-        public Dictionary<int, DateTime> Replicated { get => replicated; set => replicated = value; }
-        public bool IsReplicated { get => replicated != null; }
+        public Dictionary<int, DateTime> Replicated { get => replicated; set => replicated = value ?? new(); }
+        public bool IsReplicated { get => replicated.Count > 0; }
 
         [JsonPropertyName("solved")]
         public (int user, DateTime dateTime)? Solved { get => solved; set => solved = value; }
-        public bool IsSolved { get => solved != null; }
+        public bool IsSolved { get => solved != default; }
 
         [JsonPropertyName("solvedReport")]
         public string SolvedReport { get => solvedReport; set => solvedReport = value; }
@@ -300,6 +313,7 @@ namespace RobotManager.Classes
         private string title = String.Empty;
         private string description = String.Empty;
         private int author;
+        private User authorUser = new();
         private DateTime date;
 
         [JsonPropertyName("id")]
@@ -316,6 +330,9 @@ namespace RobotManager.Classes
 
         [JsonPropertyName("author")]
         public int Author { get => author; set => author = value; }
+
+        public User AuthorUser { get => authorUser; set => authorUser = value; }
+        public string? AuthorName { get => authorUser.Name; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
@@ -376,6 +393,8 @@ namespace RobotManager.Classes
                     this.description = note.description;
                     this.author = note.author;
                     this.date = note.date;
+                    await this.authorUser.GetUser(note.author);
+
                     return true;
                 }
                 return false;
@@ -478,7 +497,7 @@ namespace RobotManager.Classes
             string apiUri = baseUri + "CreateEdit/clinicVisit";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, visit);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
                 return response.IsSuccessStatusCode;
             }
             catch
