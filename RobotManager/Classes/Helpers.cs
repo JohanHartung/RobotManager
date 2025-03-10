@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
+using System.Text.Json.Serialization;
 using System.Threading.Tasks;
 
 namespace RobotManager.Classes
@@ -29,5 +31,118 @@ namespace RobotManager.Classes
             }
             return Hash(token, dateTime);
         }
+
+        public static async Task<List<Note>?> GetAllnotes()
+        {
+            List<Note>? notes = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetAll/notes";
+
+            var response = await client.GetFromJsonAsync<List<Note>>(apiUri);
+            if (response != null)
+            {
+                notes = response;
+            }
+
+
+            return notes;
+        }
+
+        public static async Task<List<Note>?> GetGroupNotes(int naoId)
+        {
+            List<Note>? notes = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetGroup/Note/{naoId}";
+
+            var response = await client.GetFromJsonAsync<List<Note>>(apiUri);
+            if (response != null)
+            {
+                notes = response;
+            }
+
+            return notes;
+        }
+
+        public static async Task<List<Issue>?> GetAllIssues()
+        {
+            List<Issue>? issues = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetAll/issues";
+
+            var response = await client.GetFromJsonAsync<List<Issue>>(apiUri);
+            if (response != null)
+            {
+                issues = response;
+            }
+
+            return issues;
+        }
+
+        public static async Task<List<Issue>?> GetGroupIssues(int naoId)
+        {
+            List<Issue>? issues = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetGroup/issue/{naoId}";
+            try
+            {
+
+                var response = await client.GetFromJsonAsync<List<Issue>>(apiUri);
+                if (response != null)
+                {
+                    foreach (var issue in response)
+                    {
+                        if (issue.Solved?.user == 0 && issue.Solved?.dateTime == DateTime.MinValue)
+                        {
+                            issue.Solved = null;
+                        }
+                    }
+                    issues = response;
+                }
+            }
+            catch (Exception ex)
+            {
+                issues = new List<Issue>();
+            }
+            return issues;
+        }
+
+        public static async Task<List<ClinicVisit>?> GetAllClinicVisits()
+        {
+            List<ClinicVisit>? clinicVisits = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetAll/clinicVisits";
+
+            var response = await client.GetFromJsonAsync<List<ClinicVisit>>(apiUri);
+            if (response != null)
+            {
+                clinicVisits = response;
+            }
+
+
+            return clinicVisits;
+        }
+
+        public static async Task<List<ClinicVisit>?> GetGroupClinicVisits(int naoId)
+        {
+            List<ClinicVisit>? clinicVisits = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetGroup/clinicVisit/{naoId}";
+
+            var response = await client.GetFromJsonAsync<List<ClinicVisit>>(apiUri);
+            if (response != null)
+            {
+                clinicVisits = response;
+            }
+
+            return clinicVisits;
+        }
+
+
     }
 }
