@@ -25,13 +25,13 @@ public partial class AddClinicVisitPage : ContentPage
         _clinicVisit.Nao = _nao.Id;
         _clinicVisit.Date = DateTime.Now;
         _clinicVisit.Notes = NotesEntry.Text;
-        _nao.Status = Status.Clinic;
-        if(!await _clinicVisit.Post() && !await _nao.Post())
+        if(!await _clinicVisit.Post())
         {
             await DisplayAlert("Error", "Could not connect to the server ", "OK");
         }
         else
         {
+            await _nao.SetStatus(Status.Clinic);
             await Navigation.PopAsync();
         }
     }
