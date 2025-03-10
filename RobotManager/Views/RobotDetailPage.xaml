@@ -40,11 +40,14 @@
                                         <Frame.GestureRecognizers>
                                             <TapGestureRecognizer Tapped="Frame_Tapped"/>
                                         </Frame.GestureRecognizers>
-                                        <VerticalStackLayout>
-                                            <Label Text="{Binding Title}" FontSize="18"/>
-                                            <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8"/>
-                                            <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" MaxLines="2"/>
-                                        </VerticalStackLayout>
+                                                <VerticalStackLayout>
+                                                    <Grid ColumnDefinitions="*,auto">
+                                                        <Label Text="{Binding Title}" FontSize="18" MaxLines="1" LineBreakMode="TailTruncation" Grid.Column="0"/>
+                                                        <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="1"/>
+                                                    </Grid>
+                                                    <Label Text="{Binding AuthorName}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" MaxLines="2"/>
+                                                    <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" MaxLines="2"/>
+                                                </VerticalStackLayout>
                                     </Frame>
                                     <Grid x:Name="DetailButtons"
                                         RowDefinitions="*" 
