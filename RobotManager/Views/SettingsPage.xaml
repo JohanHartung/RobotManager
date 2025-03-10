@@ -2,6 +2,7 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RobotManager.Views.SettingsPage"
+             xmlns:toolkit="http://schemas.microsoft.com/dotnet/2022/maui/toolkit"
              Title="Settings">
     <VerticalStackLayout Padding="20">
         <Label Text="API" FontSize="20"/>
@@ -9,6 +10,19 @@
         <Label x:Name="uriText" Text="https://" FontSize="15" Opacity=".8"/>
         <Entry x:Name="domainEntry" Placeholder="example.com" TextChanged="domainEntry_TextChanged"/>
         <Button Text="Confirm" TextColor="WhiteSmoke" Clicked="Button_Clicked"/>
+        <Frame Margin="0,50" BackgroundColor="{StaticResource GameColor}">
+            <toolkit:Expander>
+                <toolkit:Expander.Header>
+                    <Label Text="Danger Zone (expand)"
+                FontAttributes="Bold"
+                TextColor ="WhiteSmoke"
+                FontSize="Medium" />
+                </toolkit:Expander.Header>
+                <VerticalStackLayout>
+                    <Button x:Name="resetButton" Margin="0,20" Text="Reset user data" Clicked="ResetButton_Clicked" TextColor="WhiteSmoke"/>
 
+                </VerticalStackLayout>
+            </toolkit:Expander>
+        </Frame>
     </VerticalStackLayout>
 </ContentPage>
