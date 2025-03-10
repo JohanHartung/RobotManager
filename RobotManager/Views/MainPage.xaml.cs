@@ -4,30 +4,30 @@ using Classes;
 
 public partial class MainPage : ContentPage
 {
+
+    private List<ClinicVisit>? clinicVisits = new();
+
     public MainPage()
     {
         InitializeComponent();
-#if DEBUG
-        resetButton.IsVisible = true;
-        loginButton.IsVisible = true;
-#endif
+        _ = InitializeAsync();
     }
 
-    private void Button_Clicked(object sender, EventArgs e)
+    private async Task InitializeAsync()
     {
-        Preferences.Set("DeviceId", null);
-        Preferences.Set("Token", null);
-        Preferences.Set("UserId", -1);
-        Preferences.Set("UserName", null);
+        clinicVisits = await GetAllClinicVisits();
+        ClinicVisitCV.ItemsSource = clinicVisits;
     }
 
-    private async void LoginButton_Clicked(object sender, EventArgs e)
+    
+
+    private void ClinicVisitFrame_Tapped(object sender, TappedEventArgs e)
     {
-        User user = new();
-        string username = "Johan";
-        string password = Hash("1357");
-        var userdata = await user.CreateUser(username, password);
-        user.Initialize(userdata);
+        var frame = sender as Frame;
+        if (frame == null) { return; }
+        var visit = frame.BindingContext as ClinicVisit;
+        if (visit == null) { return; }
+        Navigation.PushAsync(new ClinicVisitDetailPage(visit));
     }
 }
 
