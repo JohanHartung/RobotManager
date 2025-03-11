@@ -73,7 +73,7 @@ namespace RobotManager.Classes
             string apiUri = baseUri + "CreateEdit/nao";
 
             User user = new();
-            var dateTime = DateTime.Now;
+            var dateTime = DateTime.UtcNow;
             var userSecret = GenerateUserSecret(dateTime.ToString());
 
             var request = new CreateEditNaoRequest
@@ -236,7 +236,7 @@ namespace RobotManager.Classes
 
         public async Task<bool> Post()
         {
-            var dateTime = DateTime.Now;
+            var dateTime = DateTime.UtcNow;
             var userSecret = GenerateUserSecret(dateTime.ToString());
             var userId = Preferences.Get("UserId", -1);
             var deviceId = Preferences.Get("DeviceId", null);
@@ -303,6 +303,53 @@ namespace RobotManager.Classes
                 return false;
             }
         }
+
+        public async Task<bool> ReplicateIssue()
+        {
+            var userId = Preferences.Get("UserId", -1);
+            var dateTime = DateTime.Now;
+            if (userId == -1) { return false; }
+
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"ReplicateIssue/{this.Id}/{dateTime}/{userId}";
+            try
+            {
+                HttpResponseMessage response = await client.PostAsync(apiUri, new StringContent(""));
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> SolveIssue()
+        {
+            var userId = Preferences.Get("UserId", -1);
+            var dateTime = DateTime.Now;
+            if (userId == -1) { return false; }
+
+            var request = new SolveIssueRequest
+            {
+                Id = this.Id,
+                UserId = userId,
+                DateTime = dateTime.ToString(),
+                Report = this.SolvedReport
+            };
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "SolveIssue";
+            try
+            {
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
     }
 
     public class Note
@@ -345,7 +392,7 @@ namespace RobotManager.Classes
 
         public async Task<bool> Post()
         {
-            var dateTime = DateTime.Now;
+            var dateTime = DateTime.UtcNow;
             var userSecret = GenerateUserSecret(dateTime.ToString());
             var userId = Preferences.Get("UserId", -1);
             var deviceId = Preferences.Get("DeviceId", null);
@@ -429,7 +476,6 @@ namespace RobotManager.Classes
         private DateTime date;
         private DateTime backDate;
         private List<int> issues = new();
-        private bool isBack;
         private string notes = String.Empty;
         private string backReport = String.Empty;
         private int author;
@@ -450,8 +496,7 @@ namespace RobotManager.Classes
         [JsonPropertyName("issues")]
         public List<int> Issues { get => issues; set => issues = value; }
 
-        [JsonPropertyName("isBack")]
-        public bool IsBack { get => isBack; set => isBack = value; }
+        public bool IsBack { get => BackReport != String.Empty; }
 
         [JsonPropertyName("notes")]
         public string Notes { get => notes; set => notes = value; }
@@ -475,7 +520,7 @@ namespace RobotManager.Classes
 
         public async Task<bool> Post()
         {
-            var dateTime = DateTime.Now;
+            var dateTime = DateTime.UtcNow;
             var userSecret = GenerateUserSecret(dateTime.ToString());
             var userId = Preferences.Get("UserId", -1);
             var deviceId = Preferences.Get("DeviceId", null);
@@ -519,7 +564,6 @@ namespace RobotManager.Classes
                     this.nao = visit.nao;
                     this.date = visit.date;
                     this.issues = visit.issues;
-                    this.isBack = visit.isBack;
                     this.notes = visit.notes;
                     this.backReport = visit.backReport;
                     this.author = visit.author;
@@ -549,6 +593,32 @@ namespace RobotManager.Classes
             }
         }
 
+        public async Task<bool> EndClinicVisit()
+        {
+            var userId = Preferences.Get("UserId", -1);
+            var dateTime = DateTime.Now;
+            if (userId == -1) { return false; }
+
+            var request = new EndClinicVisitRequest
+            {
+                Id = this.Id,
+                UserId = userId,
+                BackDate = dateTime.ToString(),
+                BackReport = this.BackReport
+            };
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "EndClinicVisit";
+            try
+            {
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
+                return response.IsSuccessStatusCode;
+            }
+            catch
+            {
+                return false;
+            }
+        }
 
     }
 
@@ -620,6 +690,22 @@ namespace RobotManager.Classes
         public string DeviceId { get; set; }
         public string DateTime { get; set; }
         public string UserSecret { get; set; }
+    }
+
+    public class SolveIssueRequest
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string DateTime { get; set; }
+        public string Report { get; set; }
+    }
+
+    public class EndClinicVisitRequest
+    {
+        public int Id { get; set; }
+        public int UserId { get; set; }
+        public string BackDate { get; set; }
+        public string BackReport { get; set; }
     }
 
 }

@@ -217,7 +217,7 @@ public partial class RobotDetailPage : ContentPage
         }
         issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
         issue.SolvedReport = solvedReport;
-        if (!await issue.Post())
+        if (!await issue.SolveIssue())
         {
             await DisplayAlert("Error", "Issue could not be updated", "OK");
         }
@@ -249,10 +249,9 @@ public partial class RobotDetailPage : ContentPage
         }
 
         bool issueSolved = await DisplayAlert("Issue(s) Solved?", "Mark issue(s) solved?", "Yes", "No");
-        visit.IsBack = true;
         visit.BackDate = DateTime.Now;
         visit.BackReport = backReport;
-        if (issueSolved)
+        if (issueSolved && issues != null)
         {
             foreach (var issue in issues)
             {
@@ -265,7 +264,7 @@ public partial class RobotDetailPage : ContentPage
             }
         }
 
-        if (!await visit.Post())
+        if (!await visit.EndClinicVisit())
         {
             await DisplayAlert("Error", "Clinic Visit could not be updated", "OK");
         }
