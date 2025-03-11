@@ -12,7 +12,7 @@ public partial class IssueDetailPage : ContentPage
         _nao = new Nao();
         BindingContext = _issue;
         InitializeComponent();
-        InitializeAsync();
+        _ = InitializeAsync();
 	}
 
     private async Task InitializeAsync()
@@ -31,7 +31,7 @@ public partial class IssueDetailPage : ContentPage
     private async void ReplicateButton_Clicked(object sender, EventArgs e)
     {
         _issue.Replicated.Add(Preferences.Get("userID", -1), DateTime.Now);
-        if (!await _issue.Post())
+        if (!await _issue.ReplicateIssue())
         {
             await DisplayAlert("Error", "Could not connect to the server", "OK");
         }
@@ -49,7 +49,7 @@ public partial class IssueDetailPage : ContentPage
         }
         _issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
         _issue.SolvedReport = solvedReport;
-        if (!await _issue.Post())
+        if (!await _issue.SolveIssue())
         {
             await DisplayAlert("Error", "Could not connect to the server", "OK");
         }
