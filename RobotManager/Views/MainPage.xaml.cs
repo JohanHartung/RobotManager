@@ -29,6 +29,12 @@ public partial class MainPage : ContentPage
         if (visit == null) { return; }
         Navigation.PushAsync(new ClinicVisitDetailPage(visit));
     }
+
+    private async void RefreshView_Refreshing(object sender, EventArgs e)
+    {
+        await InitializeAsync();
+        MainPageRV.IsRefreshing = false;
+    }
 }
 
 

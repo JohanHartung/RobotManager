@@ -2,67 +2,67 @@
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="RobotManager.Views.MainPage">
-    
-    <ScrollView>
-        <VerticalStackLayout
+    <RefreshView x:Name="MainPageRV" Refreshing="RefreshView_Refreshing">
+        <ScrollView>
+            <VerticalStackLayout
             Padding="20,0"
             Spacing="25">
-            <Frame BackgroundColor="#303030">
-                <VerticalStackLayout>
-                    <Label Text="Upcomming Games:" FontSize="20"/>
-                    <CollectionView EmptyView="No games planned" Margin="0,10">
+                <Frame BackgroundColor="#303030">
+                    <VerticalStackLayout>
+                        <Label Text="Upcomming Games:" FontSize="20"/>
+                        <CollectionView EmptyView="No games planned" Margin="0,10">
 
-                    </CollectionView>
-                    <Button Text="Add upcomming game" TextColor="WhiteSmoke"/>
-                </VerticalStackLayout>
-            </Frame>
-            <Frame BackgroundColor="#303030">
-                <VerticalStackLayout>
-                    <Label Text="Robots in Clinic" FontSize="20"/>
-                    <CollectionView x:Name="ClinicVisitCV" EmptyView="No robots in clinic" Margin="0,10">
-                        <CollectionView.ItemTemplate>
-                            <DataTemplate>
-                                <Frame x:Name="ClinicFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#303030" HasShadow="False">
-                                    <VerticalStackLayout>
-                                        <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
-                                            <Frame.GestureRecognizers>
-                                                <TapGestureRecognizer Tapped="ClinicVisitFrame_Tapped"/>
-                                            </Frame.GestureRecognizers>
-                                            <VerticalStackLayout>
-                                                <Label Text="{Binding DisplayID, StringFormat='Clinic Visit #{0}'}" FontSize="18"/>
-                                                <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8"/>
-                                                <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
-                                                    <Label.Triggers>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="True">
-                                                            <Setter Property="Text" Value="Returned"/>
-                                                        </DataTrigger>
-                                                        <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="False">
-                                                            <Setter Property="Text" Value="Still in Clinic"/>
-                                                        </DataTrigger>
-                                                    </Label.Triggers>
-                                                </Label>
-                                                <Label Text="{Binding IssueCount, StringFormat='{0} Issues'}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8"/>
-                                            </VerticalStackLayout>
-                                        </Frame>
-                                        <Grid x:Name="DetailButtons"
+                        </CollectionView>
+                        <Button Text="Add upcomming game" TextColor="WhiteSmoke"/>
+                    </VerticalStackLayout>
+                </Frame>
+                <Frame BackgroundColor="#303030">
+                    <VerticalStackLayout>
+                        <Label Text="Robots in Clinic" FontSize="20"/>
+                        <CollectionView x:Name="ClinicVisitCV" EmptyView="No robots in clinic" Margin="0,10">
+                            <CollectionView.ItemTemplate>
+                                <DataTemplate>
+                                    <Frame x:Name="ClinicFrame" BackgroundColor="#282828" Margin="0,5"  Padding="0" BorderColor="#303030" HasShadow="False">
+                                        <VerticalStackLayout>
+                                            <Frame BackgroundColor="#303030" BorderColor="#303030" Padding="10" >
+                                                <Frame.GestureRecognizers>
+                                                    <TapGestureRecognizer Tapped="ClinicVisitFrame_Tapped"/>
+                                                </Frame.GestureRecognizers>
+                                                <VerticalStackLayout>
+                                                    <Label Text="{Binding DisplayID, StringFormat='Clinic Visit #{0}'}" FontSize="18"/>
+                                                    <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8"/>
+                                                    <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
+                                                        <Label.Triggers>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="True">
+                                                                <Setter Property="Text" Value="Returned"/>
+                                                            </DataTrigger>
+                                                            <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="False">
+                                                                <Setter Property="Text" Value="Still in Clinic"/>
+                                                            </DataTrigger>
+                                                        </Label.Triggers>
+                                                    </Label>
+                                                    <Label Text="{Binding IssueCount, StringFormat='{0} Issues'}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8"/>
+                                                </VerticalStackLayout>
+                                            </Frame>
+                                            <Grid x:Name="DetailButtons"
                                                 RowDefinitions="*" 
                                                 ColumnDefinitions="*,*" Margin="5" IsVisible="False">
-                                            <Button Text="View/Edit" 
+                                                <Button Text="View/Edit" 
                                                     BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                     Grid.Row="0" Grid.Column="0" Margin="2"/>
-                                            <Button Text="Mark Returned"
+                                                <Button Text="Mark Returned"
                                                     BackgroundColor="#536578" TextColor="WhiteSmoke"
                                                     Grid.Row="0" Grid.Column="1" Margin="2"/>
-                                        </Grid>
-                                    </VerticalStackLayout>
-                                </Frame>
-                            </DataTemplate>
-                        </CollectionView.ItemTemplate>
-                    </CollectionView>
-                </VerticalStackLayout>
-            </Frame>
-            
-        </VerticalStackLayout>
-    </ScrollView>
+                                            </Grid>
+                                        </VerticalStackLayout>
+                                    </Frame>
+                                </DataTemplate>
+                            </CollectionView.ItemTemplate>
+                        </CollectionView>
+                    </VerticalStackLayout>
+                </Frame>
 
+            </VerticalStackLayout>
+        </ScrollView>
+    </RefreshView>
 </ContentPage>
