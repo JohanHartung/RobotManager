@@ -4,15 +4,15 @@ namespace RobotManager.Views;
 
 public partial class ClinicVisitDetailPage : ContentPage
 {
-    Nao _nao;
+    Nao _nao = new();
     ClinicVisit _visit;
-	List<Issue>? _issues;
+    List<Issue>? _issues;
     public ClinicVisitDetailPage(ClinicVisit visit)
 	{
 		InitializeComponent();
 		_visit = visit;
         BindingContext = _visit;
-        InitializeAsync();
+        _ = InitializeAsync();
     }
     private async Task InitializeAsync()
     {
@@ -31,23 +31,22 @@ public partial class ClinicVisitDetailPage : ContentPage
     {
 		string backReport = await DisplayPromptAsync("Return Report", "Please enter a report:");
 		bool issueSolved = await DisplayAlert("Issue(s) Solved?", "Mark issue(s) solved?", "Yes", "No");
-		_visit.IsBack = true;
         _visit.BackDate = DateTime.Now;
         _visit.BackReport = backReport;
-        if (issueSolved)
+        if (issueSolved && _issues != null)
         {
             foreach (var issue in _issues)
             {
-                issue.Solved = (-2, DateTime.Now); // -2 > clinic
+                issue.Solved = (-2, DateTime.Now); // -2 => clinic
                 issue.SolvedReport = $"Issue solved during clinic visit #{_visit.Id.ToString().PadLeft(4, '0')}";
-                if (!await issue.Post())
+                if (!await issue.SolveIssue())
                 {
                     await DisplayAlert("Error", "Issue could not be updated", "OK");
                 }
             }
         }
 
-        if(!await _visit.Post())
+        if(!await _visit.EndClinicVisit())
         {
             await DisplayAlert("Error", "Clinic Visit could not be updated", "OK");
         }
