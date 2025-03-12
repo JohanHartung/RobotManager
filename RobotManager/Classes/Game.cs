@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using System.Timers;
+using static RobotManager.Classes.Helpers;
 
 namespace RobotManager.Classes
 {
@@ -27,15 +30,37 @@ namespace RobotManager.Classes
         [JsonPropertyName("home")]
         public bool Home { get => home; set => home = value; }
 
+        public string? CountdownText { get; set; }
+        public bool CuntdownStarted { get => true; }
+
 
         public async Task<bool> Post()
         {
+            var dateTime = DateTime.UtcNow;
+            var userSecret = GenerateUserSecret(dateTime.ToString());
+            var userId = Preferences.Get("UserId", -1);
+            var deviceId = Preferences.Get("DeviceId", null);
+
+            if (userId == -1 || deviceId == null) { return false; }
             Game game = this;
+            
+
+            var request = new GameCreateEditRequest
+            {
+                Game = game,
+                UserId = userId,
+                DeviceId = deviceId,
+                DateTime = dateTime.ToString(),
+                UserSecret = userSecret
+            };
+
+
             using HttpClient client = new();
-            string apiUrl = "https://skakominor.de/api/RobotManager/CreateEdit/game";
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + "CreateEdit/game";
             try
             {
-                HttpResponseMessage response = await client.PostAsJsonAsync(apiUrl, game);
+                HttpResponseMessage response = await client.PostAsJsonAsync(apiUri, request);
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -88,5 +113,14 @@ namespace RobotManager.Classes
         B,
         C,
         D
+    }
+
+    public class GameCreateEditRequest
+    {
+        public Game Game { get; set; }
+        public int UserId { get; set; }
+        public string DeviceId { get; set; }
+        public string DateTime { get; set; }
+        public string UserSecret { get; set; }
     }
 }
