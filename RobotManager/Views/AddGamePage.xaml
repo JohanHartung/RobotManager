@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="RobotManager.Views.AddGamePage"
+             Title="AddGamePage">
+    <Grid Padding="20,0">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="auto"/>
+        </Grid.RowDefinitions>
+        <VerticalStackLayout Grid.Row="0">
+            <BoxView BackgroundColor="Transparent" HeightRequest="20"/>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Entry x:Name="OpponentEntry" Placeholder="Opponent"/>
+            </Frame>
+            
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+                <Grid ColumnDefinitions="auto, auto, *">
+                    <DatePicker x:Name="IssueDatePicker" Grid.Column="0"/>
+                    <TimePicker x:Name="IssueTimePicker" Grid.Column="1"/>
+                    <Label Text="now" TextColor="#536578"  Grid.Column="2"
+               FontAttributes="Bold" TextDecorations="Underline" 
+               Margin="20,0" VerticalTextAlignment="Center">
+                        <Label.GestureRecognizers>
+                            <TapGestureRecognizer Tapped="TapGestureRecognizer_Tapped"/>
+                        </Label.GestureRecognizers>
+                    </Label>
+                </Grid>
+            </Frame>
+            <Frame BackgroundColor="Transparent" BorderColor="Gray" Padding="5,0" Margin="0,5">
+
+                <Picker x:Name="picker"
+                    Title="Select Field" SelectedIndexChanged="picker_SelectedIndexChanged">
+                    <Picker.ItemsSource>
+                        <x:Array Type="{x:Type x:String}">
+                            <x:String>Field A</x:String>
+                            <x:String>Field B</x:String>
+                            <x:String>Field C</x:String>
+                            <x:String>Field D</x:String>
+                        </x:Array>
+                    </Picker.ItemsSource>
+                </Picker>
+            </Frame>
+            <VerticalStackLayout>
+                <Grid RowDefinitions="auto,auto,auto,auto,auto,auto" ColumnDefinitions="50,*" Margin="0,20">
+                    <CheckBox x:Name="HomeCheckBox" Grid.Row="0" Grid.Column="0" CheckedChanged="HomeCheckBox_CheckedChanged"/>
+                    <Label Text="Home" FontSize="15" Grid.Row="0" Grid.Column="1" VerticalTextAlignment="Center"/>
+                </Grid>
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+
+
+        <Button x:Name="CreateGameButton" Text="Create Game" Grid.Row="1" Margin="10,10" Clicked="CreateGameButton_Clicked" BackgroundColor="#536578" TextColor="WhiteSmoke"/>
+
+    </Grid>
+</ContentPage>
