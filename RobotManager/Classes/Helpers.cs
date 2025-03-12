@@ -143,6 +143,24 @@ namespace RobotManager.Classes
             return clinicVisits;
         }
 
+        public static async Task<List<Game>?> GetAllGames()
+        {
+            List<Game>? games = new();
+            using HttpClient client = new();
+            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string apiUri = baseUri + $"GetAll/games";
+
+            var response = await client.GetFromJsonAsync<List<Game>>(apiUri);
+            if (response != null)
+            {
+                games = response;
+            }
+
+
+            return games;
+        }
+
+
 
     }
 }
