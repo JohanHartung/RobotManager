@@ -79,16 +79,6 @@ namespace RobotManager.Classes
             var request = new CreateEditNaoRequest
             {
                 Nao = nao,
-                //Id = nao.Id,
-                //Name = nao.Name,
-                //HeadID = nao.HeadID,
-                //BodyID = nao.BodyID,
-                //WarrantyExtension = nao.WarrantyExtension,
-                //Purchased = nao.Purchased.ToString(),
-                //Issues = nao.Issues,
-                //Notes = nao.Notes,
-                //ClinicVisits = nao.ClinicVisits,
-                //Status = (int)nao.Status,
                 UserId = user.Id,
                 DeviceId = user.DeviceId,
                 DateTime = dateTime.ToString(),
