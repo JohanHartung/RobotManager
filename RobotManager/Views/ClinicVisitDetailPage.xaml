@@ -10,7 +10,7 @@
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
             <HorizontalStackLayout Margin="0,0,0,0">
-                <Label x:Name="NaoName" Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+                <Label x:Name="RobotName" Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
                 <Label Text="{Binding Status, StringFormat='{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding IsBack}" Value="True">
@@ -22,8 +22,8 @@
                     </Label.Triggers>
                 </Label>
             </HorizontalStackLayout>
-            <Label x:Name="NaoHead" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
-            <Label x:Name="NaoBody" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
+            <Label x:Name="RobotHead" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label x:Name="RobotBody" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
             <Label Text="Issues:" FontSize="18" Margin="0,15"/>
             <CollectionView x:Name="IssueCV" EmptyView="No issues" Margin="0,5" MaximumHeightRequest="200" VerticalScrollBarVisibility="Always">
                 <CollectionView.ItemTemplate>

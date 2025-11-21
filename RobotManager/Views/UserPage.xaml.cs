@@ -145,7 +145,7 @@ public partial class UserPage : ContentPage
         var frame = sender as Frame;
         if (frame == null) { return; }
 
-        Nao nao = new();
+        Robot robot = new();
 
         if (frame.BindingContext.GetType() == typeof(Issue))
         {

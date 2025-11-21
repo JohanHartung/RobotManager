@@ -53,6 +53,7 @@
             FontSize="30"
             VerticalOptions="End"
             HorizontalOptions="End"
-            Margin="0,0,16,16"/>
+            Margin="0,0,16,16"
+            IsVisible="False"/>
     </Grid>
 </ContentPage>

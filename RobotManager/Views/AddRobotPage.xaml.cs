@@ -7,21 +7,21 @@ namespace RobotManager.Views;
 
 public partial class AddRobotPage : ContentPage
 {
-    Nao _nao;
-    public AddRobotPage(Nao? nao = null, bool editMode = false)
+    Robot _robot;
+    public AddRobotPage(Robot? robot = null, bool editMode = false)
     {
         InitializeComponent();
-        _nao = nao ?? new Nao();
+        _robot = robot ?? new Robot();
 
         if (editMode)
         {
-            Title = $"Edit NAO{_nao.Name}";
+            Title = $"Edit NAO{_robot.Name}";
             AddRobotButton.Text = "Save";
-            NameEntry.Text = _nao.Name;
-            HeadIdEntry.Text = _nao.HeadID;
-            BodyIdEntry.Text = _nao.BodyID;
-            PurchaseDatePicker.Date = _nao.Purchased;
-            WarrantyExtensionEntry.Text = _nao.WarrantyExtension.ToString();
+            NameEntry.Text = _robot.Name;
+            HeadIdEntry.Text = _robot.HeadID;
+            BodyIdEntry.Text = _robot.BodyID;
+            PurchaseDatePicker.Date = _robot.Purchased;
+            WarrantyExtensionEntry.Text = _robot.WarrantyExtension.ToString();
         }
 
     }
@@ -49,13 +49,13 @@ public partial class AddRobotPage : ContentPage
         }
         if (!FormIsValid()) { return; }
 
-        _nao.Name = NameEntry.Text;
-        _nao.HeadID = HeadIdEntry.Text;
-        _nao.BodyID = BodyIdEntry.Text;
-        _nao.Purchased = PurchaseDatePicker.Date.Value;
-        _nao.WarrantyExtension = warranty;
+        _robot.Name = NameEntry.Text;
+        _robot.HeadID = HeadIdEntry.Text;
+        _robot.BodyID = BodyIdEntry.Text;
+        _robot.Purchased = PurchaseDatePicker.Date.Value;
+        _robot.WarrantyExtension = warranty;
 
-        if(!await _nao.Post())
+        if(!await _robot.Post())
         {
             await DisplayAlert("Error", "Could not connect to the server ", "OK");
             return;

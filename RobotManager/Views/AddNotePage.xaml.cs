@@ -5,19 +5,19 @@ namespace RobotManager.Views;
 
 public partial class AddNotePage : ContentPage
 {
-    Nao _nao;
+    Robot _robot;
     Note _note;
-    public AddNotePage(Nao nao, Note? note = null, bool editMode = false)
+    public AddNotePage(Robot robot, Note? note = null, bool editMode = false)
     {
         InitializeComponent();
         ResetDateTime();
 
-        _nao = nao;
+        _robot = robot;
         _note = note ?? new Note();
 
         if (editMode)
         {
-            Title = $"Edit Note #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+            Title = $"Edit Note #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
             CreateNoteButton.Text = "Save Changes";
             TitleEntry.Text = _note.Title;
             NoteDatePicker.Date = _note.Date;
@@ -25,7 +25,7 @@ public partial class AddNotePage : ContentPage
             NoteDescription.Text = _note.Description;
         }
 
-        BindingContext = _nao;
+        BindingContext = _robot;
     }
 
     private async void CreateNoteButton_Clicked(object sender, EventArgs e)
@@ -36,7 +36,7 @@ public partial class AddNotePage : ContentPage
             _note.Title = TitleEntry.Text;
             _note.Date = NoteDatePicker.Date.Value.Add(NoteTimePicker.Time.Value);
             _note.Description = NoteDescription.Text;
-            _note.Nao = _nao.Id;
+            _note.Robot = _robot.Id;
             _note.Author = Preferences.Get("UserId", -1);
 
             if (!await _note.Post())

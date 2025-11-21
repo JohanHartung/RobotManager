@@ -5,20 +5,20 @@ namespace RobotManager.Views;
 
 public partial class AddIssuePage : ContentPage
 {
-    Nao _nao;
+    Robot _robot;
     Issue _issue = new();
     bool _editMode;
-    public AddIssuePage(Nao nao, Issue? issue = null, bool editMode = false)
+    public AddIssuePage(Robot robot, Issue? issue = null, bool editMode = false)
     {
         InitializeComponent();
         ResetDateTime();
-        BindingContext = nao;
-        _nao = nao;
+        BindingContext = robot;
+        _robot = robot;
         _issue = issue ?? new Issue();
         _editMode = editMode;
         if (_editMode)
         {
-            Title = $"Edit Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+            Title = $"Edit Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
             CreateIssueButton.Text = "Save Changes";
             TitleEntry.Text = _issue.Title;
             IssueDatePicker.Date = _issue.Date;
@@ -62,7 +62,7 @@ public partial class AddIssuePage : ContentPage
                 _issue.Solved = new() { user = Preferences.Get("userID", -1), dateTime = SolvedDatePicker.Date.Value.Add(SolvedTimePicker.Time.Value) };
                 _issue.SolvedReport = SolvedReport.Text;
             }
-            _issue.Nao = _nao.Id;
+            _issue.Robot = _robot.Id;
 
             if (!await _issue.Post())
             {

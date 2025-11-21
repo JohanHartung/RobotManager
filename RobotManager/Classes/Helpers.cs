@@ -49,12 +49,12 @@ namespace RobotManager.Classes
             return notes;
         }
 
-        public static async Task<List<Note>?> GetGroupNotes(int naoId)
+        public static async Task<List<Note>?> GetGroupNotes(int robotId)
         {
             List<Note>? notes = new();
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetGroup/Note/{naoId}";
+            string apiUri = baseUri + $"GetGroup/Note/{robotId}";
 
             var response = await client.GetFromJsonAsync<List<Note>>(apiUri);
             if (response != null)
@@ -81,12 +81,12 @@ namespace RobotManager.Classes
             return issues;
         }
 
-        public static async Task<List<Issue>?> GetGroupIssues(int naoId)
+        public static async Task<List<Issue>?> GetGroupIssues(int robotId)
         {
             List<Issue>? issues = new();
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetGroup/issue/{naoId}";
+            string apiUri = baseUri + $"GetGroup/issue/{robotId}";
             try
             {
 
@@ -127,12 +127,12 @@ namespace RobotManager.Classes
             return clinicVisits;
         }
 
-        public static async Task<List<ClinicVisit>?> GetGroupClinicVisits(int naoId)
+        public static async Task<List<ClinicVisit>?> GetGroupClinicVisits(int robotId)
         {
             List<ClinicVisit>? clinicVisits = new();
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetGroup/clinicVisit/{naoId}";
+            string apiUri = baseUri + $"GetGroup/clinicVisit/{robotId}";
 
             var response = await client.GetFromJsonAsync<List<ClinicVisit>>(apiUri);
             if (response != null)

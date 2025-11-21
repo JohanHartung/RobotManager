@@ -4,16 +4,16 @@ namespace RobotManager.Views;
 
 public partial class AddClinicVisitPage : ContentPage
 {
-	Nao _nao;
+	Robot _robot;
 	ClinicVisit _clinicVisit;
 
 	List<Issue> selectedIssues = new();
 
-    public AddClinicVisitPage(Nao nao, List<Issue> issues, ClinicVisit? clinicVisit = null, bool editMode = false)
+    public AddClinicVisitPage(Robot robot, List<Issue> issues, ClinicVisit? clinicVisit = null, bool editMode = false)
     {
         InitializeComponent();
-        BindingContext = nao;
-        _nao = nao;
+        BindingContext = robot;
+        _robot = robot;
         _clinicVisit = clinicVisit ?? new ClinicVisit();
         IssueCV.ItemsSource = issues;
         selectedIssues = clinicVisit?.Issues.Select(i => issues.Find(issue => issue.Id == i)).ToList() ?? new List<Issue>();
@@ -22,7 +22,7 @@ public partial class AddClinicVisitPage : ContentPage
     private async void CreateVisit_Button_Clicked(object sender, EventArgs e)
     {
         _clinicVisit.Issues = selectedIssues.Select(i => i.Id).ToList();
-        _clinicVisit.Nao = _nao.Id;
+        _clinicVisit.Robot = _robot.Id;
         _clinicVisit.Date = DateTime.Now;
         _clinicVisit.Notes = NotesEntry.Text;
         if(!await _clinicVisit.Post())
@@ -31,7 +31,7 @@ public partial class AddClinicVisitPage : ContentPage
         }
         else
         {
-            await _nao.SetStatus(Status.Clinic);
+            await _robot.SetStatus(Status.Clinic);
             await Navigation.PopAsync();
         }
     }

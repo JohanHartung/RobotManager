@@ -13,7 +13,7 @@ namespace RobotManager.Views;
 public partial class RobotsPage : ContentPage
 {
     private static readonly HttpClient client = new();
-    ObservableCollection<Nao> naos = new();
+    ObservableCollection<Robot> robots = new();
     List<Issue> issues = new();
     List<Note> notes = new();
     List<ClinicVisit> clinicVisits = new();
@@ -39,7 +39,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2023, 12, 18),
         Description = "The right elbow joint is misaligned and requires recalibration.",
         Replicated = new Dictionary<int, DateTime> { { 1, new DateTime(2023, 12, 18) } },
-        Nao = 3
+        robot = 3
     }
 };
         /*
@@ -50,7 +50,7 @@ public partial class RobotsPage : ContentPage
         Date = new DateTime(2024, 1, 5),
         Description = "The NAO robot fails to recognize simple commands after multiple interactions.",
         Solved = (3, DateTime.Now),
-        Nao = 1
+        robot = 1
     },
     new()
     {
@@ -61,7 +61,7 @@ public partial class RobotsPage : ContentPage
         Replicated = true,
         ReplicatedDate = new DateTime(2024, 2, 15),
         Solved = false,
-        Nao = 2
+        robot = 2
     },
     new()
     {
@@ -72,7 +72,7 @@ public partial class RobotsPage : ContentPage
         Replicated = true,
         ReplicatedDate = new DateTime(2024, 3, 23),
         Solved = true,
-        Nao = 4
+        robot = 4
     },
     new()
     {
@@ -82,7 +82,7 @@ public partial class RobotsPage : ContentPage
         Description = "The robot freezes while performing dance routines, requiring a reboot.",
         Replicated = false,
         Solved = true,
-        Nao = 2
+        robot = 2
     }
 };*/
         notes = new List<Note>
@@ -90,7 +90,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 1,
-        Nao = 3,
+        robot = 3,
         Title = "Initial Calibration Note",
         Description = "Calibrated joints and sensors for optimal performance. Right elbow still requires adjustment.",
         Date = new DateTime(2023, 12, 18)
@@ -98,7 +98,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 2,
-        Nao = 1,
+        robot = 1,
         Title = "Speech Recognition Issue",
         Description = "Noticed intermittent failures in the speech recognition module. Robot struggles with noise-heavy environments.",
         Date = new DateTime(2024, 1, 6)
@@ -106,7 +106,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 3,
-        Nao = 2,
+        robot = 2,
         Title = "Battery Replacement",
         Description = "Replaced the battery due to rapid drain issues. Testing results to be monitored over the next week.",
         Date = new DateTime(2024, 2, 12)
@@ -114,7 +114,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 4,
-        Nao = 4,
+        robot = 4,
         Title = "Camera Feed Issue",
         Description = "Camera displays distorted images in low light. Firmware update recommended.",
         Date = new DateTime(2024, 3, 23)
@@ -122,7 +122,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 5,
-        Nao = 2,
+        robot = 2,
         Title = "Movement Freeze During Interaction",
         Description = "The robot froze while performing a routine. Suspected software bug.",
         Date = new DateTime(2024, 4, 8)
@@ -133,7 +133,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 1,
-        Nao = 3,
+        robot = 3,
         Date = new DateTime(2023, 12, 18),
         Issues = new List<int> { 1, 3 },
         IsBack = false,
@@ -143,7 +143,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 2,
-        Nao = 1,
+        robot = 1,
         Date = new DateTime(2024, 1, 5),
         Issues = new List<int> { 2 },
         IsBack = true,
@@ -153,7 +153,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 3,
-        Nao = 2,
+        robot = 2,
         Date = new DateTime(2024, 2, 15),
         Issues = new List<int> { 3, 5 },
         IsBack = false,
@@ -163,7 +163,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 4,
-        Nao = 4,
+        robot = 4,
         Date = new DateTime(2024, 3, 23),
         Issues = new List<int> { 4 },
         IsBack = true,
@@ -173,7 +173,7 @@ public partial class RobotsPage : ContentPage
     new()
     {
         Id = 5,
-        Nao = 2,
+        robot = 2,
         Date = new DateTime(2024, 4, 10),
         Issues = new List<int> { 5 },
         IsBack = false,
@@ -183,31 +183,31 @@ public partial class RobotsPage : ContentPage
 };
 
 
-        naos.Add(new() { Id = 1, Name = "26", BodyID = "28", HeadID = "20", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
-        naos.Add(new() { Id = 2, Name = "25", BodyID = "06", HeadID = "06", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
-        naos.Add(new() { Id = 3, Name = "24", BodyID = "11", HeadID = "32", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Id = 4, Name = "23", BodyID = "10", HeadID = "37", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Id = 5, Name = "22", BodyID = "04", HeadID = "22", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Id = 6, Name = "21", BodyID = "42", HeadID = "50", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
-        naos.Add(new() { Id = 7, Name = "18", BodyID = "29", HeadID = "37", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 8, Name = "17", BodyID = "04", HeadID = "09", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 9, Name = "16", BodyID = "17", HeadID = "31", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 10, Name = "15", BodyID = "06", HeadID = "17", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 11, Name = "14", BodyID = "40", HeadID = "45", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 12, Name = "13", BodyID = "38", HeadID = "20", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
-        naos.Add(new() { Id = 13, Name = "12", BodyID = "01", HeadID = "31", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
-        naos.Add(new() { Id = 14, Name = "11", BodyID = "11", HeadID = "06", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
-        RobotCollection.ItemsSource = naos;
+        robots.Add(new() { Id = 1, Name = "26", BodyID = "28", HeadID = "20", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
+        robots.Add(new() { Id = 2, Name = "25", BodyID = "06", HeadID = "06", Purchased = new DateTime(2023, 12, 18), Status = Status.Free });
+        robots.Add(new() { Id = 3, Name = "24", BodyID = "11", HeadID = "32", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        robots.Add(new() { Id = 4, Name = "23", BodyID = "10", HeadID = "37", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        robots.Add(new() { Id = 5, Name = "22", BodyID = "04", HeadID = "22", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        robots.Add(new() { Id = 6, Name = "21", BodyID = "42", HeadID = "50", Purchased = new DateTime(2022, 10, 21), Status = Status.Free });
+        robots.Add(new() { Id = 7, Name = "18", BodyID = "29", HeadID = "37", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 8, Name = "17", BodyID = "04", HeadID = "09", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 9, Name = "16", BodyID = "17", HeadID = "31", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 10, Name = "15", BodyID = "06", HeadID = "17", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 11, Name = "14", BodyID = "40", HeadID = "45", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 12, Name = "13", BodyID = "38", HeadID = "20", Purchased = new DateTime(2019, 12, 02), Status = Status.Free });
+        robots.Add(new() { Id = 13, Name = "12", BodyID = "01", HeadID = "31", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
+        robots.Add(new() { Id = 14, Name = "11", BodyID = "11", HeadID = "06", Purchased = new DateTime(2018, 05, 15), Status = Status.Free });
+        RobotCollection.ItemsSource = robots;
 #endif
     }
 
-    private async Task LoadNaosAsync()
+    private async Task LoadrobotsAsync()
     {
         try
         {
             //using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetAll/naos";
+            string apiUri = baseUri + $"GetAll/robots";
             var response = await client.GetAsync(apiUri);
 
             response.EnsureSuccessStatusCode();
@@ -221,16 +221,16 @@ public partial class RobotsPage : ContentPage
 
 
             Console.WriteLine(jsonResponse);
-            naos = new();
-            var apiResponse = JsonSerializer.Deserialize<List<Nao>>(jsonResponse);
+            robots = new();
+            var apiResponse = JsonSerializer.Deserialize<List<Robot>>(jsonResponse);
             if (apiResponse != null)
             {
-                foreach (var nao in apiResponse)
+                foreach (var robot in apiResponse)
                 {
-                    //if (!naos.Contains(nao))
+                    //if (!robots.Contains(robot))
                     //{
                     //}
-                        naos.Add(nao);
+                        robots.Add(robot);
                 }
             }
         }
@@ -246,8 +246,8 @@ public partial class RobotsPage : ContentPage
     {
         var swipeItem = sender as SwipeItem;
         if (swipeItem == null) return;
-        var nao = swipeItem.BindingContext as Nao;
-        if (nao == null) return;
+        var robot = swipeItem.BindingContext as Robot;
+        if (robot == null) return;
 
         if (openSwipeView != null)
         {
@@ -260,7 +260,7 @@ public partial class RobotsPage : ContentPage
             case "Free":
 
 
-                if(!await nao.SetStatus(Status.Free))
+                if(!await robot.SetStatus(Status.Free))
                 {
                     await DisplayAlert("Error", "Error syncing status", "OK");
                 }
@@ -268,19 +268,19 @@ public partial class RobotsPage : ContentPage
             case "Game":
 
 
-                if (!await nao.SetStatus(Status.Game))
+                if (!await robot.SetStatus(Status.Game))
                 {
 
                     await DisplayAlert("Error", "Error syncing status", "OK");
                 }
                 break;
             case "Clinic":
-                await Navigation.PushAsync(new AddClinicVisitPage(nao, issues.Where(iss => iss.Nao == nao.Id).ToList()));
+                await Navigation.PushAsync(new AddClinicVisitPage(robot, issues.Where(iss => iss.Robot == robot.Id).ToList()));
                 break;
             default:
 
 
-                if (!await nao.SetStatus(Status.Free))
+                if (!await robot.SetStatus(Status.Free))
                 {
                     await DisplayAlert("Error", "Error syncing status", "OK");
                 }
@@ -296,15 +296,15 @@ public partial class RobotsPage : ContentPage
     {
         var frame = sender as Frame;
         if (frame == null) return;
-        var nao = frame.BindingContext as Nao;
-        if (nao == null) return;
+        var robot = frame.BindingContext as Robot;
+        if (robot == null) return;
 
         if (openSwipeView == null)
         {
-            var naoIssues = issues.Where(iss => iss.Nao == nao.Id).ToList();
-            var naoNotes = notes.Where(note => note.Nao == nao.Id).ToList();
-            var naoClinicVisits = clinicVisits.Where(clinic => clinic.Nao == nao.Id).ToList();
-            Navigation.PushAsync(new RobotDetailPage(nao.Id));
+            var robotIssues = issues.Where(iss => iss.Robot == robot.Id).ToList();
+            var robotNotes = notes.Where(note => note.Robot == robot.Id).ToList();
+            var robotClinicVisits = clinicVisits.Where(clinic => clinic.Robot == robot.Id).ToList();
+            Navigation.PushAsync(new RobotDetailPage(robot.Id));
         }
         else
         {
@@ -352,16 +352,16 @@ public partial class RobotsPage : ContentPage
 
     private async Task Refresh()
     {
-        await LoadNaosAsync();
+        await LoadrobotsAsync();
         RobotCollection.ItemsSource = null;
         FilterCollection();
     }
 
-    private async Task<bool> SetStatusAsync(Nao nao, Status status)
+    private async Task<bool> SetStatusAsync(Robot robot, Status status)
     {
         using HttpClient client = new();
         string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-        string apiUri = baseUri + $"SetStatus/{nao.Id}/{(int)status}";
+        string apiUri = baseUri + $"SetStatus/{robot.Id}/{(int)status}";
         try
         {
             HttpResponseMessage response = await client.PostAsync(apiUri, new StringContent(""));
@@ -412,11 +412,11 @@ public partial class RobotsPage : ContentPage
     {
         if (selectedFilter == AllFilterButton)
         {
-            RobotCollection.ItemsSource = naos;
+            RobotCollection.ItemsSource = robots;
         }
         else
         {
-            RobotCollection.ItemsSource = naos.Where(nao => nao.Status.ToString() == selectedFilter.Text);
+            RobotCollection.ItemsSource = robots.Where(robot => robot.Status.ToString() == selectedFilter.Text);
         }
     }
 }

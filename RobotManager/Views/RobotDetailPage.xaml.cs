@@ -4,7 +4,7 @@ namespace RobotManager.Views;
 
 public partial class RobotDetailPage : ContentPage
 {
-    private Nao nao;
+    private Robot robot;
     private Grid? currenDetailButtons;
 
     List<Issue>? issues = new();
@@ -13,20 +13,20 @@ public partial class RobotDetailPage : ContentPage
 
     Button selectedTab;
 
-    public RobotDetailPage(int naoId)
+    public RobotDetailPage(int robotId)
     {
         InitializeComponent();
-        _ = InitializeAsync(naoId);
+        _ = InitializeAsync(robotId);
     }
 
-    private async Task InitializeAsync(int naoId)
+    private async Task InitializeAsync(int robotId)
     {
-        nao = new();
+        robot = new();
 
-        if (!await nao.InitializeFromCloud(naoId)) { return; }
-        issues = await GetGroupIssues(naoId);
-        notes = await GetGroupNotes(naoId);
-        clinicVisits = await GetGroupClinicVisits(naoId);
+        if (!await robot.InitializeFromCloud(robotId)) { return; }
+        issues = await GetGroupIssues(robotId);
+        notes = await GetGroupNotes(robotId);
+        clinicVisits = await GetGroupClinicVisits(robotId);
         if (notes != null)
         {
             foreach (var note in notes)
@@ -36,10 +36,10 @@ public partial class RobotDetailPage : ContentPage
         }
 
         // check whether the robot is under warranty and display the corresponding text
-        bool underWarranty = nao.Warranty >= DateTime.Now;
-        warrantyLabel.Text = underWarranty ? $"Currently under warranty ({nao.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
+        bool underWarranty = robot.Warranty >= DateTime.Now;
+        warrantyLabel.Text = underWarranty ? $"Currently under warranty ({robot.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
 
-        BindingContext = nao;
+        BindingContext = robot;
         NoteCV.ItemsSource = notes;
 
         // almost equivalent to 'NoteCV.ItemsSource = notes;' but filters out solved issues and clinic visits
@@ -85,15 +85,15 @@ public partial class RobotDetailPage : ContentPage
 
         if (button == AddIssueButton)
         {
-            page = new AddIssuePage(nao);
+            page = new AddIssuePage(robot);
         }
         else if (button == AddNoteButton)
         {
-            page = new AddNotePage(nao);
+            page = new AddNotePage(robot);
         }
         else if (button == AddClinicVisitButton)
         {
-            page = new AddClinicVisitPage(nao, issues);
+            page = new AddClinicVisitPage(robot, issues);
         }
 
         Navigation.PushAsync(page);
@@ -119,7 +119,7 @@ public partial class RobotDetailPage : ContentPage
     {
         bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this NAO?", "Yes", "No");
         if (!answer) { return; }
-        if (!await nao.Delete())
+        if (!await robot.Delete())
         {
             await DisplayAlert("Error", "NAO could not be deleted", "OK");
         }
@@ -127,7 +127,7 @@ public partial class RobotDetailPage : ContentPage
 
     private async void EditButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddRobotPage(nao, true));
+        await Navigation.PushAsync(new AddRobotPage(robot, true));
     }
 
     // toggles the visibility of the detail buttons for notes issues and clinic visits
@@ -368,7 +368,7 @@ public partial class RobotDetailPage : ContentPage
 
     private async void RobotDetailPageRV_Refreshing(object sender, EventArgs e)
     {
-        await InitializeAsync(nao.Id);
+        await InitializeAsync(robot.Id);
         RobotDetailPageRV.IsRefreshing = false;
     }
 }

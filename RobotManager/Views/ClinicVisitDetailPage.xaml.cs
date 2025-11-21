@@ -4,7 +4,7 @@ namespace RobotManager.Views;
 
 public partial class ClinicVisitDetailPage : ContentPage
 {
-    Nao _nao = new();
+    Robot _robot = new();
     ClinicVisit _visit;
     List<Issue>? _issues;
     public ClinicVisitDetailPage(ClinicVisit visit)
@@ -16,15 +16,15 @@ public partial class ClinicVisitDetailPage : ContentPage
     }
     private async Task InitializeAsync()
     {
-        await _nao.InitializeFromCloud(_visit.Nao);
+        await _robot.InitializeFromCloud(_visit.Robot);
         _issues = new();
 
         _issues = _issues.Where(i => _visit.Issues.Contains(i.Id)).ToList();
         IssueCV.ItemsSource = _issues;
-        Title = $"Clinic Visit #{_visit.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
-        NaoName.Text = $"NAO{_nao.Name}";
-        NaoHead.Text = $"Head ID: {_nao.HeadID}";
-        NaoBody.Text = $"Body ID: {_nao.BodyID}";
+        Title = $"Clinic Visit #{_visit.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
+        RobotName.Text = $"NAO{_robot.Name}";
+        RobotHead.Text = $"Head ID: {_robot.HeadID}";
+        RobotBody.Text = $"Body ID: {_robot.BodyID}";
     }
 
     private async void ReturnedButton_Clicked(object sender, EventArgs e)
@@ -62,7 +62,7 @@ public partial class ClinicVisitDetailPage : ContentPage
     private async void EditButton_Clicked(object sender, EventArgs e)
     {
         // TODO: get global issues
-        await Navigation.PushAsync(new AddClinicVisitPage(_nao, _issues!, _visit, true));
+        await Navigation.PushAsync(new AddClinicVisitPage(_robot, _issues!, _visit, true));
     }
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)

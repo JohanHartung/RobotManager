@@ -15,7 +15,7 @@ using static RobotManager.Classes.Helpers;
 
 namespace RobotManager.Classes
 {
-    public class Nao : INotifyPropertyChanged
+    public class Robot : INotifyPropertyChanged
     {
         int id;
         private string name = String.Empty;
@@ -65,20 +65,20 @@ namespace RobotManager.Classes
 
         public async Task<bool> Post()
         {
-            Nao nao = this;
+            Robot robot = this;
             using HttpClient client = new();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + "CreateEdit/nao";
+            string apiUri = baseUri + "CreateEdit/robot";
 
             User user = new();
             var dateTime = DateTime.UtcNow;
             var userSecret = GenerateUserSecret(dateTime.ToString());
 
-            var request = new CreateEditNaoRequest
+            var request = new CreateEditRobotRequest
             {
-                Nao = nao,
+                Robot = robot,
                 UserId = user.Id,
                 DeviceId = user.DeviceId,
                 DateTime = dateTime.ToString(),
@@ -93,7 +93,7 @@ namespace RobotManager.Classes
             try
             {
                 HttpResponseMessage response = await client.PostAsync(apiUri, content);
-                var result = await response.Content.ReadFromJsonAsync<CreateNaoResponse>();
+                var result = await response.Content.ReadFromJsonAsync<CreateRobotResponse>();
                 return response.IsSuccessStatusCode;
             }
             catch
@@ -103,9 +103,9 @@ namespace RobotManager.Classes
 
         }
 
-        public async Task<bool> InitializeFromCloud(int naoID)
+        public async Task<bool> InitializeFromCloud(int robotID)
         {
-            id = naoID;
+            id = robotID;
             return await Get();
         }
 
@@ -113,23 +113,23 @@ namespace RobotManager.Classes
         {
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetSingle/nao/{id}";
+            string apiUri = baseUri + $"GetSingle/robot/{id}";
             try
             {
                 HttpResponseMessage response = await client.GetAsync(apiUri).ConfigureAwait(false);
                 response.EnsureSuccessStatusCode();
 
-                Nao? nao = await response.Content.ReadFromJsonAsync<Nao>();
+                Robot? robot = await response.Content.ReadFromJsonAsync<Robot>();
                 
 
-                if (nao != null)
+                if (robot != null)
                 { 
-                    this.name = nao.name;
-                    this.headID = nao.headID;
-                    this.bodyID = nao.bodyID;
-                    this.warrantyExtension = nao.warrantyExtension;
-                    this.purchased = nao.purchased;
-                    this.status = nao.status;
+                    this.name = robot.name;
+                    this.headID = robot.headID;
+                    this.bodyID = robot.bodyID;
+                    this.warrantyExtension = robot.warrantyExtension;
+                    this.purchased = robot.purchased;
+                    this.status = robot.status;
                     return true;
                 }
                 return false;
@@ -144,7 +144,7 @@ namespace RobotManager.Classes
         {
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"Delete/nao/{id}";
+            string apiUri = baseUri + $"Delete/robot/{id}";
             try
             {
                 HttpResponseMessage response = await client.DeleteAsync(apiUri);
@@ -179,7 +179,7 @@ namespace RobotManager.Classes
     public class Issue
     {
         int id;
-        int nao;
+        int robot;
 
         private string title = String.Empty;
         private string description = String.Empty;
@@ -192,8 +192,8 @@ namespace RobotManager.Classes
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
 
-        [JsonPropertyName("nao")]
-        public int Nao { get => nao; set => nao = value; }
+        [JsonPropertyName("robot")]
+        public int Robot { get => robot; set => robot = value; }
 
         [JsonPropertyName("title")]
         public string Title { get => title; set => title = value; }
@@ -265,7 +265,7 @@ namespace RobotManager.Classes
             Issue issue = await client.GetFromJsonAsync<Issue>(apiUri);
             if (issue != null)
             {
-                this.nao = issue.nao;
+                this.robot = issue.robot;
                 this.title = issue.title;
                 this.description = issue.description;
                 this.author = issue.author;
@@ -345,7 +345,7 @@ namespace RobotManager.Classes
     public class Note
     {
         int id;
-        int nao;
+        int robot;
 
         private string title = String.Empty;
         private string description = String.Empty;
@@ -356,8 +356,8 @@ namespace RobotManager.Classes
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
 
-        [JsonPropertyName("nao")]
-        public int Nao { get => nao; set => nao = value; }
+        [JsonPropertyName("robot")]
+        public int Robot { get => robot; set => robot = value; }
 
         [JsonPropertyName("title")]
         public string Title { get => title; set => title = value; }
@@ -425,7 +425,7 @@ namespace RobotManager.Classes
                 Note note = await client.GetFromJsonAsync<Note>(apiUri);
                 if (note != null)
                 {
-                    this.nao = note.nao;
+                    this.robot = note.robot;
                     this.title = note.title;
                     this.description = note.description;
                     this.author = note.author;
@@ -461,7 +461,7 @@ namespace RobotManager.Classes
     public class ClinicVisit
     {
         int id;
-        int nao;
+        int robot;
 
         private DateTime date;
         private DateTime backDate;
@@ -474,8 +474,8 @@ namespace RobotManager.Classes
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
 
-        [JsonPropertyName("nao")]
-        public int Nao { get => nao; set => nao = value; }
+        [JsonPropertyName("robot")]
+        public int Robot { get => robot; set => robot = value; }
 
         [JsonPropertyName("date")]
         public DateTime Date { get => date; set => date = value; }
@@ -551,7 +551,7 @@ namespace RobotManager.Classes
                 ClinicVisit visit = await client.GetFromJsonAsync<ClinicVisit>(apiUri);
                 if (visit != null)
                 {
-                    this.nao = visit.nao;
+                    this.robot = visit.robot;
                     this.date = visit.date;
                     this.issues = visit.issues;
                     this.notes = visit.notes;
@@ -618,11 +618,11 @@ namespace RobotManager.Classes
         Game,
         Clinic
     }
-    public class CreateEditNaoRequest
+    public class CreateEditRobotRequest
     {
-        public Nao Nao { get; set; }
+        public Robot Robot { get; set; }
 
-        // Nao Data
+        // Robot Data
         //public int Id { get; set; }
         //public string Name { get; set; }
         //public string HeadID { get; set; }
@@ -641,7 +641,7 @@ namespace RobotManager.Classes
         public string UserSecret { get; set; }
     }
 
-    public class CreateNaoResponse
+    public class CreateRobotResponse
     {
         public int id { get; set; }
         public string name { get; set; }

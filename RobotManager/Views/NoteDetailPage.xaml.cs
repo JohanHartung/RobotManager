@@ -5,12 +5,12 @@ namespace RobotManager.Views;
 public partial class NoteDetailPage : ContentPage
 {
     Note _note;
-    Nao _nao;
+    Robot _robot;
     
 	public NoteDetailPage(Note note)
 	{
         _note = note;
-        _nao = new Nao();
+        _robot = new Robot();
         BindingContext = _note;
         InitializeComponent();
         InitalizeAsync();
@@ -18,8 +18,8 @@ public partial class NoteDetailPage : ContentPage
 
     private async Task InitalizeAsync()
     {
-        await _nao.InitializeFromCloud(_note.Nao);
-        Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+        await _robot.InitializeFromCloud(_note.Robot);
+        Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
     }
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)
@@ -43,6 +43,6 @@ public partial class NoteDetailPage : ContentPage
 
     private async void EditButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddNotePage(_nao, _note, true));
+        await Navigation.PushAsync(new AddNotePage(_robot, _note, true));
     }
 }

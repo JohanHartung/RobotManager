@@ -5,11 +5,11 @@ namespace RobotManager.Views;
 public partial class IssueDetailPage : ContentPage
 {
     Issue _issue;
-    Nao _nao;
+    Robot _robot;
     public IssueDetailPage(Issue issue)
 	{
         _issue = issue;
-        _nao = new Nao();
+        _robot = new Robot();
         BindingContext = _issue;
         InitializeComponent();
         _ = InitializeAsync();
@@ -17,8 +17,8 @@ public partial class IssueDetailPage : ContentPage
 
     private async Task InitializeAsync()
     {
-        await _nao.InitializeFromCloud(_issue.Nao);
-        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_nao.Name}";
+        await _robot.InitializeFromCloud(_issue.Robot);
+        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
     }
 
     private void OptionsButton_Clicked(object sender, EventArgs e)
@@ -67,6 +67,6 @@ public partial class IssueDetailPage : ContentPage
 
     private async void EditButton_Clicked(object sender, EventArgs e)
     {
-        await Navigation.PushAsync(new AddIssuePage(_nao, _issue, true));
+        await Navigation.PushAsync(new AddIssuePage(_robot, _issue, true));
     }
 }
