@@ -51,15 +51,15 @@ public partial class AddIssuePage : ContentPage
         if (FormIsValid())
         {
             _issue.Title = TitleEntry.Text;
-            _issue.Date = IssueDatePicker.Date.Add(IssueTimePicker.Time);
+            _issue.Date = IssueDatePicker.Date.Value.Add(IssueTimePicker.Time.Value);
             _issue.Description = IssueDescription.Text;
             if (ReplicatedCheckBox.IsChecked)
             {
-                _issue.Replicated!.Add(Preferences.Get("userID", -1), ReplicatedDatePicker.Date.Add(ReplicatedTimePicker.Time));
+                _issue.Replicated!.Add(Preferences.Get("userID", -1), ReplicatedDatePicker.Date.Value.Add(ReplicatedTimePicker.Time.Value));
             }
             if(SolvedCheckBox.IsChecked)
             {
-                _issue.Solved = new() { user = Preferences.Get("userID", -1), dateTime = SolvedDatePicker.Date.Add(SolvedTimePicker.Time)};
+                _issue.Solved = new() { user = Preferences.Get("userID", -1), dateTime = SolvedDatePicker.Date.Value.Add(SolvedTimePicker.Time.Value) };
                 _issue.SolvedReport = SolvedReport.Text;
             }
             _issue.Nao = _nao.Id;

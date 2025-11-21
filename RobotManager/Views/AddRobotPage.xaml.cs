@@ -52,7 +52,7 @@ public partial class AddRobotPage : ContentPage
         _nao.Name = NameEntry.Text;
         _nao.HeadID = HeadIdEntry.Text;
         _nao.BodyID = BodyIdEntry.Text;
-        _nao.Purchased = PurchaseDatePicker.Date;
+        _nao.Purchased = PurchaseDatePicker.Date.Value;
         _nao.WarrantyExtension = warranty;
 
         if(!await _nao.Post())

@@ -34,7 +34,7 @@ public partial class AddNotePage : ContentPage
         {
 
             _note.Title = TitleEntry.Text;
-            _note.Date = NoteDatePicker.Date.Add(NoteTimePicker.Time);
+            _note.Date = NoteDatePicker.Date.Value.Add(NoteTimePicker.Time.Value);
             _note.Description = NoteDescription.Text;
             _note.Nao = _nao.Id;
             _note.Author = Preferences.Get("UserId", -1);

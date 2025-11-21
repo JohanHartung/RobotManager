@@ -22,7 +22,7 @@ public partial class AddGamePage : ContentPage
         if (FormIsValid())
         {
             game.Against = OpponentEntry.Text;
-            game.Date = IssueDatePicker.Date.Add(IssueTimePicker.Time);
+            game.Date = IssueDatePicker.Date.Value.Add(IssueTimePicker.Time.Value);
             if (HomeCheckBox.IsChecked)
             {
                 game.Home = HomeCheckBox.IsChecked;
