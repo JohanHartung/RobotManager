@@ -18,7 +18,7 @@ public partial class IssueDetailPage : ContentPage
     private async Task InitializeAsync()
     {
         await _robot.InitializeFromCloud(_issue.Robot);
-        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
+        Title = $"Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
     }
 
     private void OptionsButton_Clicked(object sender, EventArgs e)

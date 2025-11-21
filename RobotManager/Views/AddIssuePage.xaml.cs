@@ -18,7 +18,7 @@ public partial class AddIssuePage : ContentPage
         _editMode = editMode;
         if (_editMode)
         {
-            Title = $"Edit Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
+            Title = $"Edit Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
             CreateIssueButton.Text = "Save Changes";
             TitleEntry.Text = _issue.Title;
             IssueDatePicker.Date = _issue.Date;

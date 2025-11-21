@@ -28,10 +28,17 @@
                                     </Frame.GestureRecognizers>
                                     <VerticalStackLayout>
                                         <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                                            <Label Text="{Binding Name, StringFormat='NAO {0}'}" FontSize="20"/>
+                                            <Label FontSize="20">
+                                                <Label.Text>
+                                                    <MultiBinding StringFormat="{}{0}{1}">
+                                                        <Binding Path="Model" />
+                                                        <Binding Path="HeadNumber" />
+                                                    </MultiBinding>
+                                                </Label.Text>
+                                            </Label>
                                             <Label Text="{Binding Ip}" Opacity=".5" VerticalOptions="Center" Margin="10,0,0,0"/>
                                         </HorizontalStackLayout>
-                                        <Label Text="{Binding Status, StringFormat='Status: {0}'}" Opacity=".8"/>
+                                        <Label Text="{Binding Version, StringFormat='Version: {0}'}" Opacity=".8"/>
                                     </VerticalStackLayout>
                                 </Frame>
                             </SwipeView>

@@ -21,10 +21,10 @@ public partial class ClinicVisitDetailPage : ContentPage
 
         _issues = _issues.Where(i => _visit.Issues.Contains(i.Id)).ToList();
         IssueCV.ItemsSource = _issues;
-        Title = $"Clinic Visit #{_visit.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
-        RobotName.Text = $"NAO{_robot.Name}";
-        RobotHead.Text = $"Head ID: {_robot.HeadID}";
-        RobotBody.Text = $"Body ID: {_robot.BodyID}";
+        Title = $"Clinic Visit #{_visit.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
+        RobotName.Text = $"NAO{_robot.HeadNumber}";
+        RobotHead.Text = $"Head ID: {_robot.HeadSerial}";
+        RobotBody.Text = $"Body ID: {_robot.BodySerial}";
     }
 
     private async void ReturnedButton_Clicked(object sender, EventArgs e)

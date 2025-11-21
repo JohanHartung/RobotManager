@@ -36,8 +36,8 @@ public partial class RobotDetailPage : ContentPage
         }
 
         // check whether the robot is under warranty and display the corresponding text
-        bool underWarranty = robot.Warranty >= DateTime.Now;
-        warrantyLabel.Text = underWarranty ? $"Currently under warranty ({robot.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
+        //bool underWarranty = robot.Warranty >= DateTime.Now;
+        //warrantyLabel.Text = underWarranty ? $"Currently under warranty ({robot.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
 
         BindingContext = robot;
         NoteCV.ItemsSource = notes;
@@ -119,10 +119,10 @@ public partial class RobotDetailPage : ContentPage
     {
         bool answer = await DisplayAlert("Delete", "Are you sure you want to delete this NAO?", "Yes", "No");
         if (!answer) { return; }
-        if (!await robot.Delete())
-        {
-            await DisplayAlert("Error", "NAO could not be deleted", "OK");
-        }
+        //if (!await robot.Delete())
+        //{
+        //    await DisplayAlert("Error", "NAO could not be deleted", "OK");
+        //}
     }
 
     private async void EditButton_Clicked(object sender, EventArgs e)

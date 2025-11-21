@@ -18,34 +18,46 @@ namespace RobotManager.Classes
     public class Robot : INotifyPropertyChanged
     {
         int id;
-        private string name = String.Empty;
-        private string headID = String.Empty;
-        private string bodyID = String.Empty;
-        private int warrantyExtension = 0;
+        private int headNumber;
+        private string model = String.Empty;
+        private string bodySerial = String.Empty;
+        private string headSerial = String.Empty;
+        private string version = String.Empty;
         private DateTime purchased;
+        private DateTime warranty_end;
+        private string comment = String.Empty;
         private Status status = Status.Free;
 
         [JsonPropertyName("id")]
         public int Id { get => id; set => id = value; }
 
-        [JsonPropertyName("name")]
-        public string Name { get => name; set => name = value; }
-        public string Ip { get => $"10.0.4.{name}"; }
 
-        [JsonPropertyName("headID")]
-        public string HeadID { get => headID; set => headID = value; }
+        [JsonPropertyName("head_number")]
+        public int HeadNumber { get => headNumber; set => headNumber = value; }
+        public string Ip { get => $"10.0.4.{headNumber}"; }
 
-        [JsonPropertyName("bodyID")]
-        public string BodyID { get => bodyID; set => bodyID = value; }
+        [JsonPropertyName("model")]
+        public string Model { get => model; set => model = value; }
 
-        [JsonPropertyName("warrantyExtension")]
-        public int WarrantyExtension { get => warrantyExtension; set => warrantyExtension = value; }
+        [JsonPropertyName("body_serial")]
+        public string BodySerial { get => bodySerial; set => bodySerial = value; }
+
+        [JsonPropertyName("head_serial")]
+        public string HeadSerial { get => headSerial; set => headSerial = value; }
 
         [JsonPropertyName("purchased")]
         public DateTime Purchased { get => purchased; set => purchased = value; }
-        public DateTime Warranty { get => purchased.AddYears(2 + WarrantyExtension); }
 
-        [JsonPropertyName("status")]
+        [JsonPropertyName("warranty_end")]
+        public DateTime Warranty_end { get => warranty_end; set => warranty_end = value; }
+
+        [JsonPropertyName("version")]
+        public string Version { get => version; set => version = value; }
+
+        [JsonPropertyName("comment")]
+        public string Comment { get => comment; set => comment = value; }
+
+        //[JsonPropertyName("status")]
         public Status Status
         {
             get => status;
@@ -63,45 +75,45 @@ namespace RobotManager.Classes
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
-        public async Task<bool> Post()
-        {
-            Robot robot = this;
-            using HttpClient client = new();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //public async Task<bool> Post()
+        //{
+        //    Robot robot = this;
+        //    using HttpClient client = new();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + "CreateEdit/robot";
+        //    string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
+        //    string apiUri = baseUri + "CreateEdit/robot";
 
-            User user = new();
-            var dateTime = DateTime.UtcNow;
-            var userSecret = GenerateUserSecret(dateTime.ToString());
+        //    User user = new();
+        //    var dateTime = DateTime.UtcNow;
+        //    var userSecret = GenerateUserSecret(dateTime.ToString());
 
-            var request = new CreateEditRobotRequest
-            {
-                Robot = robot,
-                UserId = user.Id,
-                DeviceId = user.DeviceId,
-                DateTime = dateTime.ToString(),
-                UserSecret = userSecret
-            };
+        //    var request = new CreateEditRobotRequest
+        //    {
+        //        Robot = robot,
+        //        UserId = user.Id,
+        //        DeviceId = user.DeviceId,
+        //        DateTime = dateTime.ToString(),
+        //        UserSecret = userSecret
+        //    };
 
-            var content = JsonContent.Create(request);
-            // Serialize JSON manually and log it
-            string jsonBody = JsonSerializer.Serialize(request);
-            Console.WriteLine("Sending JSON: " + jsonBody);
+        //    var content = JsonContent.Create(request);
+        //    // Serialize JSON manually and log it
+        //    string jsonBody = JsonSerializer.Serialize(request);
+        //    Console.WriteLine("Sending JSON: " + jsonBody);
 
-            try
-            {
-                HttpResponseMessage response = await client.PostAsync(apiUri, content);
-                var result = await response.Content.ReadFromJsonAsync<CreateRobotResponse>();
-                return response.IsSuccessStatusCode;
-            }
-            catch
-            {
-                return false;
-            }
+        //    try
+        //    {
+        //        HttpResponseMessage response = await client.PostAsync(apiUri, content);
+        //        var result = await response.Content.ReadFromJsonAsync<CreateRobotResponse>();
+        //        return response.IsSuccessStatusCode;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
 
         public async Task<bool> InitializeFromCloud(int robotID)
         {
@@ -112,8 +124,11 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetSingle/robot/{id}";
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
+            string apiUri = baseUri + $"robots/{id}";
+            string apiKey = Preferences.Get("apiKey", "");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", apiKey);
             try
             {
                 HttpResponseMessage response = await client.GetAsync(apiUri).ConfigureAwait(false);
@@ -124,12 +139,14 @@ namespace RobotManager.Classes
 
                 if (robot != null)
                 { 
-                    this.name = robot.name;
-                    this.headID = robot.headID;
-                    this.bodyID = robot.bodyID;
-                    this.warrantyExtension = robot.warrantyExtension;
+                    this.headNumber = robot.headNumber;
+                    this.bodySerial = robot.bodySerial;
+                    this.headSerial = robot.headSerial;
+                    this.version = robot.version;
                     this.purchased = robot.purchased;
-                    this.status = robot.status;
+                    this.warranty_end = robot.warranty_end;
+                    this.comment = robot.comment;
+
                     return true;
                 }
                 return false;
@@ -140,26 +157,26 @@ namespace RobotManager.Classes
             }
         }
 
-        public async Task<bool> Delete()
-        {
-            using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"Delete/robot/{id}";
-            try
-            {
-                HttpResponseMessage response = await client.DeleteAsync(apiUri);
-                return response.IsSuccessStatusCode;
-            }
-            catch
-            {
-                return false;
-            }
-        }
+        //public async Task<bool> Delete()
+        //{
+        //    using HttpClient client = new();
+        //    string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
+        //    string apiUri = baseUri + $"Delete/robot/{id}";
+        //    try
+        //    {
+        //        HttpResponseMessage response = await client.DeleteAsync(apiUri);
+        //        return response.IsSuccessStatusCode;
+        //    }
+        //    catch
+        //    {
+        //        return false;
+        //    }
+        //}
 
         public async Task<bool> SetStatus(Status status)
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"SetStatus/{id}/{(int)status}";
             try
             {
@@ -244,7 +261,7 @@ namespace RobotManager.Classes
             };
 
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + "CreateEdit/issue";
             try
             {
@@ -260,7 +277,7 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"GetSingle/issue/{id}";
             Issue issue = await client.GetFromJsonAsync<Issue>(apiUri);
             if (issue != null)
@@ -281,7 +298,7 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"Delete/issue/{id}";
             try
             {
@@ -301,7 +318,7 @@ namespace RobotManager.Classes
             if (userId == -1) { return false; }
 
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"ReplicateIssue/{this.Id}/{dateTime}/{userId}";
             try
             {
@@ -328,7 +345,7 @@ namespace RobotManager.Classes
                 Report = this.SolvedReport
             };
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + "SolveIssue";
             try
             {
@@ -401,7 +418,7 @@ namespace RobotManager.Classes
             };
 
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + "CreateEdit/note";
             try
             {
@@ -418,7 +435,7 @@ namespace RobotManager.Classes
         {
             using HttpClient client = new();
 
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"GetSingle/note/{id}";
             try
             {
@@ -445,7 +462,7 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"Delete/note/{id}";
             try
             {
@@ -528,7 +545,7 @@ namespace RobotManager.Classes
                 UserSecret = userSecret
             };
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + "CreateEdit/clinicVisit";
             try
             {
@@ -544,7 +561,7 @@ namespace RobotManager.Classes
         public async Task<bool> Get()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"GetSingle/clinicVisit/{id}";
             try
             {
@@ -570,7 +587,7 @@ namespace RobotManager.Classes
         public async Task<bool> Delete()
         {
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + $"Delete/clinicVisit/{id}";
             try
             {
@@ -597,7 +614,7 @@ namespace RobotManager.Classes
                 BackReport = this.BackReport
             };
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
             string apiUri = baseUri + "EndClinicVisit";
             try
             {

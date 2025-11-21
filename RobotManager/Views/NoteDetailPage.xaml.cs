@@ -19,7 +19,7 @@ public partial class NoteDetailPage : ContentPage
     private async Task InitalizeAsync()
     {
         await _robot.InitializeFromCloud(_note.Robot);
-        Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
+        Title = $"Issue #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
     }
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)

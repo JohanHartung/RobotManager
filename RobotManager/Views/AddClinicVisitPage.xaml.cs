@@ -31,7 +31,7 @@ public partial class AddClinicVisitPage : ContentPage
         }
         else
         {
-            await _robot.SetStatus(Status.Clinic);
+            //await _robot.SetStatus(Status.Clinic);
             await Navigation.PopAsync();
         }
     }

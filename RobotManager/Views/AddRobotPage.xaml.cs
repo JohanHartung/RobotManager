@@ -15,13 +15,12 @@ public partial class AddRobotPage : ContentPage
 
         if (editMode)
         {
-            Title = $"Edit NAO{_robot.Name}";
+            Title = $"Edit NAO{_robot.HeadNumber}";
             AddRobotButton.Text = "Save";
-            NameEntry.Text = _robot.Name;
-            HeadIdEntry.Text = _robot.HeadID;
-            BodyIdEntry.Text = _robot.BodyID;
+            NameEntry.Text = _robot.HeadNumber.ToString();
+            HeadIdEntry.Text = _robot.HeadSerial;
+            BodyIdEntry.Text = _robot.BodySerial;
             PurchaseDatePicker.Date = _robot.Purchased;
-            WarrantyExtensionEntry.Text = _robot.WarrantyExtension.ToString();
         }
 
     }
@@ -49,17 +48,16 @@ public partial class AddRobotPage : ContentPage
         }
         if (!FormIsValid()) { return; }
 
-        _robot.Name = NameEntry.Text;
-        _robot.HeadID = HeadIdEntry.Text;
-        _robot.BodyID = BodyIdEntry.Text;
+        _robot.HeadNumber = Convert.ToInt32(NameEntry.Text);
+        _robot.HeadSerial = HeadIdEntry.Text;
+        _robot.BodySerial = BodyIdEntry.Text;
         _robot.Purchased = PurchaseDatePicker.Date.Value;
-        _robot.WarrantyExtension = warranty;
 
-        if(!await _robot.Post())
-        {
-            await DisplayAlert("Error", "Could not connect to the server ", "OK");
-            return;
-        }
+        //if(!await _robot.Post())
+        //{
+        //    await DisplayAlert("Error", "Could not connect to the server ", "OK");
+        //    return;
+        //}
         await Navigation.PopAsync();
     }
 

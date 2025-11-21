@@ -17,7 +17,7 @@ public partial class AddNotePage : ContentPage
 
         if (editMode)
         {
-            Title = $"Edit Note #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.Name}";
+            Title = $"Edit Note #{_note.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
             CreateNoteButton.Text = "Save Changes";
             TitleEntry.Text = _note.Title;
             NoteDatePicker.Date = _note.Date;

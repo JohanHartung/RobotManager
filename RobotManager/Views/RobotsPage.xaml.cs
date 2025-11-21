@@ -1,11 +1,7 @@
-using System.Net.Http;
-using System.Net.Http.Json;
-using System.Threading.Tasks;
 using RobotManager.Classes;
 using System.Collections.ObjectModel;
+using System.Net.Http.Headers;
 using System.Text.Json;
-using System.Text.Json.Serialization;
-using Microsoft.Maui.Controls.PlatformConfiguration.TizenSpecific;
 
 
 namespace RobotManager.Views;
@@ -201,13 +197,18 @@ public partial class RobotsPage : ContentPage
 #endif
     }
 
-    private async Task LoadrobotsAsync()
+    private async Task LoadRobotsAsync()
     {
         try
         {
             //using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetAll/robots";
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
+            string apiUri = baseUri + $"robots/";
+            //Preferences.Set("apiKey", "...");
+            string apiKey = Preferences.Get("apiKey", "");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", apiKey);
+
             var response = await client.GetAsync(apiUri);
 
             response.EnsureSuccessStatusCode();
@@ -352,7 +353,7 @@ public partial class RobotsPage : ContentPage
 
     private async Task Refresh()
     {
-        await LoadrobotsAsync();
+        await LoadRobotsAsync();
         RobotCollection.ItemsSource = null;
         FilterCollection();
     }
