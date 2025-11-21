@@ -14,13 +14,22 @@
                 </Grid.RowDefinitions>
                 <VerticalStackLayout Grid.Row="0">
                     <HorizontalStackLayout Margin="0,15,0,0">
-                        <Label Text="{Binding Name, StringFormat='NAO {0}'}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
-                        <Label Text="{Binding Status, StringFormat='{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
+                        <Label Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center">
+                            <Label.Text>
+                                <MultiBinding StringFormat="{}{0}{1}">
+                                    <Binding Path="Model" />
+                                    <Binding Path="HeadNumber" />
+                                </MultiBinding>
+                            </Label.Text>
+                        </Label>
+                        <Label Text="{Binding Version, StringFormat='v{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
                     </HorizontalStackLayout>
                     <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
-                    <Label x:Name="warrantyLabel" Text="Warranty Info" Opacity=".9" FontSize="14"/>
-                    <Label Text="{Binding HeadID, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
-                    <Label Text="{Binding BodyID, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding HeadSerial, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding BodySerial, StringFormat='Body ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="1" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding Purchased, StringFormat='Purchased: {0:dd.MM.yyyy}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding WarrantyEnd, StringFormat='Warranty end: {0:dd.MM.yyyy}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+                    <Label Text="{Binding WarrantyInfo}" Opacity=".9" FontSize="16"/>
 
                     <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,10,0,20"/>
                 </VerticalStackLayout>
@@ -194,20 +203,6 @@
                         <Button x:Name="RemoveButton" Clicked="RemoveButton_Clicked" Text="Remove" IsVisible="True" BackgroundColor="#80464d" TextColor="WhiteSmoke" Padding="-10" HeightRequest="40"/>
                     </VerticalStackLayout>
                     <Grid ColumnDefinitions="*,auto">
-                        <Button 
-                x:Name="DeleteEditButton"
-                Clicked="DeleteEditButton_Clicked"
-                Grid.Column="0"
-                Text="Delete/Edit"
-                IsVisible="False"
-                CornerRadius="10"
-                HeightRequest="40"
-                BackgroundColor="#536578"
-                TextColor="WhiteSmoke"
-                VerticalOptions="Center"
-                HorizontalOptions="Fill"
-                Margin="0,0,16,16"/>
-
                         <Button 
                 x:Name="AddButton"
                 Clicked="AddButton_Clicked"

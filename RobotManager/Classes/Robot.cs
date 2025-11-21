@@ -24,7 +24,7 @@ namespace RobotManager.Classes
         private string headSerial = String.Empty;
         private string version = String.Empty;
         private DateTime purchased;
-        private DateTime warranty_end;
+        private DateTime warrantyEnd;
         private string comment = String.Empty;
         private Status status = Status.Free;
 
@@ -49,7 +49,9 @@ namespace RobotManager.Classes
         public DateTime Purchased { get => purchased; set => purchased = value; }
 
         [JsonPropertyName("warranty_end")]
-        public DateTime Warranty_end { get => warranty_end; set => warranty_end = value; }
+        public DateTime WarrantyEnd { get => warrantyEnd; set => warrantyEnd = value; }
+
+        public string WarrantyInfo { get => warrantyEnd > DateTime.Now ? $"Under warranty" : "Not under warranty"; }
 
         [JsonPropertyName("version")]
         public string Version { get => version; set => version = value; }
@@ -125,13 +127,15 @@ namespace RobotManager.Classes
         {
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
-            string apiUri = baseUri + $"robots/{id}";
+            string apiUri = baseUri + $"robots/{id}/";
+            //Preferences.Set("apiKey", "...");
             string apiKey = Preferences.Get("apiKey", "");
 
             client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", apiKey);
+
             try
             {
-                HttpResponseMessage response = await client.GetAsync(apiUri).ConfigureAwait(false);
+                var response = await client.GetAsync(apiUri);
                 response.EnsureSuccessStatusCode();
 
                 Robot? robot = await response.Content.ReadFromJsonAsync<Robot>();
@@ -140,11 +144,12 @@ namespace RobotManager.Classes
                 if (robot != null)
                 { 
                     this.headNumber = robot.headNumber;
+                    this.model = robot.model;
                     this.bodySerial = robot.bodySerial;
                     this.headSerial = robot.headSerial;
                     this.version = robot.version;
                     this.purchased = robot.purchased;
-                    this.warranty_end = robot.warranty_end;
+                    this.warrantyEnd = robot.warrantyEnd;
                     this.comment = robot.comment;
 
                     return true;

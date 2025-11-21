@@ -23,21 +23,18 @@ public partial class RobotDetailPage : ContentPage
     {
         robot = new();
 
-        if (!await robot.InitializeFromCloud(robotId)) { return; }
-        issues = await GetGroupIssues(robotId);
-        notes = await GetGroupNotes(robotId);
-        clinicVisits = await GetGroupClinicVisits(robotId);
-        if (notes != null)
-        {
-            foreach (var note in notes)
-            {
-                await note.AuthorUser.GetUser(note.Author);
-            }
-        }
-
-        // check whether the robot is under warranty and display the corresponding text
-        //bool underWarranty = robot.Warranty >= DateTime.Now;
-        //warrantyLabel.Text = underWarranty ? $"Currently under warranty ({robot.Warranty.ToString("dd.MM.yyyy")})" : "Not under warranty";
+        if (!await robot.InitializeFromCloud(robotId)) 
+        { return; }
+        //issues = await GetGroupIssues(robotId);
+        //notes = await GetGroupNotes(robotId);
+        //clinicVisits = await GetGroupClinicVisits(robotId);
+        //if (notes != null)
+        //{
+        //    foreach (var note in notes)
+        //    {
+        //        await note.AuthorUser.GetUser(note.Author);
+        //    }
+        //}
 
         BindingContext = robot;
         NoteCV.ItemsSource = notes;
@@ -55,7 +52,7 @@ public partial class RobotDetailPage : ContentPage
         {
             AddInterface.IsVisible = false;
             OptionsInterface.IsVisible = false;
-            DeleteEditButton.IsVisible = false;
+            //DeleteEditButton.IsVisible = false;
 
             //transforms the 'x' button to an '+' button
             AddButton.RotateTo(0);
@@ -63,7 +60,7 @@ public partial class RobotDetailPage : ContentPage
         else
         {
             AddInterface.IsVisible = true;
-            DeleteEditButton.IsVisible = true;
+            //DeleteEditButton.IsVisible = true;
 
             // cancel out currently active detail buttons
             if (currenDetailButtons != null)
@@ -97,22 +94,6 @@ public partial class RobotDetailPage : ContentPage
         }
 
         Navigation.PushAsync(page);
-    }
-
-    private void DeleteEditButton_Clicked(object sender, EventArgs e)
-    {
-        if (OptionsInterface.IsVisible)
-        {
-            OptionsInterface.IsVisible = false;
-            AddInterface.IsVisible = true;
-            DeleteEditButton.Text = "Delete/Edit";
-        }
-        else
-        {
-            OptionsInterface.IsVisible = true;
-            AddInterface.IsVisible = false;
-            DeleteEditButton.Text = "Add to NAO";
-        }
     }
 
     private async void RemoveButton_Clicked(object sender, EventArgs e)
@@ -158,7 +139,7 @@ public partial class RobotDetailPage : ContentPage
         {
             AddInterface.IsVisible = false;
             OptionsInterface.IsVisible = false;
-            DeleteEditButton.IsVisible = false;
+            //DeleteEditButton.IsVisible = false;
 
             //transforms the 'x' button to an '+' button
             AddButton.RotateTo(0);
