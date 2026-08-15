@@ -20,6 +20,7 @@ public partial class AddIssuePage : ContentPage
         {
             Title = $"Edit Issue #{_issue.Id.ToString().PadLeft(4, '0')} | NAO{_robot.HeadNumber}";
             CreateIssueButton.Text = "Save Changes";
+            /*
             TitleEntry.Text = _issue.Title;
             IssueDatePicker.Date = _issue.Date;
             IssueTimePicker.Time = _issue.Date.TimeOfDay;
@@ -37,6 +38,7 @@ public partial class AddIssuePage : ContentPage
                 SolvedTimePicker.Time = _issue.Solved.Value.dateTime.TimeOfDay;
                 SolvedReport.Text = _issue.SolvedReport;
             }
+            */
         }
 
     }
@@ -50,6 +52,7 @@ public partial class AddIssuePage : ContentPage
     {
         if (FormIsValid())
         {
+            /*
             _issue.Title = TitleEntry.Text;
             _issue.Date = IssueDatePicker.Date.Value.Add(IssueTimePicker.Time.Value);
             _issue.Description = IssueDescription.Text;
@@ -63,6 +66,7 @@ public partial class AddIssuePage : ContentPage
                 _issue.SolvedReport = SolvedReport.Text;
             }
             _issue.Robot = _robot.Id;
+            */
 
             if (!await _issue.Post())
             {

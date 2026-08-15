@@ -4,39 +4,46 @@
              x:Class="RobotManager.Views.RobotsPage"
              Title="Robots">
     <Grid Padding="20,0"
-          RowDefinitions="50,*">
-        <Grid ColumnDefinitions="*,*,*,*" Grid.Row="0">
-            <Button x:Name="AllFilterButton" BackgroundColor="{StaticResource DefaultColor}" TextColor="WhiteSmoke" Grid.Column="0" Margin="3" Text="All" Clicked="FilterButton_Clicked"/>
-            <Button x:Name="FreeFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="1" Margin="3" Text="Free" Clicked="FilterButton_Clicked"/>
-            <Button x:Name="GameFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="2" Margin="3" Text="Game" Clicked="FilterButton_Clicked"/>
-            <Button x:Name="ClinicFilterButton" BackgroundColor="#303030"  TextColor="WhiteSmoke"  Grid.Column="3" Margin="3" Text="Clinic" Clicked="FilterButton_Clicked"/>
+          RowDefinitions="Auto,*">
+        <Grid RowDefinitions="auto, auto" Grid.Row="0">
+            <Grid ColumnDefinitions="*,*,*,*" RowDefinitions="Auto" Grid.Row="0">
+                <Button x:Name="AllFilterButton" BackgroundColor="{StaticResource DefaultColor}" TextColor="WhiteSmoke" Grid.Column="0" Margin="3" Text="All" Clicked="FilterButton_Clicked"/>
+                <Button x:Name="NaoFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="1" Margin="3" Text="Nao" Clicked="FilterButton_Clicked"/>
+                <Button x:Name="BoosterFilterButton" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="2" Margin="3" Text="Booster" Clicked="FilterButton_Clicked"/>
+                <Button x:Name="OtherFilterButton" BackgroundColor="#303030"  TextColor="WhiteSmoke"  Grid.Column="3" Margin="3" Text="Other" Clicked="FilterButton_Clicked"/>
+            </Grid>
+            <Grid x:Name="NaoVersionFilterGrid" Grid.Row="1" ColumnDefinitions="*,*,*" IsVisible="False">
+                <Button x:Name="NaoAllFilterButton" class="Nao" BackgroundColor="{StaticResource DefaultColor}" TextColor="WhiteSmoke" Grid.Column="0" Margin="3" Text="All" Clicked="SubFilterButton_Clicked"/>
+                <Button x:Name="NaoV5FilterButton"  class="Nao" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="1" Margin="3" Text="v5.0 H25" Clicked="SubFilterButton_Clicked"/>
+                <Button x:Name="NaoV6FilterButton"  class="Nao" BackgroundColor="#303030" TextColor="WhiteSmoke" Grid.Column="2" Margin="3" Text="v6.0" Clicked="SubFilterButton_Clicked"/>
+            </Grid>
+            <!--<Picker x:Name="SortByPicker" Title="Sort by"
+                    Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="3">
+                <Picker.ItemsSource>
+                    <x:Array Type="{x:Type x:String}">
+                        <x:String>Name</x:String>
+                        <x:String>Warranty</x:String>
+                    </x:Array>
+                </Picker.ItemsSource>
+            </Picker>
+            <Button x:Name="SortDirectionButton" BackgroundColor="#303030"  TextColor="WhiteSmoke" Grid.Row="1"  Grid.Column="3" Margin="3" Text="↑↓" FontSize="25" Padding="0" />-->
         </Grid>
         <RefreshView x:Name="RobotPageRV" Refreshing="RefreshView_Refreshing" Grid.Row="1">
-            <CollectionView x:Name="RobotCollection">
+            <CollectionView x:Name="RobotCollection" EmptyView="No Robots">
                 <CollectionView.ItemTemplate>
                     <DataTemplate>
                         <Frame Margin="0,5" BackgroundColor="#303030" BorderColor="#303030" HasShadow="False">
                             <Frame.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="Robot_Tapped"/>
                             </Frame.GestureRecognizers>
-                            <VerticalStackLayout>
-                                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                                    <Label FontSize="20">
-                                        <Label.Text>
-                                            <MultiBinding StringFormat="{}{0}{1}">
-                                                <Binding Path="Model" />
-                                                <Binding Path="HeadNumber" />
-                                            </MultiBinding>
-                                        </Label.Text>
-                                    </Label>
-                                    <Label Text="{Binding Ip}" Opacity=".5" VerticalOptions="Center" Margin="10,0,0,0"/>
+                            <Grid RowDefinitions="auto, auto" ColumnDefinitions="auto, *">
+                                <Label FontSize="24" Text="{Binding HeadNumber}" Grid.Row="0" Grid.RowSpan="2" Grid.Column="0" VerticalOptions="Center"/>
+                                <HorizontalStackLayout Margin="10,0,0,0" Grid.Row="0" Grid.Column="1">
+                                    <Label Text="{Binding Model}" Opacity=".7" VerticalOptions="Center"/>
+                                    <Label Text="{Binding Version, StringFormat=' v{0}'}" Opacity=".7"/>
                                 </HorizontalStackLayout>
-                                <HorizontalStackLayout HorizontalOptions="FillAndExpand">
-                                <Label Text="{Binding Version, StringFormat='v{0}'}" Opacity=".8"/>
-                                <Label Text="|" Margin="5,0" Opacity=".6"/>
-                                <Label Text="{Binding WarrantyInfo}" Opacity=".8"/>
-                                </HorizontalStackLayout>
-                            </VerticalStackLayout>
+                                <Label Text="{Binding WarrantyInfo}" Opacity=".8" Grid.Row="1" Margin="10,0,0,0" Grid.Column="1"/>
+                            </Grid>
                         </Frame>
                     </DataTemplate>
                 </CollectionView.ItemTemplate>

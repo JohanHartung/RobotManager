@@ -15,6 +15,9 @@ namespace RobotManager
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
                     fonts.AddFont("OpenSans-Semibold.ttf", "OpenSansSemibold");
+                    fonts.AddFont("fa-solid-900.otf", "FASolid");
+                    fonts.AddFont("fa-regular-400.otf", "FARegular");
+                    fonts.AddFont("fa-brands-400.otf", "FABrands");
                 });
 
 #if DEBUG

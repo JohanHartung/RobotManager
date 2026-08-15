@@ -10,7 +10,8 @@
         </Grid.RowDefinitions>
         <VerticalStackLayout Grid.Row="0">
             <Grid ColumnDefinitions="*,100" Margin="0,15,0,0">
-                <Label Text="{Binding Title}" Margin="0,0,10,0" FontSize="22" VerticalTextAlignment="Center" Grid.Column="0"/>
+                <Label Text="{Binding Description}" Margin="0,0,10,0" FontSize="22" VerticalTextAlignment="Center" Grid.Column="0" LineBreakMode="TailTruncation"/>
+                <!--
                 <Label Opacity=".7" VerticalOptions="Start" FontSize="20" Grid.Column="1" HorizontalTextAlignment="Center">
                     <Label.Triggers>
                         <DataTrigger TargetType="Label" Binding="{Binding IsSolved}" Value="True">
@@ -20,19 +21,12 @@
                             <Setter Property="Text" Value="Open"/>
                         </DataTrigger>
                     </Label.Triggers>
-                </Label>
+                </Label> -->
+                <Label Text="{Binding Status}" Opacity=".7" VerticalOptions="Start" FontSize="20" Grid.Column="1" HorizontalTextAlignment="Center"/>
             </Grid>
             <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
-            <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
-                <Label.Triggers>
-                    <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="True">
-                        <Setter Property="Text" Value="Replicated"/>
-                    </DataTrigger>
-                    <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="False">
-                        <Setter Property="Text" Value="Not yet replicated"/>
-                    </DataTrigger>
-                </Label.Triggers>
-            </Label>
+            <Label Text="{Binding Created, StringFormat='Created: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
+            <Label Text="{Binding Modified, StringFormat='Modified: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
             <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
                 <Label.Triggers>
                     <DataTrigger TargetType="Label" Binding="{Binding IsSolved}" Value="True">

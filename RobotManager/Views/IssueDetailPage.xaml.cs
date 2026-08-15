@@ -30,7 +30,7 @@ public partial class IssueDetailPage : ContentPage
 
     private async void ReplicateButton_Clicked(object sender, EventArgs e)
     {
-        _issue.Replicated.Add(Preferences.Get("userID", -1), DateTime.Now);
+        //_issue.Replicated.Add(Preferences.Get("userID", -1), DateTime.Now);
         if (!await _issue.ReplicateIssue())
         {
             await DisplayAlert("Error", "Could not connect to the server", "OK");
@@ -47,7 +47,7 @@ public partial class IssueDetailPage : ContentPage
             // use string.IsNullOrWhiteSpace(solvedReport) to check if user pressed OK with empty input
             return;
         }
-        _issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
+        //_issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
         _issue.SolvedReport = solvedReport;
         if (!await _issue.SolveIssue())
         {

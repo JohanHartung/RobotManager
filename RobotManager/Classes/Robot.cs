@@ -23,8 +23,8 @@ namespace RobotManager.Classes
         private string bodySerial = String.Empty;
         private string headSerial = String.Empty;
         private string version = String.Empty;
-        private DateTime purchased;
-        private DateTime warrantyEnd;
+        private DateTime? purchased;
+        private DateTime? warrantyEnd;
         private string comment = String.Empty;
         private Status status = Status.Free;
 
@@ -46,12 +46,25 @@ namespace RobotManager.Classes
         public string HeadSerial { get => headSerial; set => headSerial = value; }
 
         [JsonPropertyName("purchased")]
-        public DateTime Purchased { get => purchased; set => purchased = value; }
+        public DateTime? Purchased { get => purchased; set => purchased = value; }
 
         [JsonPropertyName("warranty_end")]
-        public DateTime WarrantyEnd { get => warrantyEnd; set => warrantyEnd = value; }
+        public DateTime? WarrantyEnd { get => warrantyEnd; set => warrantyEnd = value; }
 
-        public string WarrantyInfo { get => warrantyEnd > DateTime.Now ? $"Under warranty" : "Not under warranty"; }
+        public string WarrantyInfo
+        {
+            get
+            {
+                if (warrantyEnd == null)
+                {
+                    return "No warranty info";
+                }
+                else
+                {
+                    return warrantyEnd > DateTime.Now ? $"Under warranty" : "Not under warranty";
+                }
+            }
+        }
 
         [JsonPropertyName("version")]
         public string Version { get => version; set => version = value; }
@@ -197,18 +210,22 @@ namespace RobotManager.Classes
         }
 
     }
-
+    public enum IssueStatus
+    {
+        Noticed,
+        Verified,
+        InClinic,
+        Solved
+    }
     public class Issue
     {
         int id;
         int robot;
-
-        private string title = String.Empty;
         private string description = String.Empty;
         private int author;
-        private DateTime date = new();
-        private Dictionary<int, DateTime> replicated = new(); // (int user, DateTime dateTime)
-        private (int user, DateTime dateTime)? solved = new();
+        private string status = String.Empty;
+        private DateTime created = new();
+        private DateTime modified = new();
         private string solvedReport = String.Empty;
 
         [JsonPropertyName("id")]
@@ -217,27 +234,24 @@ namespace RobotManager.Classes
         [JsonPropertyName("robot")]
         public int Robot { get => robot; set => robot = value; }
 
-        [JsonPropertyName("title")]
-        public string Title { get => title; set => title = value; }
-
         [JsonPropertyName("description")]
         public string Description { get => description; set => description = value; }
 
-        [JsonPropertyName("author")]
+        //[JsonPropertyName("author")]
         public int Author { get => author; set => author = value; }
 
-        [JsonPropertyName("date")]
-        public DateTime Date { get => date; set => date = value; }
+        [JsonPropertyName("created")]
+        public DateTime Created { get => created; set => created = value; }
 
-        [JsonPropertyName("replicated")]
-        public Dictionary<int, DateTime> Replicated { get => replicated; set => replicated = value ?? new(); }
-        public bool IsReplicated { get => replicated.Count > 0; }
+        [JsonPropertyName("modified")]
+        public DateTime Modified { get => modified; set => modified = value; }
 
-        [JsonPropertyName("solved")]
-        public (int user, DateTime dateTime)? Solved { get => solved; set => solved = value; }
-        public bool IsSolved { get => solved != default; }
+        [JsonPropertyName("status")]
+        public string Status { get => status; set => status = value; }
 
-        [JsonPropertyName("solvedReport")]
+        public bool IsSolved { get => status == IssueStatus.Solved.ToString(); }
+
+        //[JsonPropertyName("solvedReport")]
         public string SolvedReport { get => solvedReport; set => solvedReport = value; }
 
         public async Task<bool> InitializeFromCloud(int issueID)
@@ -283,18 +297,17 @@ namespace RobotManager.Classes
         {
             using HttpClient client = new();
             string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
-            string apiUri = baseUri + $"GetSingle/issue/{id}";
+            string apiUri = baseUri + $"health-issues/{id}";
             Issue issue = await client.GetFromJsonAsync<Issue>(apiUri);
             if (issue != null)
             {
                 this.robot = issue.robot;
-                this.title = issue.title;
                 this.description = issue.description;
-                this.author = issue.author;
-                this.date = issue.date;
-                this.replicated = issue.replicated;
-                this.solved = issue.solved;
-                this.solvedReport = issue.solvedReport;
+                //this.author = issue.author;
+                this.status = issue.status;
+                this.created = issue.created;
+                this.modified = issue.modified;
+                //this.solvedReport = issue.solvedReport;
                 return true;
             }
             return false;

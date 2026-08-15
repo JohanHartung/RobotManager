@@ -14,15 +14,9 @@
                 </Grid.RowDefinitions>
                 <VerticalStackLayout Grid.Row="0">
                     <HorizontalStackLayout Margin="0,15,0,0">
-                        <Label Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center">
-                            <Label.Text>
-                                <MultiBinding StringFormat="{}{0}{1}">
-                                    <Binding Path="Model" />
-                                    <Binding Path="HeadNumber" />
-                                </MultiBinding>
-                            </Label.Text>
-                        </Label>
-                        <Label Text="{Binding Version, StringFormat='v{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
+                        <Label Text="{Binding HeadNumber}" Margin="0,0,10,0" FontSize="22" Grid.Column="0" VerticalTextAlignment="Center"/>
+                        <Label Text="{Binding Model}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
+                        <Label Text="{Binding Version, StringFormat=' v{0}'}" Opacity=".7" VerticalOptions="Center" FontSize="20"/>
                     </HorizontalStackLayout>
                     <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,15,0,10"/>
                     <Label Text="{Binding HeadSerial, StringFormat='Head ID: {0}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
@@ -30,18 +24,18 @@
                     <Label Text="{Binding Purchased, StringFormat='Purchased: {0:dd.MM.yyyy}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
                     <Label Text="{Binding WarrantyEnd, StringFormat='Warranty end: {0:dd.MM.yyyy}'}" FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center"/>
                     <Label Text="{Binding WarrantyInfo}" Opacity=".9" FontSize="16"/>
-
+            
                     <BoxView BackgroundColor="#2f2f2f" HeightRequest="2" Margin="0,10,0,20"/>
                 </VerticalStackLayout>
-                <Grid ColumnDefinitions="*,*,*" Grid.Row="1" Margin="0,5">
+                <Grid ColumnDefinitions="*,*,*" Grid.Row="1" Margin="0,5" IsVisible="False">
                     <Button x:Name="NotesButton" Margin="3" Text="Notes" Grid.Column="0" BackgroundColor="{StaticResource FreeColor}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
                     <Button x:Name="IssuesButton" Margin="3" Text="Issues" Grid.Column="1" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
                     <Button x:Name="ClinicButton" Margin="3" Text="Clinic Visits" Grid.Column="2" BackgroundColor="{StaticResource Gray550}" TextColor="WhiteSmoke" Clicked="TabButton_Clicked"/>
                 </Grid>
-
+                
                 <VerticalStackLayout Grid.Row="2" VerticalOptions="FillAndExpand">
 
-                    <StackLayout x:Name="NoteLayout" VerticalOptions="FillAndExpand">
+                    <StackLayout x:Name="NoteLayout" VerticalOptions="FillAndExpand" IsVisible="False">
                         <BoxView HeightRequest="18 " BackgroundColor="Transparent"/>
                         <CollectionView x:Name="NoteCV" EmptyView="No Notes" Margin="0,5">
                             <CollectionView.ItemTemplate>
@@ -78,7 +72,8 @@
                         </CollectionView>
                     </StackLayout>
 
-                    <StackLayout x:Name="IssueLayout" IsVisible="False" Grid.Row="2">
+                    <StackLayout x:Name="IssueLayout" IsVisible="True" Grid.Row="2">
+                        <Label Text="Health Issues" FontSize="18"/>
                         <Grid x:Name="solvedIssuesGrid" ColumnDefinitions="auto,*">
                             <Grid.GestureRecognizers>
                                 <TapGestureRecognizer Tapped="SwitchGrid_Tapped"/>
@@ -96,29 +91,12 @@
                                                     <TapGestureRecognizer Tapped="Frame_Tapped"/>
                                                 </Frame.GestureRecognizers>
                                                 <VerticalStackLayout>
-                                                    <Label Text="{Binding Title}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="0"/>
-                                                    <Label Text="{Binding Date, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="1"/>
-                                                    <Grid ColumnDefinitions="auto,10,auto">
-                                                        <Label FontSize="15" Opacity=".6" Grid.Column="0" VerticalTextAlignment="Center">
-                                                            <Label.Triggers>
-                                                                <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="True">
-                                                                    <Setter Property="Text" Value="Replicated"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger TargetType="Label" Binding="{Binding IsReplicated}" Value="False">
-                                                                    <Setter Property="Text" Value="Not yet replicated"/>
-                                                                </DataTrigger>
-                                                            </Label.Triggers>
-                                                        </Label>
-                                                        <Label FontSize="15" Opacity=".6" Grid.Column="2" VerticalTextAlignment="Center">
-                                                            <Label.Triggers>
-                                                                <DataTrigger TargetType="Label" Binding="{Binding IsSolved}" Value="True">
-                                                                    <Setter Property="Text" Value="{Binding Solved[1], StringFormat='Solved: {0}'}"/>
-                                                                </DataTrigger>
-                                                                <DataTrigger TargetType="Label" Binding="{Binding Solved}" Value="False">
-                                                                    <Setter Property="Text" Value="Not solved"/>
-                                                                </DataTrigger>
-                                                            </Label.Triggers>
-                                                        </Label>
+                                                    <Grid ColumnDefinitions="100, *, auto, auto" RowDefinitions="auto, auto">
+                                                        <Label Text="{Binding Description}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="0" Grid.Row="0"/>
+                                                        <Label Text="&#xf007;" LineBreakMode="TailTruncation" FontSize="11" Grid.Column="2" FontFamily="FASolid" VerticalTextAlignment="Center" Margin="2,0" Opacity=".7" Grid.Row="0"/>
+                                                        <Label Text="Name" LineBreakMode="TailTruncation" FontSize="14" Grid.Column="3" VerticalTextAlignment="Center" Opacity=".7" Grid.Row="0"/>
+                                                        <Label Text="{Binding Created, StringFormat='{0:dd.MM.yyyy}'}" FontSize="15" VerticalTextAlignment="Center" Opacity=".8" Grid.Column="0" Grid.Row="1"/>
+                                                        <Label Text="{Binding Status, StringFormat='Status: {0}'}" LineBreakMode="TailTruncation" FontSize="18" Grid.Column="1" Grid.ColumnSpan="3" Grid.Row="1" HorizontalTextAlignment="End" Opacity=".8"/>
                                                     </Grid>
                                                     <Label Text="{Binding Description}" FontSize="15" LineBreakMode="TailTruncation" Opacity=".8" Margin="0,0,20,0" MaxLines="2"/>
                                                 </VerticalStackLayout>

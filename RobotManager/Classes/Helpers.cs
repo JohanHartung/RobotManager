@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http.Headers;
 using System.Net.Http.Json;
 using System.Security.Cryptography;
 using System.Text;
@@ -85,21 +86,24 @@ namespace RobotManager.Classes
         {
             List<Issue>? issues = new();
             using HttpClient client = new();
-            string baseUri = Preferences.Get("uri", "https://example.com/api/RobotManager/");
-            string apiUri = baseUri + $"GetGroup/issue/{robotId}";
+            string baseUri = Preferences.Get("uri", "https://vat.berlin-united.com/api/");
+            string apiUri = baseUri + $"health-issues/";
+            string apiKey = Preferences.Get("apiKey", "");
+
+            client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Token", apiKey);
             try
             {
 
                 var response = await client.GetFromJsonAsync<List<Issue>>(apiUri);
                 if (response != null)
                 {
-                    foreach (var issue in response)
-                    {
-                        if (issue.Solved?.user == 0 && issue.Solved?.dateTime == DateTime.MinValue)
-                        {
-                            issue.Solved = null;
-                        }
-                    }
+                    //foreach (var issue in response)
+                    //{
+                    //    if (issue.Solved?.user == 0 && issue.Solved?.dateTime == DateTime.MinValue)
+                    //    {
+                    //        issue.Solved = null;
+                    //    }
+                    //}
                     issues = response;
                 }
             }
@@ -107,7 +111,7 @@ namespace RobotManager.Classes
             {
                 issues = new List<Issue>();
             }
-            return issues;
+            return issues.Where(i => i.Robot == robotId).ToList();
         }
 
         public static async Task<List<ClinicVisit>?> GetAllClinicVisits()

@@ -25,7 +25,7 @@ public partial class RobotDetailPage : ContentPage
 
         if (!await robot.InitializeFromCloud(robotId)) 
         { return; }
-        //issues = await GetGroupIssues(robotId);
+        issues = await GetGroupIssues(robotId);
         //notes = await GetGroupNotes(robotId);
         //clinicVisits = await GetGroupClinicVisits(robotId);
         //if (notes != null)
@@ -196,7 +196,7 @@ public partial class RobotDetailPage : ContentPage
             // use string.IsNullOrWhiteSpace(solvedReport) to check if user pressed OK with empty input
             return;
         }
-        issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
+        //issue.Solved = (Preferences.Get("userID", -1), DateTime.Now);
         issue.SolvedReport = solvedReport;
         if (!await issue.SolveIssue())
         {
@@ -236,7 +236,7 @@ public partial class RobotDetailPage : ContentPage
         {
             foreach (var issue in issues)
             {
-                issue.Solved = (-2, DateTime.Now); // -2 > clinic
+                //issue.Solved = (-2, DateTime.Now); // -2 > clinic
                 issue.SolvedReport = $"Issue solved during clinic visit #{visit.Id.ToString().PadLeft(4, '0')}";
                 if (!await issue.Post())
                 {

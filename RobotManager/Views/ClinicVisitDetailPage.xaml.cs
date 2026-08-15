@@ -37,7 +37,7 @@ public partial class ClinicVisitDetailPage : ContentPage
         {
             foreach (var issue in _issues)
             {
-                issue.Solved = (-2, DateTime.Now); // -2 => clinic
+                //issue.Solved = (-2, DateTime.Now); // -2 => clinic
                 issue.SolvedReport = $"Issue solved during clinic visit #{_visit.Id.ToString().PadLeft(4, '0')}";
                 if (!await issue.SolveIssue())
                 {
